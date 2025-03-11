@@ -2075,10 +2075,10 @@ print(result[0].tag)
 '''
 Tip_100401 使用Django实现一个账目管理系统
 
-https://github.com/wu-wenxiang/ZZLARGE-Project-DjangoTest
+https://github.com/duicikeyihangaolou/ZZLARGE-Project-DjangoTest
 或者 https://gitee.com/wu-wen-xiang/project-django-demo
 
-https://github.com/wu-wenxiang/Project-Python-Webdev
+https://github.com/duicikeyihangaolou/Project-Python-Webdev
 或者 https://gitee.com/wu-wen-xiang/project-python-webdev-demo
 '''
 
@@ -2436,7 +2436,7 @@ for key in r.scan_iter():
 '''
 Tip_110201 如何使用Fabric实现自动化部署？
 
-参考：https://github.com/wu-wenxiang/Project-Python-Webdev
+参考：https://github.com/duicikeyihangaolou/Project-Python-Webdev
 或者：https://gitee.com/wu-wen-xiang/project-python-webdev-demo
 '''
 

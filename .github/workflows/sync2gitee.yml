@@ -8,5 +8,5 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
         with:
-          source-repo: "https://github.com/wu-wenxiang/training-python-public.git"
+          source-repo: "https://github.com/duicikeyihangaolou/training-python-public.git"
           destination-repo: "git@gitee.com:wu-wen-xiang/training-python.git"

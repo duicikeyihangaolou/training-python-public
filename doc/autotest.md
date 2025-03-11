@@ -610,7 +610,7 @@ Prerequisite：
 
   ![](images/testing-gRPC-vs-RestAPI.jpeg)
 
-- Rest API Demo：[Github](https://github.com/wu-wenxiang/rest_api_demo) &
+- Rest API Demo：[Github](https://github.com/duicikeyihangaolou/rest_api_demo) &
   [Gitee](https://gitee.com/wu-wen-xiang/rest_api_demo)，对象s + CRUD
 
       ```bash
@@ -700,21 +700,21 @@ Prerequisite：
   ```python
   >>> import requests
   >>> import json
-  >>> r = requests.get('https://api.github.com/repos/wu-wenxiang/training-python-public')
+  >>> r = requests.get('https://api.github.com/repos/duicikeyihangaolou/training-python-public')
   >>> json_data = r.json()
   >>> print(json.dumps(json_data, indent=4))
   {
       "id": 100894204,
       "node_id": "MDEwOlJlcG9zaXRvcnkxMDA4OTQyMDQ=",
       "name": "training-python-public",
-      "full_name": "wu-wenxiang/training-python-public",
+      "full_name": "duicikeyihangaolou/training-python-public",
       "private": false,
       ...
   }
 
   >>> r.json()['owner']['login']
-  'wu-wenxiang'
-  >>> assert r.json()['owner']['login'] == 'wu-wenxiang'
+  'duicikeyihangaolou'
+  >>> assert r.json()['owner']['login'] == 'duicikeyihangaolou'
   >>> assert r.json()['owner']['login'] == 'maodouzi'
   Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
@@ -748,9 +748,9 @@ Prerequisite：
     ```python
     >>> import requests
     >>> from jsonpath import jsonpath
-    >>> r = requests.get('https://api.github.com/repos/wu-wenxiang/training-python-public')
+    >>> r = requests.get('https://api.github.com/repos/duicikeyihangaolou/training-python-public')
     >>> jsonpath(r.json(), '$..login')[0]
-    'wu-wenxiang'
+    'duicikeyihangaolou'
     ```
 
 - schema 断言
@@ -775,7 +775,7 @@ Prerequisite：
     >>> import jsonschema
     >>> import pprint
 
-    >>> r = requests.get('https://api.github.com/repos/wu-wenxiang/training-python-public')
+    >>> r = requests.get('https://api.github.com/repos/duicikeyihangaolou/training-python-public')
     >>> data = r.json()
     >>> data
     {'id': 100894204, 'node_id': 'MDEwOlJlcG9zaXRvcnkxMDA4OTQyMDQ=', ...}
@@ -783,16 +783,16 @@ Prerequisite：
     >>> schema = {
     ...     "name" : "training-python-public",
     ...     "owner" : {
-    ...         "login" : "wu-wenxiang",
+    ...         "login" : "duicikeyihangaolou",
     ...     },
     ... }
     >>> pprint.pprint(schema)
-    {'name': 'training-python-public', 'owner': {'login': 'wu-wenxiang'}}
+    {'name': 'training-python-public', 'owner': {'login': 'duicikeyihangaolou'}}
     >>> print(json.dumps(schema, indent=4))
     {
         "name": "training-python-public",
         "owner": {
-            "login": "wu-wenxiang"
+            "login": "duicikeyihangaolou"
         }
     }
     ```
@@ -805,7 +805,7 @@ Prerequisite：
     >>> schema = {
     ...     "name" : "training-python-public",
     ...     "owner" : {
-    ...         "login" : "wu-wenxiang",
+    ...         "login" : "duicikeyihangaolou",
     ...     },
     ... }
     >>> builder.add_object(schema)
@@ -837,7 +837,7 @@ Prerequisite：
     ...         {
     ...             "name": "training-python-public",
     ...             "owner": {
-    ...                 "login": "wu-wenxiang"
+    ...                 "login": "duicikeyihangaolou"
     ...             }
     ...         }
     ...     ],
@@ -864,7 +864,7 @@ Prerequisite：
     ...             "default": {},
     ...             "examples": [
     ...                 {
-    ...                     "login": "wu-wenxiang"
+    ...                     "login": "duicikeyihangaolou"
     ...                 }
     ...             ],
     ...             "required": [
@@ -878,7 +878,7 @@ Prerequisite：
     ...                     "description": "An explanation about the purpose of this instance.",
     ...                     "default": "",
     ...                     "examples": [
-    ...                         "wu-wenxiang"
+    ...                         "duicikeyihangaolou"
     ...                     ]
     ...                 }
     ...             },
@@ -895,7 +895,7 @@ Prerequisite：
     'default': {},
     'description': 'The root schema comprises the entire JSON document.',
     'examples': [{'name': 'training-python-public',
-                'owner': {'login': 'wu-wenxiang'}}],
+                'owner': {'login': 'duicikeyihangaolou'}}],
     'properties': {'name': {'$id': '#/properties/name',
                             'default': '',
                             'description': 'An explanation about the purpose of '
@@ -908,7 +908,7 @@ Prerequisite：
                             'default': {},
                             'description': 'An explanation about the purpose of '
                                             'this instance.',
-                            'examples': [{'login': 'wu-wenxiang'}],
+                            'examples': [{'login': 'duicikeyihangaolou'}],
                             'properties': {'login': {'$id': '#/properties/owner/properties/login',
                                                     'default': '',
                                                     'description': 'An '
@@ -917,7 +917,7 @@ Prerequisite：
                                                                     'purpose of '
                                                                     'this '
                                                                     'instance.',
-                                                    'examples': ['wu-wenxiang'],
+                                                    'examples': ['duicikeyihangaolou'],
                                                     'title': 'The login schema',
                                                     'type': 'string'}},
                             'required': ['login'],
@@ -1059,7 +1059,7 @@ class TelClient(base.TelClient):
 
 ### 4.6 RobotFramwork
 
-[Github](https://github.com/wu-wenxiang/training-python-public/blob/master/doc/TailoredTraining-Python-RobotFrameWork.md#lab-07-robotframework)
+[Github](https://github.com/duicikeyihangaolou/training-python-public/blob/master/doc/TailoredTraining-Python-RobotFrameWork.md#lab-07-robotframework)
 或
 [Gitee](https://gitee.com/wu-wen-xiang/training-python/blob/master/doc/TailoredTraining-Python-RobotFrameWork.md#lab-07-robotframework)
 
