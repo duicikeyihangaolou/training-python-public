@@ -3,6 +3,7 @@ on: push
 jobs:
   sync:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - uses: wearerequired/git-mirror-action@master 
         env:
