@@ -1,7 +1,7 @@
 # Learning-Python
 
 - 原始文档在 Github: <https://github.com/duicikeyihangaolou/training-python-public>
-- 同步到 Gitee: <https://gitee.com/wu-wen-xiang/training-python>
+- 同步到 Gitee: <https://gitee.com/duicikeyihangaolou/training-python>
 
 ## 学习进度安排
 
@@ -22,7 +22,7 @@
   - [算法](doc/algorithms.md)
   - [设计模式](http://blog.wuwenxiang.net/Design-Pattern)
   - Django：[Github](https://github.com/duicikeyihangaolou/Training-Django-Public) 或
-    [Gitee](https://gitee.com/wu-wen-xiang/training-django)
+    [Gitee](https://gitee.com/duicikeyihangaolou/training-django)
   - [自动化测试](doc/autotest.md)
   - [机器学习](http://blog.wuwenxiang.net/Machine-Learning)，[练习](src/data-analysis)
   - [自动化运维](doc/automation.md)

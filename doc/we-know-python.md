@@ -2421,7 +2421,7 @@ Copilot: <https://docs.github.com/zh/copilot/quickstart>
 [返回目录](#课程目录)
 
 参考：Training Django，[Github](https://github.com/duicikeyihangaolou/Training-Django-Public) 或
-[Gitee](https://gitee.com/wu-wen-xiang/training-django)，确认兼容 python 3.9.6
+[Gitee](https://gitee.com/duicikeyihangaolou/training-django)，确认兼容 python 3.9.6
 
 ### 4.2 Restful API
 
@@ -2434,27 +2434,27 @@ Copilot: <https://docs.github.com/zh/copilot/quickstart>
 Flask，参考：<https://flask.palletsprojects.com/zh-cn/main/quickstart/#a-minimal-application>
 
 Flask Restful API：[Github](https://github.com/duicikeyihangaolou/rest_api_demo#quick-start) 或
-[Gitee](https://gitee.com/wu-wen-xiang/rest_api_demo#quick-start)
+[Gitee](https://gitee.com/duicikeyihangaolou/rest_api_demo#quick-start)
 
 #### 4.2.2 Pecan
 
 参考：pecan restful API
-demo，[Github](https://github.com/duicikeyihangaolou/restful-api-demo)，[Gitee](https://gitee.com/wu-wen-xiang/restful-api-demo)
+demo，[Github](https://github.com/duicikeyihangaolou/restful-api-demo)，[Gitee](https://gitee.com/duicikeyihangaolou/restful-api-demo)
 
 #### 4.2.3 FastAPI
 
 参考：fastapi retstful API
-demo，[Github](https://github.com/duicikeyihangaolou/fastapi-demo)，[Gitee](https://gitee.com/wu-wen-xiang/fastapi-demo)，异步框架压测可以看到明显优势，[压测报告](https://gitee.com/wu-wen-xiang/fastapi-demo/blob/main/doc/how-to-take-a-stress-test-for-fastapi-sync-mode.md)
+demo，[Github](https://github.com/duicikeyihangaolou/fastapi-demo)，[Gitee](https://gitee.com/duicikeyihangaolou/fastapi-demo)，异步框架压测可以看到明显优势，[压测报告](https://gitee.com/duicikeyihangaolou/fastapi-demo/blob/main/doc/how-to-take-a-stress-test-for-fastapi-sync-mode.md)
 
 参考：fastapi todolist
-demo，[Github](https://github.com/duicikeyihangaolou/fastapi-todo-list-demo)，[Gitee](https://gitee.com/wu-wen-xiang/fastapi-todo-list-demo)
+demo，[Github](https://github.com/duicikeyihangaolou/fastapi-todo-list-demo)，[Gitee](https://gitee.com/duicikeyihangaolou/fastapi-todo-list-demo)
 
 ### 4.3 服务部署
 
 [返回目录](#课程目录)
 
 参考：Python Django Demo，[Github](https://github.com/duicikeyihangaolou/ZZLARGE-Project-DjangoTest) 或
-[Gitee](https://gitee.com/wu-wen-xiang/project-django-demo)
+[Gitee](https://gitee.com/duicikeyihangaolou/project-django-demo)
 
 参考：[Ansible](automation.md#23-ansible-基础)
 
@@ -2463,7 +2463,7 @@ demo，[Github](https://github.com/duicikeyihangaolou/fastapi-todo-list-demo)，
 #### 4.4.1 BootStrap + JQuery
 
 参考：[Github](https://github.com/duicikeyihangaolou/todolist-bootstrap-jquery) 或
-[Gitee](https://gitee.com/wu-wen-xiang/todolist-bootstrap-jquery)
+[Gitee](https://gitee.com/duicikeyihangaolou/todolist-bootstrap-jquery)
 
 参考：[Ant Design](https://4x-ant-design.antgroup.com/components/overview-cn/)
 
@@ -2475,7 +2475,7 @@ demo，[Github](https://github.com/duicikeyihangaolou/fastapi-todo-list-demo)，
 - 代码规范：husky + prettier + lint-staged + eslint + stylelint
 
 参考：[Github](https://github.com/duicikeyihangaolou/todolist-vue3) 或
-[Gitee](https://gitee.com/wu-wen-xiang/todolist-vue3)
+[Gitee](https://gitee.com/duicikeyihangaolou/todolist-vue3)
 
 #### 4.4.3 react
 
@@ -3187,7 +3187,7 @@ Windows: `pip install -i https://pypi.tuna.tsinghua.edu.cn/simple msvc-runtime`
 
 - 环境变量 PATH 配置
 - virtualenv：参考
-  [Gitee](https://gitee.com/wu-wen-xiang/restful-api-demo#%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95) 或
+  [Gitee](https://gitee.com/duicikeyihangaolou/restful-api-demo#%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95) 或
   [Github](https://github.com/duicikeyihangaolou/restful-api-demo#%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95)
 - [容器化](https://gitee.com/dev-99cloud/training-kubernetes/blob/master/doc/class-01-Kubernetes-Administration.md#29-%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA-pod)
 
@@ -3769,7 +3769,7 @@ with torch.no_grad():
 
 #### 7.6.1 GPU 相关
 
-参考：[Gitee](https://gitee.com/wu-wen-xiang/lab-kubernetes/blob/master/doc/kubernetes-best-practices.md#7-gpu-%E7%9B%B8%E5%85%B3)
+参考：[Gitee](https://gitee.com/duicikeyihangaolou/lab-kubernetes/blob/master/doc/kubernetes-best-practices.md#7-gpu-%E7%9B%B8%E5%85%B3)
 或者
 [Github](https://github.com/duicikeyihangaolou/lab-kubernetes/blob/master/doc/kubernetes-best-practices.md#7-gpu-%E7%9B%B8%E5%85%B3)
 

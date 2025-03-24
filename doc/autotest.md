@@ -611,7 +611,7 @@ Prerequisite：
   ![](images/testing-gRPC-vs-RestAPI.jpeg)
 
 - Rest API Demo：[Github](https://github.com/duicikeyihangaolou/rest_api_demo) &
-  [Gitee](https://gitee.com/wu-wen-xiang/rest_api_demo)，对象s + CRUD
+  [Gitee](https://gitee.com/duicikeyihangaolou/rest_api_demo)，对象s + CRUD
 
       ```bash
       docker stop rest-api-demo
@@ -1061,7 +1061,7 @@ class TelClient(base.TelClient):
 
 [Github](https://github.com/duicikeyihangaolou/training-python-public/blob/master/doc/TailoredTraining-Python-RobotFrameWork.md#lab-07-robotframework)
 或
-[Gitee](https://gitee.com/wu-wen-xiang/training-python/blob/master/doc/TailoredTraining-Python-RobotFrameWork.md#lab-07-robotframework)
+[Gitee](https://gitee.com/duicikeyihangaolou/training-python/blob/master/doc/TailoredTraining-Python-RobotFrameWork.md#lab-07-robotframework)
 
 ### 4.7 更多的 Restful API 测试框架
 
@@ -1448,8 +1448,8 @@ Selenium 的 UI 测试与 Django 开发很好的结合起来。
 1. [为什么 Cypress 更好？](https://docs.cypress.io/guides/overview/why-cypress)
 2. [安装 npm](https://opendev.org/skyline/skyline-console#local-environment)
 3. [安装 Cypress](https://docs.cypress.io/guides/getting-started/installing-cypress)
-4. [Demo-001](https://gitee.com/wu-wen-xiang/cypress-demo-todo)
-5. [Demo-002](https://gitee.com/wu-wen-xiang/cypress-demo/)
+4. [Demo-001](https://gitee.com/duicikeyihangaolou/cypress-demo-todo)
+5. [Demo-002](https://gitee.com/duicikeyihangaolou/cypress-demo/)
 
 ## 6. 压力测试
 
@@ -1470,7 +1470,7 @@ Bugs，而是排除系统的性能瓶颈，并为回归测试建立一个基准�
 
 ### 6.2 压测工具
 
-[压测工具比较](https://gitee.com/wu-wen-xiang/go-stress-testing#5%E5%8E%8B%E6%B5%8B%E5%B7%A5%E5%85%B7%E7%9A%84%E6%AF%94%E8%BE%83)
+[压测工具比较](https://gitee.com/duicikeyihangaolou/go-stress-testing#5%E5%8E%8B%E6%B5%8B%E5%B7%A5%E5%85%B7%E7%9A%84%E6%AF%94%E8%BE%83)
 
 ### 6.3 Rally
 

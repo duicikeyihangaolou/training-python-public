@@ -167,7 +167,7 @@ systems._](https://www.redhat.com/en/topics/automation/whats-it-automation)
 
 **基础环境安装**，参考：[Github](https://github.com/duicikeyihangaolou/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#111-%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7)
 或
-[Gitee](https://gitee.com/wu-wen-xiang/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#111-%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7)
+[Gitee](https://gitee.com/duicikeyihangaolou/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#111-%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7)
 
 - 作业：升级内核到 5.4
 - 作业：升级 Python 到 3.8
@@ -243,7 +243,7 @@ pip 22.1.2 from /Users/wuwenxiang/local/github-99cloud/lab-openstack/.venv/lib/p
 
 参考：[Github](https://github.com/duicikeyihangaolou/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#211-linux-%E5%AE%B9%E5%99%A8%E5%92%8C-docker)
 或
-[Gitee](https://gitee.com/wu-wen-xiang/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#211-linux-%E5%AE%B9%E5%99%A8%E5%92%8C-docker)
+[Gitee](https://gitee.com/duicikeyihangaolou/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#211-linux-%E5%AE%B9%E5%99%A8%E5%92%8C-docker)
 
 - 作业：安装 Docker
 - 作业：熟悉 Docker 命令
@@ -255,7 +255,7 @@ pip 22.1.2 from /Users/wuwenxiang/local/github-99cloud/lab-openstack/.venv/lib/p
 参考
 [Github](https://github.com/duicikeyihangaolou/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#22-containerd)
 或
-[Gitee](https://gitee.com/wu-wen-xiang/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#22-containerd)
+[Gitee](https://gitee.com/duicikeyihangaolou/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#22-containerd)
 
 - 作业：安装 Containerd
 - 作业：熟悉 crictl / ctr / nerdctr 命令
@@ -270,12 +270,12 @@ pip 22.1.2 from /Users/wuwenxiang/local/github-99cloud/lab-openstack/.venv/lib/p
 
 组件和基本架构，参考：[Github](https://github.com/duicikeyihangaolou/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#3-k8s-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%AE%A1%E7%90%86)
 或
-[Gitee](https://gitee.com/wu-wen-xiang/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#3-k8s-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%AE%A1%E7%90%86)
+[Gitee](https://gitee.com/duicikeyihangaolou/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#3-k8s-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%AE%A1%E7%90%86)
 
 部署单节点
 K8S，参考：[Github](https://github.com/duicikeyihangaolou/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#3111-%E5%8D%95%E8%8A%82%E7%82%B9%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2)
 或
-[Gitee](https://gitee.com/wu-wen-xiang/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#3111-%E5%8D%95%E8%8A%82%E7%82%B9%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2)，注意：Containerd
+[Gitee](https://gitee.com/duicikeyihangaolou/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#3111-%E5%8D%95%E8%8A%82%E7%82%B9%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2)，注意：Containerd
 如果已经部署好的话，前面部署 Containerd 的步骤可以跳过，直接部署 K8S 即可。
 
 - 作业：完成 K8S 单节点部署
@@ -352,7 +352,7 @@ Ansible
 - 作业：安装 Ansible Docker 模块
 
 部署 Django 应用，参考：[Github](https://github.com/duicikeyihangaolou/ZZLARGE-Project-DjangoTest) 或
-[Gitee](https://gitee.com/wu-wen-xiang/project-django-demo/)
+[Gitee](https://gitee.com/duicikeyihangaolou/project-django-demo/)
 
 - 作业：通过 Docker 部署容器应用
 
@@ -450,7 +450,7 @@ Drone，参考：[Github](https://github.com/99cloud/lab-openstack/blob/master/d
 [返回目录](#课程目录)
 
 配置默认 StorageClass，参考：[Github] 或
-[Gitee](https://gitee.com/wu-wen-xiang/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#45-local-%E5%92%8C%E5%8A%A8%E6%80%81%E5%88%86%E9%85%8D)
+[Gitee](https://gitee.com/duicikeyihangaolou/lab-kubernetes/blob/main/doc/kubernetes-best-practices.md#45-local-%E5%92%8C%E5%8A%A8%E6%80%81%E5%88%86%E9%85%8D)
 
 参考：[KubeSphere 部署官网](https://kubesphere.io/docs/v3.3/quick-start/minimal-kubesphere-on-k8s/)
 
