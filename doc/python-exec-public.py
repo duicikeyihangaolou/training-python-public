@@ -2076,7 +2076,7 @@ print(result[0].tag)
 Tip_100401 使用Django实现一个账目管理系统
 
 https://github.com/duicikeyihangaolou/ZZLARGE-Project-DjangoTest
-或者 https://gitee.com/duicikeyihangaolou/project-django-demo
+或者 https://gitee.com/duicikeyihangaolou/lab-django
 
 https://github.com/duicikeyihangaolou/Project-Python-Webdev
 或者 https://gitee.com/duicikeyihangaolou/project-python-webdev-demo

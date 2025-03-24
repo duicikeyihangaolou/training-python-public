@@ -352,7 +352,7 @@ Ansible
 - 作业：安装 Ansible Docker 模块
 
 部署 Django 应用，参考：[Github](https://github.com/duicikeyihangaolou/ZZLARGE-Project-DjangoTest) 或
-[Gitee](https://gitee.com/duicikeyihangaolou/project-django-demo/)
+[Gitee](https://gitee.com/duicikeyihangaolou/lab-django/)
 
 - 作业：通过 Docker 部署容器应用
 
@@ -381,7 +381,7 @@ ansible 2.9.27
   executable location = /usr/local/bin/ansible
   python version = 3.10.1 (main, Dec 21 2021, 09:01:08) [GCC 10.2.1 20210110]
 
-$ docker run -it -v "/root/.ssh":"/root/.ssh" -uroot -v "$(pwd)"/project-django-demo:/app ansible:2.9.27 ansible-playbook -i /app/ansible-u1804/inventory/inventory.ini /app/ansible-u1804/playbooks/deploy.yml
+$ docker run -it -v "/root/.ssh":"/root/.ssh" -uroot -v "$(pwd)"/lab-django:/app ansible:2.9.27 ansible-playbook -i /app/ansible-u1804/inventory/inventory.ini /app/ansible-u1804/playbooks/deploy.yml
 ```
 
 - 作业：将 Ansible 装进容器

@@ -2454,7 +2454,7 @@ demo，[Github](https://github.com/duicikeyihangaolou/fastapi-todo-list-demo)，
 [返回目录](#课程目录)
 
 参考：Python Django Demo，[Github](https://github.com/duicikeyihangaolou/ZZLARGE-Project-DjangoTest) 或
-[Gitee](https://gitee.com/duicikeyihangaolou/project-django-demo)
+[Gitee](https://gitee.com/duicikeyihangaolou/lab-django)
 
 参考：[Ansible](automation.md#23-ansible-基础)
 
