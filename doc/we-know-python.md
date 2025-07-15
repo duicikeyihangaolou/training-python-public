@@ -3187,7 +3187,8 @@ Windows: `pip install -i https://pypi.tuna.tsinghua.edu.cn/simple msvc-runtime`
 
 - 环境变量 PATH 配置
 - virtualenv：参考
-  [Gitee](https://gitee.com/duicikeyihangaolou/restful-api-demo#%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95) 或
+  [Gitee](https://gitee.com/duicikeyihangaolou/restful-api-demo#%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95)
+  或
   [Github](https://github.com/duicikeyihangaolou/restful-api-demo#%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95)
 - [容器化](https://gitee.com/dev-99cloud/training-kubernetes/blob/master/doc/class-01-Kubernetes-Administration.md#29-%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA-pod)
 
@@ -3993,7 +3994,8 @@ Supabase：一个开源的 Firebase 替代方案，提供 PostgreSQL 数据库�
 6. [百度-Megatron-DeepSpeed](https://cloud.baidu.com/article/3178698)
 7. [阿里云-DeepSpeed 分布式训练](https://help.aliyun.com/zh/ack/cloud-native-ai-suite/user-guide/deepspeed-distributed-training)，[基于 Kubernetes 构建云原生 AI 平台](https://mp.weixin.qq.com/s?spm=a2c6h.12873639.article-detail.7.55c554015aKVnM&__biz=MzUzNzYxNjAzMg==&mid=2247524465&idx=1&sn=5a51aee33e4b81439a55a432ab29280a&scene=21#wechat_redirect)
 8. [Megatron-LLaMA](https://github.com/alibaba/Megatron-LLaMA)
-9. [阿里-使用 Megatron-Deepspeed 训练 GPT-2 并生成文本](https://help.aliyun.com/zh/ecs/use-cases/use-the-megatron-deepspeed-training-gpt-2-and-generate-text)
+9. [阿里-使用 Megatron-Deepspeed 训练 GPT-2
+   并生成文本](https://help.aliyun.com/zh/ecs/use-cases/use-the-megatron-deepspeed-training-gpt-2-and-generate-text)
 
 #### 7.9.3 大模型
 
