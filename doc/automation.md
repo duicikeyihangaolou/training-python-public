@@ -304,6 +304,45 @@ K8S，参考：[Github](https://github.com/duicikeyihangaolou/lab-kubernetes/blo
 - [Chef](https://www.chef.io/solutions)
 - [Puppet](https://puppet.com/)
 
+| **对比维度** | **Ansible**      | **Puppet**              | **Chef**                 | **SaltStack**     | **Fabric**       |
+| -------- | ---------------- | ----------------------- | ------------------------ | ----------------- | ---------------- |
+| **架构**   | 无代理（SSH）         | 客户端 - 服务器（Agent-Server） | 客户端 - 服务器（Client-Server） | 混合架构（代理 / 无代理）    | 无架构（直接 SSH）      |
+| **配置语言** | YAML（Playbook）   | Puppet DSL（特定领域语言）      | Ruby DSL（Recipe）         | YAML/Python       | Python 脚本        |
+| **状态管理** | 支持（声明式）          | 强支持（状态驱动，自动修复）          | 支持（资源定义）                 | 支持（States）        | 不支持（仅执行命令）       |
+| **学习曲线** | 低（YAML 易读，语法简单）  | 中高（DSL 需专门学习）           | 中（需懂 Ruby 基础）            | 中（模块多，概念稍复杂）      | 极低（Python 基础即可）  |
+| **并发性能** | 中等（依赖 SSH 并发）    | 高（Agent 缓存机制）           | 中高（Client 本地执行）          | 极高（ZeroMQ 异步通信）   | 低（串行 / 简单并行）     |
+| **适用规模** | 中小到大型（万级节点需优化）   | 大型（企业级，十万级节点）           | 中大型（开发主导的复杂环境）           | 超大型（实时监控 + 大规模部署） | 小型（临时任务 / 小规模节点） |
+| **典型场景** | 配置管理、应用部署、容器集成   | 长期基础设施稳定管理（如 IDC）       | 开发与运维协同（CI/CD 流程）        | 实时操作、云平台管理、监控     | 临时脚本执行、批量命令      |
+| **生态集成** | 强（容器、GitOps、云厂商） | 强（企业级工具链，如 Foreman）     | 强（开发工具链，如 Jenkins）       | 强（云、监控、网络设备）      | 弱（仅基础命令扩展）       |
+
+如何选择？
+
+**选 Ansible**：
+
+- 团队追求 “低门槛”“快速上手”，无需维护客户端；
+- 需结合容器（Docker/K8s）、GitOps 等现代运维场景；
+- 场景以 “一次性任务编排” 或 “轻量级配置管理” 为主。
+
+**选 Puppet**：
+
+- 企业级大规模基础设施（如十万级服务器），需长期稳定的状态管理；
+- 强调 “自动化修复”（如配置漂移后自动恢复）。
+
+**选 Chef**：
+
+- 团队以开发人员为主，熟悉 Ruby 语言；
+- 场景需高度定制化逻辑（如复杂的应用部署流程）。
+
+**选 SaltStack**：
+
+- 需实时监控目标节点状态，或超大规模节点（如云计算数据中心）；
+- 追求极致并发性能（如秒级操作上万节点）。
+
+**选 Fabric**：
+
+- 仅需执行简单批量命令（如日志收集、临时脚本）；
+- 团队缺乏自动化工具经验，需快速落地小任务。
+
 ### 2.2 Fabric
 
 [返回目录](#课程目录)
@@ -319,6 +358,204 @@ K8S，参考：[Github](https://github.com/duicikeyihangaolou/lab-kubernetes/blo
 
 [返回目录](#课程目录)
 
+Ansible 的独特优势​：
+
+1. 无代理架构：减少目标节点资源占用，避免 “客户端故障影响整体” 的风险；​
+2. 语法友好：YAML 格式接近自然语言，运维、开发、产品均可参与编写；​
+3. 生态灵活性：与容器（Docker/K8s）、云平台（AWS/Azure）、GitOps（GitLab CI）无缝集成，适配现代运维趋势；​
+4. 模块丰富：内置数千模块（涵盖系统、网络、数据库等），且支持 Python 自定义模块，扩展成本低。​
+
+综上，Ansible 凭借 “简单、灵活、易集成” 的特点，成为当前自动化运维的主流选择，尤其适合中小团队快速落地自动化流程。
+
+Ansible 原理：
+
+![](images/ansible-architecture.png)
+
+#### 2.3.1 关于 Ansible 你需要知道的二三事
+
+Ansible
+案例，参考：[Github](https://github.com/99cloud/lab-openstack/blob/master/doc/class-02-OpenStack-API-and-Development.md#ansible-as-a-plus--catalog-)
+或
+[Gitee](https://gitee.com/dev-99cloud/lab-openstack/blob/master/doc/class-02-OpenStack-API-and-Development.md#ansible-as-a-plus--catalog-)
+
+Ansible = Ansible Core + Ansible 组件库
+
+版本选择：[Ansible 发行和维护](https://docs.ansible.org.cn/ansible/latest/reference_appendices/release_and_maintenance.html)
+
+#### 2.3.2 Ansible 安装
+
+对 Ubuntu 22.04
+
+```bash
+apt update -y
+apt install ansible
+ansible --version
+```
+
+可以看到：
+
+```console
+ansible 2.10.8
+  config file = None
+  configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3/dist-packages/ansible
+  executable location = /usr/bin/ansible
+  python version = 3.10.12 (main, May 27 2025, 17:12:29) [GCC 11.4.0]
+```
+
+如果要指定版本，可以用 pip 安装
+
+```console
+# pip3 install virtualenv
+
+# python3 -m virtualenv .venv
+created virtual environment CPython3.10.12.final.0-64 in 1299ms
+  creator CPython3Posix(dest=/root/.venv, clear=False, no_vcs_ignore=False, global=False)
+  seeder FromAppData(download=False, pip=bundle, setuptools=bundle, via=copy, app_data_dir=/root/.local/share/virtualenv)
+    added seed packages: pip==25.1.1, setuptools==80.9.0
+  activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+
+# . .venv/bin/activate
+
+(.venv) ~# which python
+/root/.venv/bin/python
+
+(.venv) ~# which pip
+/root/.venv/bin/pip
+
+(.venv) ~# pip install "ansible==2.10.7" -i https://mirrors.aliyun.com/pypi/simple/
+```
+
+#### 2.3.2 配置 SSH
+
+生成 SSH key
+
+```console
+root@devopslab020:~/.ssh# ls
+authorized_keys  known_hosts
+
+root@devopslab020:~/.ssh# ssh-keygen 
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /root/.ssh/id_rsa.
+Your public key has been saved in /root/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:41njTMl+VNsh/gjSojuolLSGiKXA2lQPU/Ds6co3YFg root@devopslab020
+The key's randomart image is:
++---[RSA 2048]----+
+|    ...          |
+|     +           |
+|    + o      ... |
+|.  .E= . ......o.|
+|..o+  + So*o... .|
+|==+ =. ..Ooo. o  |
+|=..* .o.o + .. . |
+|  o. oo..  .     |
+|   .+. o.        |
++----[SHA256]-----+
+
+root@devopslab020:~/.ssh# ls
+authorized_keys  id_rsa  id_rsa.pub  known_hosts
+```
+
+注意：
+
+1. public key -> server side authorized_keys
+2. private key -> client side
+3. [Generator for PuTTY on Windows](https://www.ssh.com/ssh/putty/windows/puttygen)
+
+把 public key 写入服务端的 ~/.ssh/authorized_keys，确保 ssh 能够免密登陆
+
+服务端的 SSH 配置
+
+```console
+# cat /etc/ssh/sshd_config | tail -n 5
+
+UseDNS no
+ClientAliveInterval 120
+ClientAliveCountMax 720
+GSSAPIAuthentication no
+
+# systemctl restart ssh
+```
+
+客户端 SSH 配置
+
+```conf
+# cat ~/.ssh/config 
+Host *
+    KexAlgorithms +diffie-hellman-group1-sha1
+    HostKeyAlgorithms +ssh-rsa,ssh-dss
+    PubkeyAcceptedKeyTypes +ssh-rsa,ssh-dss
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+
+Host test1
+    HostName        localhost
+    User            root
+
+Host test2
+    HostName        localhost
+    User            root
+```
+
+补充：SSH Proxy
+
+```
+ProxyCommand    ssh fq -W %h:%p
+ProxyCommand    bash -c 'h=%h;ssh bastion -W ${h##prefix-}:%p'
+```
+
+#### 2.3.3 Hello, Ansible
+
+配置 hosts.ini
+
+```ini
+# cat hosts.ini 
+[webservers]
+test1
+test2
+```
+
+ping 这一组 webservers 服务器
+
+```bash
+ansible webservers -m ping -i hosts.ini
+```
+
+输出：
+
+```console
+# ansible webservers -m ping -i hosts.ini
+
+test1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.12"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+test2 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.12"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+```
+
+最佳实践：
+
+1. hosts.ini 还可以配置 ssh 相关的参数，但尽量不要，让 ssh 配置都放在 ~/.ssh/config 里，配置免密登陆后，ansible 会自动使用 ssh 登陆
+2. 可以在 hosts.ini 里配置 ansible 相关的参数，如 ansible_python_interpreter 等，但尽量不要，越简单越好，尽量和 python 版本无关。
+3. ping 是 ansible 内置的动作，用来测试连接是否正常，也可以用来测试 ansible 配置是否正确。大部分内置命令是幂等的，但也有些不是，比如 shell。
+4. 这里直接运行 ansible，但实际更常用的是 ansible-playbook，把要执行的命令放在 playbook 里，playbook 是 ansible 的剧本文件，用 YAML
+   格式编写。
+
+#### 2.3.4 YAML
+
 [YAML 基本语法](https://docs.ansible.com/ansible/2.9/reference_appendices/YAMLSyntax.html)
 
 - YAML 是数据结构，包含字符串、数字、布尔、列表、字典五种类型
@@ -329,15 +566,606 @@ K8S，参考：[Github](https://github.com/duicikeyihangaolou/lab-kubernetes/blo
 - [w3cnote YAML 介绍](https://www.runoob.com/w3cnote/yaml-intro.html)
 - [redhat what's YAML](https://www.redhat.com/en/topics/automation/what-is-yaml)
 
-Ansible 官方文档，参考：[Ansible 2.9 用户手册](https://docs.ansible.com/ansible/2.9/user_guide/index.html)
+#### 2.3.5 Ansible 快速参考
 
-Ansible
-案例，参考：[Github](https://github.com/99cloud/lab-openstack/blob/master/doc/class-02-OpenStack-API-and-Development.md#ansible-as-a-plus--catalog-)
-或
-[Gitee](https://gitee.com/dev-99cloud/lab-openstack/blob/master/doc/class-02-OpenStack-API-and-Development.md#ansible-as-a-plus--catalog-)
+**Ansible 核心命令**
 
-- 作业：Ansible 安装
-- 作业：Anisble 练习
+| 命令                  | 功能描述                                                                 | 示例                                                                                            |
+| ------------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `ansible`           | 执行临时命令，快速在远程主机上执行单一任务（如 ping、shell 命令）。                              | `ansible webservers -m pingansible dbservers -a "df -h"`                                      |
+| `ansible-playbook`  | 执行 Playbook 文件，批量执行预定义的任务序列。                                         | `ansible-playbook deploy.yml -i hosts.ini`                                                    |
+| `ansible-galaxy`    | 管理 Ansible 角色和集合，可从 [Galaxy](https://galaxy.ansible.com/) 下载或上传共享内容。 | `ansible-galaxy install geerlingguy.nginxansible-galaxy collection install community.general` |
+| `ansible-doc`       | 查看模块文档和用法示例。                                                         | `ansible-doc fileansible-doc -s copy`（仅显示参数摘要）                                                |
+| `ansible-vault`     | 加密 / 解密敏感数据（如密码、密钥），保护 Playbook 中的机密信息。                              | `ansible-vault encrypt group_vars/production/secrets.ymlansible-vault view secrets.yml`       |
+| `ansible-inventory` | 查看或调试主机清单（inventory）的结构和变量。                                          | `ansible-inventory --list -i hosts.iniansible-inventory --graph`                              |
+
+**常用模块（非完整列表）**
+
+| 模块名               | 功能描述                                              | 适用场景                                                                                            |
+| ----------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `ping`            | 测试与目标主机的连通性（基于 Python），验证 SSH 配置和 Python 环境。      | 检查主机是否可达：`ansible all -m ping`                                                                  |
+| `shell`/`command` | 在远程主机执行 shell 命令（`shell` 支持管道和变量，`command` 直接执行）。 | 执行系统命令：`ansible web -m shell -a "ls -l /tmp"`                                                   |
+| `copy`            | 将文件从控制节点复制到远程主机，支持权限和内容替换。                        | 分发配置文件：`ansible web -m copy -a "src=nginx.conf dest=/etc/nginx/"`                               |
+| `file`            | 管理文件 / 目录属性（权限、所有者、状态等）。                          | 创建目录：`ansible all -m file -a "path=/data state=directory mode=0755"`                            |
+| `template`        | 基于 Jinja2 模板生成配置文件，动态填充变量。                        | 生成个性化配置：`ansible web -m template -a "src=app.conf.j2 dest=/etc/app.conf"`                       |
+| `yum`/`apt`       | 包管理模块，用于安装、升级或删除软件包（分别适用于 RHEL 和 Debian 系）。       | 安装 Nginx：`ansible web -m yum -a "name=nginx state=present"`                                     |
+| `service`         | 管理系统服务（启动、停止、重启、设置开机自启）。                          | 重启服务：`ansible all -m service -a "name=httpd state=restarted enabled=yes"`                       |
+| `user`/`group`    | 创建或管理用户和用户组。                                      | 创建 deploy 用户：`ansible all -m user -a "name=deploy groups=sudo append=yes"`                      |
+| `git`             | 从 Git 仓库克隆或更新代码。                                  | 部署应用：`ansible app -m git -a "repo=https://github.com/example.git dest=/opt/app version=master"` |
+| `uri`             | 发送 HTTP 请求，用于 API 调用或检查服务状态。                      | 检查网站状态：`ansible localhost -m uri -a "url=http://example.com return_content=yes"`                |
+| `debug`           | 调试模块，打印变量值或临时信息。                                  | 输出变量：`ansible all -m debug -a "var=ansible_facts"`                                              |
+
+**其他实用命令**
+
+| 命令                | 功能描述                                     |
+| ----------------- | ---------------------------------------- |
+| `ansible-config`  | 查看或配置 Ansible 的运行参数（如并发数、SSH 超时）。        |
+| `ansible-console` | 交互式执行命令，类似 shell 终端，但针对多主机批量操作。          |
+| `ansible-pull`    | 在远程主机上直接拉取并执行 Playbook（反向操作，适用于无中心节点场景）。 |
+
+**如何查找更多模块？**
+
+**官方文档**：[Ansible Modules 文档](https://docs.ansible.com/ansible/latest/collections/index.html)
+
+**命令行查询**：
+
+```
+ansible-doc -l  # 列出所有可用模块
+ansible-doc <模块名>  # 查看特定模块的详细文档
+```
+
+建议结合具体场景选择合适的模块，并通过 `ansible-doc` 深入了解参数用法。
+
+#### 2.3.6 动态 inventory
+
+创建文件 dynamic_host.py
+
+```python
+#!/usr/bin/env python3
+import json
+
+# 模拟从CMDB获取的主机数据
+def get_hosts_data():
+    return {
+        "webservers": {
+            "hosts": ["test1", "test2"],
+            "vars": {
+                "http_port": 80,
+                "env": "production"
+            }
+        },
+        "dbservers": {
+            "hosts": ["test2"],
+            "vars": {
+                "db_port": 5432,
+                "engine": "postgresql"
+            }
+        },
+    }
+
+if __name__ == "__main__":
+    print(json.dumps(get_hosts_data()))
+
+# import json
+# import requests
+
+# class CMDBInventory:
+#     def __init__(self):
+#         self.api_url = "https://cmdb.example.com/api/servers"
+#         self.token = "your_api_token"
+#         self.inventory = {"_meta": {"hostvars": {}}}
+        
+#     def get_cmdb_data(self):
+#         headers = {"Authorization": f"Bearer {self.token}"}
+#         response = requests.get(self.api_url, headers=headers)
+#         return response.json()
+        
+#     def parse_data(self, cmdb_data):
+#         # 将CMDB数据转换为Ansible Inventory格式
+#         for server in cmdb_data.get("servers", []):
+#             hostname = server["hostname"]
+#             groups = server["groups"]
+            
+#             # 添加到组
+#             for group in groups:
+#                 if group not in self.inventory:
+#                     self.inventory[group] = {"hosts": []}
+#                 self.inventory[group]["hosts"].append(hostname)
+                
+#             # 添加主机变量
+#             self.inventory["_meta"]["hostvars"][hostname] = {
+#                 "ansible_host": server["ip_address"],
+#                 "os_family": server["os_family"],
+#                 "env": server["environment"]
+#             }
+            
+#     def run(self):
+#         cmdb_data = self.get_cmdb_data()
+#         self.parse_data(cmdb_data)
+#         print(json.dumps(self.inventory, indent=2))
+
+# if __name__ == "__main__":
+#     CMDBInventory().run()
+```
+
+验证动态清单输出
+
+```bash
+# 加执行权限
+
+chmod +x dynamic_host.py
+
+# 执行脚本查看JSON输出
+./dynamic_inventory.py --list
+
+# 查看特定主机信息（需实现--host参数）
+./dynamic_inventory.py --host web1.example.com
+```
+
+使用动态清单
+
+```bash
+# 使用动态清单脚本执行命令（需赋予执行权限）
+ansible all -m ping -i ./dynamic_host.py
+```
+
+#### 2.3.7 版本兼容性
+
+```yaml
+# playbook.yml
+- name: 安装Apache
+  hosts: all
+  tasks:
+    - name: 在RHEL 7及以下使用yum
+      yum:
+        name: httpd
+        state: present
+      when: ansible_distribution_major_version|int <= 7
+    
+    - name: 在RHEL 8及以上使用dnf
+      dnf:
+        name: httpd
+        state: present
+      when: ansible_distribution_major_version|int >= 8
+```
+
+执行：
+
+```bash
+# 在Ansible 2.9下执行（yum模块为主）
+ansible-playbook playbook.yml -i hosts.ini
+
+# 在Ansible 2.16下执行（支持dnf模块）
+ansible-playbook playbook.yml -i hosts.ini
+```
+
+类似的还有，ec2 模块变成 aws_ec2_instance 模块
+
+```yaml
+# compatible_playbook.yml
+- name: 启动EC2实例
+  hosts: localhost
+  tasks:
+    - name: 启动EC2（旧版）
+      ec2:
+        instance_type: t2.micro
+        image: ami-123456
+        region: us-east-1
+        state: present
+      when: ansible_version.full is version('2.10', '<')
+    
+    - name: 启动EC2（新版）
+      aws_ec2_instance:
+        instance_type: t2.micro
+        image_id: ami-123456
+        region: us-east-1
+        state: running
+      when: ansible_version.full is version('2.10', '>=')
+```
+
+#### 2.3.8 Playbook 语法基础
+
+打印变量类型 & 长行字符串
+
+```yaml
+# quotes_demo.yml
+- name: YAML引号测试
+  hosts: localhost
+  gather_facts: no
+  vars:
+    bool_1: yes       # 布尔值True
+    bool_2: "yes"     # 字符串"yes"
+    bool_3: 'yes'     # 字符串'yes'
+    bool_4: "True"    # 字符串"True"
+    bool_5: True      # 布尔值True
+  tasks:
+    - name: 打印变量类型和值
+      debug:
+        msg: |
+          bool_1: {{ bool_1 }} (类型: {{ bool_1 | type_debug }})
+          bool_2: {{ bool_2 }} (类型: {{ bool_2 | type_debug }})
+          bool_3: {{ bool_3 }} (类型: {{ bool_3 | type_debug }})
+          bool_4: {{ bool_4 }} (类型: {{ bool_4 | type_debug }})
+          bool_5: {{ bool_5 }} (类型: {{ bool_5 | type_debug }})
+```
+
+```bash
+ansible-playbook quotes_demo.yml
+
+# 如果 hosts 用 inventory.ini 配置，需要指定 -i 参数
+# ansible-playbook quotes_demo.yml -i inventory.ini
+```
+
+特殊字符串 & 遍历
+
+```yaml
+# special_chars.yml
+- name: 特殊字符测试
+  hosts: localhost
+  gather_facts: no
+  vars:
+    path1: /data/logs   # 无需引号
+    path2: /data/logs/  # 无需引号
+    regex: '^[0-9]+$'   # 必须使用引号，避免YAML解析错误
+    host: "server:port" # 包含冒号时需要引号
+  tasks:
+    - name: 打印变量
+      debug:
+        var: "{{ item }}"
+      loop:
+        - path1
+        - path2
+        - regex
+        - host
+```
+
+任务的执行顺序：pre_tasks、tasks、post_tasks
+
+```yaml
+# task_order.yml
+- name: 任务执行顺序测试
+  hosts: localhost
+  gather_facts: yes
+  
+  pre_tasks:
+    - name: 前置任务1
+      debug:
+        msg: "这是pre_tasks中的第一个任务"
+    
+    - name: 前置任务2
+      debug:
+        msg: "这是pre_tasks中的第二个任务"
+  
+  tasks:
+    - name: 主任务1
+      debug:
+        msg: "这是主tasks中的第一个任务"
+    
+    - name: 主任务2
+      debug:
+        msg: "这是主tasks中的第二个任务"
+  
+  post_tasks:
+    - name: 后置任务1
+      debug:
+        msg: "这是post_tasks中的第一个任务"
+    
+    - name: 后置任务2
+      debug:
+        msg: "这是post_tasks中的第二个任务"
+```
+
+错误处理
+
+```yaml
+# error_handling.yml
+- name: 异常处理测试
+  hosts: localhost
+  gather_facts: no
+  
+  pre_tasks:
+    - name: 前置任务
+      debug:
+        msg: "执行前置任务"
+  
+  tasks:
+    - name: 触发错误
+      command: /bin/false
+      ignore_errors: true
+    
+    - name: 继续执行
+      debug:
+        msg: "错误被忽略，继续执行"
+  
+  post_tasks:
+    - name: 后置任务
+      debug:
+        msg: "执行后置任务（无论是否出错）"
+```
+
+调试复杂的的嵌套 YAML 结构
+
+```yaml
+# nested_structure.yml
+- name: 嵌套结构测试
+  hosts: localhost
+  gather_facts: no
+  vars:
+    # 多级字典嵌套
+    users:
+      admin:
+        name: "系统管理员"
+        groups:
+          - sudo
+          - wheel
+        permissions:
+          files:
+            - /etc/hosts
+            - /etc/sudoers
+          commands:
+            - /bin/systemctl
+      developer:
+        name: "开发人员"
+        groups:
+          - dev
+          - docker
+        permissions:
+          files:
+            - /var/www/html
+          commands:
+            - /usr/bin/git
+            - /usr/bin/docker
+  
+  tasks:
+    - name: 打印嵌套结构
+      debug:
+        var: users
+    
+    - name: 遍历用户和权限
+      debug:
+        msg: "用户 {{ item.key }} 属于组 {{ item.value.groups }}"
+      loop: "{{ users.items() }}"
+```
+
+yaml-lint 工具
+
+```bash
+# 安装yaml-lint
+pip install yamllint
+
+# 检查YAML文件格式
+yamllint nested_structure.yml
+```
+
+Ansible 内置调试方法
+
+```yaml
+# debug_nested.yml
+- name: 嵌套结构调试
+  hosts: localhost
+  gather_facts: no
+  vars:
+    config:
+      servers:
+        - name: web1
+          ip: 192.168.1.10
+          ports:
+            - 80
+            - 443
+        - name: db1
+          ip: 192.168.1.20
+          ports:
+            - 5432
+  
+  tasks:
+    - name: 调试输出
+      debug:
+        var: config.servers[0].ports[0]
+    
+    - name: 使用to_nice_yaml过滤器
+      debug:
+        msg: "{{ config | to_nice_yaml }}"
+```
+
+条件执行
+
+```yaml
+# conditional_tasks.yml
+- name: 条件执行测试
+  hosts: localhost
+  gather_facts: yes
+  vars:
+    deploy_env: "production"
+    web_server: "nginx"
+  
+  tasks:
+    - name: 在生产环境安装安全补丁
+      yum:
+        name: security-updates
+        state: latest
+      when: deploy_env == "production"
+    
+    - name: 安装Nginx
+      yum:
+        name: nginx
+        state: present
+      when: web_server == "nginx"
+    
+    - name: 安装Apache
+      yum:
+        name: httpd
+        state: present
+      when: web_server == "apache"
+```
+
+基于系统信息的条件执行
+
+```yaml
+# os_specific.yml
+- name: 跨平台任务
+  hosts: all
+  gather_facts: yes
+  
+  tasks:
+    - name: 在Debian系系统安装Python3
+      apt:
+        name: python3
+        state: present
+      when: ansible_os_family == "Debian"
+    
+    - name: 在RedHat系系统安装Python3
+      yum:
+        name: python3
+        state: present
+      when: ansible_os_family == "RedHat"
+    
+    - name: 在Windows系统启用远程桌面
+      win_regedit:
+        path: HKLM:\System\CurrentControlSet\Control\Terminal Server
+        name: fDenyTSConnections
+        data: 0
+        type: dword
+      when: ansible_os_family == "Windows"
+```
+
+复杂条件组合，when 列表是 and 关系
+
+```yaml
+# complex_conditions.yml
+- name: 复杂条件测试
+  hosts: all
+  gather_facts: yes
+  vars:
+    min_ram: 2048  # MB
+    required_disk: 10  # GB
+  
+  tasks:
+    - name: 检查内存和磁盘空间
+      debug:
+        msg: "系统资源满足要求"
+      when: 
+        - ansible_memtotal_mb >= min_ram
+        - ansible_mounts[0].size_available / 1024 / 1024 >= required_disk
+        - (ansible_distribution == "CentOS" and ansible_distribution_major_version|int >= 7)
+          or ansible_distribution == "Ubuntu"
+```
+
+#### 2.3.9 Playbook 高级编写技巧
+
+变量优先级层级和覆盖顺序
+
+```text
+1. 命令行参数 (-e, --extra-vars)
+2. 环境变量 (ANSIBLE_VAR_NAME)
+3. playbook文件中定义的vars_prompt
+4. playbook文件中定义的vars
+5. 任务中定义的vars
+6. include_vars模块引入的变量
+7. 角色中的vars/main.yml
+8. 块(Block)中定义的vars
+9. 主机清单中定义的变量
+10. 主机清单中组变量
+11. 主机清单中继承的组变量
+12. playbook文件中定义的vars_files
+13. 角色中的defaults/main.yml
+14. 命令行指定的-vault-password-file或--ask-vault-pass
+15. 事实收集(facts)
+16. 注册变量(registered variables)
+17. 魔法变量(magic variables)
+18. 内置变量(如ansible_version)
+19. 角色依赖中的变量
+20. 插件返回的变量
+21. 缓存的事实(cached facts)
+22. 清单组的组变量文件
+23. 主机的主机变量文件
+24. 全局配置文件中的变量
+```
+
+第 24 级，全局配置文件的加载顺序：
+
+1. 环境变量 `ANSIBLE_CONFIG` 指定的路径（例如 `export ANSIBLE_CONFIG=/etc/ansible/my_ansible.cfg`）
+2. 当前目录下的 ansible.cfg
+3. 用户主目录下的 ~/.ansible.cfg
+4. 系统级默认配置：/etc/ansible/ansible.cfg
+
+加载顺序：Ansible 会按上述顺序查找配置文件，找到第一个存在的文件后停止搜索。例如，如果 ANSIBLE_CONFIG 环境变量已设置，则优先使用该路径的配置文件。
+
+查看当前 ansible 执行对应的全局配置文件：
+
+```console
+$ ansible --version
+ansible 2.10.17
+  config file = None
+  configured module search path = ['/Users/wuwenxiang/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /Users/wuwenxiang/local/github-mine/demotheworld/.venv/lib/python3.10/site-packages/ansible
+  executable location = /Users/wuwenxiang/local/github-mine/demotheworld/.venv/bin/ansible
+  python version = 3.10.17 (main, Apr  8 2025, 12:10:59) [Clang 17.0.0 (clang-1700.0.13.3)]
+```
+
+最佳实践：
+
+1. 系统级配置：在 /etc/ansible/ansible.cfg 中设置全局默认值。
+2. 项目级配置：在项目根目录创建 ansible.cfg，覆盖系统默认配置。
+3. 变量优先级：尽量使用角色 defaults（低优先级）定义通用默认值，通过 extra_vars 或 host_vars（高优先级）覆盖特定场景的值。
+
+举例说明：
+
+```yaml
+# variable_priority.yml
+- name: 变量优先级测试
+  hosts: localhost
+  gather_facts: no
+  vars:
+    # 优先级9: playbook vars
+    test_var: "playbook_vars"
+  vars_files:
+    - vars/defaults.yml  # 优先级8: vars_files
+  vars_prompt:
+    - name: test_var
+      prompt: "请输入变量值"  # 优先级12: vars_prompt
+      private: no
+  
+  tasks:
+    - name: 打印变量值
+      debug:
+        var: test_var
+    
+    - name: 命令行变量覆盖测试
+      debug:
+        msg: "命令行变量优先级最高: {{ test_var }}"
+      when: test_var == "extra_vars"
+```
+
+测试不同来源的变量：
+
+```bash
+# 1. 执行默认情况（vars_files优先级低于playbook vars）
+ansible-playbook variable_priority.yml
+
+# 2. 使用命令行变量（extra_vars，优先级最高）
+ansible-playbook variable_priority.yml -e "test_var=extra_vars"
+
+# 3. 交互式输入变量（vars_prompt，优先级中等）
+ansible-playbook variable_priority.yml --skip-tags=extra
+```
+
+角色依赖管理和角色的递归加载
+
+```text
+roles/
+├── webserver/
+│   ├── tasks/
+│   │   └── main.yml
+│   └── meta/
+│       └── main.yml  # 定义依赖
+└── common/
+    └── tasks/
+        └── main.yml
+```
+
+#### 2.3.10 自定义模块开发实战
+
+#### 2.3.11 AI 辅助 Ansible 模块生成
 
 ### 2.4 Ansible 和容器技术
 
