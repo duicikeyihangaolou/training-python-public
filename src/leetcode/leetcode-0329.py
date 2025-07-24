@@ -24,9 +24,9 @@ class Solution(object):
         for row in range(len(matrix)):
             for col in range(len(matrix[0])):
                 result = max(result, self.dfs(matrix, dp, row, col))
-                
+
         return result
-    
+
     def dfs(self, matrix, dp, i, j):
         if dp[i][j]:
             return dp[i][j]
@@ -36,7 +36,6 @@ class Solution(object):
             x, y = i + d[0], j + d[1]
             if 0 <= x < len(matrix) and 0 <= y < len(matrix[0]) and matrix[x][y] < matrix[i][j] :
                 max_depth = max(max_depth, self.dfs(matrix, dp, x, y))
-                
+
         dp[i][j] = max_depth + 1
         return dp[i][j]
-        

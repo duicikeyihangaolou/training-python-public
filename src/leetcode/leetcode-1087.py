@@ -7,7 +7,7 @@ For example, "{a,b,c}d{e,f}" represents the list ["ade", "adf", "bde", "bdf", "c
 
 Return all words that can be formed in this manner, in lexicographical order.
 
- 
+
 
 Example 1:
 
@@ -17,7 +17,7 @@ Example 2:
 
 Input: "abcd"
 Output: ["abcd"]
- 
+
 
 Note:
 
@@ -32,7 +32,7 @@ class Solution(object):
         :type S: str
         :rtype: List[str]
         """
-        
+
         if not S:
             return []
         if '{' not in S:
@@ -50,7 +50,7 @@ class Solution(object):
                     for char in stack:
                         for char2 in stack2:
                             new_stack.append(char + char2)
-                                
+
                     stack = new_stack
                 stack2 = []
                 brace = 2
@@ -63,7 +63,7 @@ class Solution(object):
                 else:
                     stack.append(char)
                 # print stack
-                
-        stack.sort() 
-        stack.sort(key = len) 
+
+        stack.sort()
+        stack.sort(key = len)
         return stack

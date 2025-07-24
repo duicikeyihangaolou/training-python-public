@@ -7,9 +7,9 @@
 
 	Example 1:
 
-	Input: 2, [[1,0]] 
+	Input: 2, [[1,0]]
 	Output: true
-	Explanation: There are a total of 2 courses to take. 
+	Explanation: There are a total of 2 courses to take.
 	             To take course 1 you should have finished course 0. So it is possible.
 
 '''
@@ -33,7 +33,7 @@ class Solution(object):
         for course in range(numCourses):
         	if visited[course] == False:
         		if self.dfs(graph, visited, stack, course):
-        			return False 
+        			return False
         return True
 
     def dfs(self, graph, visited, stack, course):
@@ -49,4 +49,3 @@ class Solution(object):
     			return True
     	stack[course] = False
     	return False
-        

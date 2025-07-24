@@ -23,7 +23,7 @@ class Solution(object):
 		self.queue.append(num)
 		return float(self.curr_sum)/len(self.queue)
 
-	
+
 
 solution = Solution()
 window_size = int(input())

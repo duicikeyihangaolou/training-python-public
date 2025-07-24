@@ -5,7 +5,7 @@ Note that elements beyond the length of the original array are not written.
 
 Do the above modifications to the input array in place, do not return anything from your function.
 
- 
+
 
 Example 1:
 
@@ -17,7 +17,7 @@ Example 2:
 Input: [1,2,3]
 Output: null
 Explanation: After calling your function, the input array is modified to: [1,2,3]
- 
+
 
 Note:
 

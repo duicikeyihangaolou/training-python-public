@@ -1,4 +1,4 @@
-""" topological sort of direct graph 
+""" topological sort of direct graph
 """
 
 from 图.Graph import *
@@ -67,15 +67,15 @@ if __name__ == '__main__':
     g2 = GraphA(gmat2, 0)
     dfs2 = DFS_seq(g2, 0)
     print(dfs2, "\n")
-    
+
     dfs_tree = DFS_span_tree(g1)
     print(dfs_tree)
     dfs_tree = DFS_span_tree(g2)
     print(dfs_tree)
-    
 
 
-    
-    
-    
+
+
+
+
 

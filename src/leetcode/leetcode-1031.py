@@ -5,7 +5,7 @@ Formally, return the largest V for which V = (A[i] + A[i+1] + ... + A[i+L-1]) + 
 
 0 <= i < i + L - 1 < j < j + M - 1 < A.length, or
 0 <= j < j + M - 1 < i < i + L - 1 < A.length.
- 
+
 
 Example 1:
 
@@ -22,7 +22,7 @@ Example 3:
 Input: A = [2,1,5,6,0,9,5,0,3,8], L = 4, M = 3
 Output: 31
 Explanation: One choice of subarrays is [5,6,0,9] with length 4, and [3,8] with length 3.
- 
+
 
 Note:
 
@@ -44,10 +44,10 @@ class Solution(object):
         for index in range(len(A)):
             cumm_sum.append(cumm_sum[index]+A[index])
         result = 0
-        
+
         def valid(index_i, index_j):
             return index_i+L <=len(A) and index_j+M <= len(A) and(index_j>=index_i+L or index_i>=index_j+M)
-    
+
         for index_i in range(len(A)):
             for index_j in range(len(A)):
                 if valid(index_i, index_j):

@@ -7,7 +7,7 @@ Return the number of pawns the rook can capture in one move.
 
 Input: [[".",".",".",".",".",".",".","."],[".",".",".","p",".",".",".","."],[".",".",".","R",".",".",".","p"],[".",".",".",".",".",".",".","."],[".",".",".",".",".",".",".","."],[".",".",".","p",".",".",".","."],[".",".",".",".",".",".",".","."],[".",".",".",".",".",".",".","."]]
 Output: 3
-Explanation: 
+Explanation:
 In this example the rook is able to capture all the pawns.
 '''
 
@@ -24,7 +24,7 @@ class Solution(object):
                 if board[row][col] == 'R':
                     rook_index = (row, col)
                     break
-               
+
         flag = True
         col = rook_index[1]-1
         pawn = 0
@@ -38,7 +38,7 @@ class Solution(object):
             col -= 1
         if flag and pawn != 0:
             result += 1
-            
+
         flag = True
         col = rook_index[1]+1
         pawn = 0
@@ -50,10 +50,10 @@ class Solution(object):
                 pawn += 1
                 break
             col += 1
-            
+
         if flag and pawn != 0:
             result += 1
-        
+
         flag = True
         row = rook_index[0]+1
         pawn = 0
@@ -61,15 +61,15 @@ class Solution(object):
             if board[row][rook_index[1]] == 'B':
                 flag = False
                 break
-                
+
             if board[row][rook_index[1]] == 'p':
                 pawn += 1
                 break
             row += 1
-            
+
         if flag and pawn != 0:
             result += 1
-            
+
         pawn = 0
         flag = True
         row = rook_index[0]-1
@@ -83,5 +83,5 @@ class Solution(object):
             row -= 1
         if flag and pawn != 0:
             result += 1
-        
+
         return result

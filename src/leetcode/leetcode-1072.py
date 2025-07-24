@@ -3,7 +3,7 @@ Given a matrix consisting of 0s and 1s, we may choose any number of columns in t
 
 Return the maximum number of rows that have all values equal after some number of flips.
 
- 
+
 
 Example 1:
 
@@ -20,7 +20,7 @@ Example 3:
 Input: [[0,0,0],[0,0,1],[1,1,0]]
 Output: 2
 Explanation: After flipping values in the first two columns, the last two rows have equal values.
- 
+
 
 Note:
 

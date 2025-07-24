@@ -1,4 +1,4 @@
-""" Dictionary and searching 
+""" Dictionary and searching
 """
 
 from Assoc import Assoc
@@ -18,7 +18,7 @@ def bisearch(lst, key):
             low = mid + 1  # continue in the higher half part
 
 # A simple digit-str/general-str hash function
-def int_str_hash(sn): 
+def int_str_hash(sn):
     c = 0
     for c in sn:
         h = (h*10 + int(c)*31) % 65521
@@ -33,7 +33,7 @@ class LSet: # A part of a simple set class
 
     def includes(self, e):
         return e in self.elems
-        
+
 if __name__ == '__main__':
 
     lst1 = [Assoc(randint(1, 30), i) for i in range(16)]
@@ -44,6 +44,6 @@ if __name__ == '__main__':
         print("Search", i, "in the list and get:", ind)
 
     pass
-        
-    
+
+
 

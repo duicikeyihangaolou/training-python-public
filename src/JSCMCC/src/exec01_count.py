@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*- 
+# -*- coding: UTF-8 -*-
 import pandas as pd
 import time
 
@@ -13,7 +13,7 @@ def getProvinceData(csv):
 def getCityData(csv, provinceId):
     cityData = pd.read_csv(csv, header=None, dtype=str)
     cityData.columns = ['区域ID', '区域名称', '上级区域ID']
-    cityData = cityData[cityData['上级区域ID'] == provinceId] 
+    cityData = cityData[cityData['上级区域ID'] == provinceId]
     cityData.set_index('区域ID', inplace=True)
     cityData = cityData[~cityData.index.duplicated(keep='first')]
     return cityData
@@ -60,6 +60,6 @@ if __name__ == '__main__':
     outputList = [len(cityData), len(townData),
                   len(bsData[(bsData['基站状态'] != '工程') & (bsData['基站状态'] != '退网')]),
                   len(bsData)]
-    output.write('\n'.join(map(str, outputList))) 
+    output.write('\n'.join(map(str, outputList)))
     output.close()
     print('Run finished, cost: %.2f sec' % (time.time()-startTime))

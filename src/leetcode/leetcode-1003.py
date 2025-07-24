@@ -7,20 +7,20 @@ If for example S = "abc", then examples of valid strings are: "abc", "aabcbc", "
 
 Return true if and only if the given string S is valid.
 
- 
+
 
 Example 1:
 
 Input: "aabcbc"
 Output: true
-Explanation: 
+Explanation:
 We start with the valid string "abc".
 Then we can insert another "abc" between "a" and "bc", resulting in "a" + "abc" + "bc" which is "aabcbc".
 Example 2:
 
 Input: "abcabcababcc"
 Output: true
-Explanation: 
+Explanation:
 "abcabcabc" is valid after consecutive insertings of "abc".
 Then we can insert "abc" before the last letter, resulting in "abcabcab" + "abc" + "c" which is "abcabcababcc".
 Example 3:
@@ -31,7 +31,7 @@ Example 4:
 
 Input: "cababc"
 Output: false
- 
+
 
 Note:
 
@@ -48,7 +48,7 @@ class Solution(object):
         stack = []
         if not S:
             return False
-        
+
         for char in S:
             if char == 'a':
                 stack.append('a')
@@ -64,4 +64,3 @@ class Solution(object):
                 if stack[-1] == 'b':
                     stack.pop()
         return len(stack) == 0
- 

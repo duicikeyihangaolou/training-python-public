@@ -1,7 +1,7 @@
 '''
 You have a set of tiles, where each tile has one letter tiles[i] printed on it.  Return the number of possible non-empty sequences of letters you can make.
 
- 
+
 
 Example 1:
 
@@ -20,10 +20,10 @@ class Solution(object):
         :type tiles: str
         :rtype: int
         """
-        
+
         if not tiles:
             return 0
-        
+
         import collections
         unique = set(tiles)
         freq_map =  collections.Counter(tiles)
@@ -42,6 +42,6 @@ class Solution(object):
                         new.add(new_seq)
             # print new
             unique.update(new)
-                    
+
             total_len += 1
         return len(unique)

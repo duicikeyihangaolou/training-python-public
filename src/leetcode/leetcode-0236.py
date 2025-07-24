@@ -34,7 +34,7 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
-        
+
         if not root:
         	return None
 

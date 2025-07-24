@@ -15,7 +15,7 @@ class Solution(object):
         :type numRows: int
         :rtype: str
         """
-        
+
         if numRows == 1:
         	return s
 

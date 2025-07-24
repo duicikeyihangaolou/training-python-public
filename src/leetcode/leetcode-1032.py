@@ -3,7 +3,7 @@ Implement the StreamChecker class as follows:
 
 StreamChecker(words): Constructor, init the data structure with the given words.
 query(letter): returns true if and only if for some k >= 1, the last k characters queried (in order from oldest to newest, including this letter just queried) spell one of the words in the given list.
- 
+
 
 Example:
 
@@ -20,7 +20,7 @@ streamChecker.query('i');          // return false
 streamChecker.query('j');          // return false
 streamChecker.query('k');          // return false
 streamChecker.query('l');          // return true, because 'kl' is in the wordlist
- 
+
 
 Note:
 
@@ -35,7 +35,7 @@ class Trie(object):
     def __init__(self):
         self.nodes = {}
         self.word = False
-        
+
 class StreamChecker(object):
 
     def __init__(self, words):
@@ -51,7 +51,7 @@ class StreamChecker(object):
                 ptr = ptr.nodes[char]
             ptr.word = True
         self.stream = []
-        
+
 
     def query(self, letter):
         """
@@ -66,10 +66,10 @@ class StreamChecker(object):
             if root.nodes[char].word:
                 return True
             root = root.nodes[char]
-            
+
         return root.word
-            
- 
+
+
 
 # Your StreamChecker object will be instantiated and called as such:
 # obj = StreamChecker(words)

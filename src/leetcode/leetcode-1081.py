@@ -1,7 +1,7 @@
 '''
 Return the lexicographically smallest subsequence of text that contains all the distinct characters of text exactly once.
 
- 
+
 Example 1:
 
 Input: "cdadabcc"
@@ -18,7 +18,7 @@ Example 4:
 
 Input: "leetcode"
 Output: "letcod"
- 
+
 
 Note:
 
@@ -37,7 +37,7 @@ class Solution(object):
         freq_map = collections.Counter(text)
         used = [False]*26
         result = ''
-        
+
         for char in text:
             freq_map[char] -= 1
             if used[ord(char)-97]:
@@ -45,7 +45,7 @@ class Solution(object):
             while (result and result[-1] > char and freq_map[result[-1]] > 0):
                 used[ord(result[-1])-97] = False
                 result = result[:-1]
-                
+
             used[ord(char)-97] = True
             result += char
         return result

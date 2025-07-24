@@ -61,8 +61,8 @@
   Writing default config to: /Users/wxdev_mac/.jupyter/jupyter_notebook_config.py
 
   $ jupyter notebook password
-  Enter password: 
-  Verify password: 
+  Enter password:
+  Verify password:
   [NotebookPasswordApp] Wrote hashed password to /Users/wxdev_mac/.jupyter/jupyter_notebook_config.json
 
   $ cat /Users/wxdev_mac/.jupyter/jupyter_notebook_config.json

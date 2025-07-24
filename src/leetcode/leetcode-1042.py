@@ -9,7 +9,7 @@ Your task is to choose a flower type for each garden such that, for any two gard
 
 Return any such a choice as an array answer, where answer[i] is the type of flower planted in the (i+1)-th garden.  The flower types are denoted 1, 2, 3, or 4.  It is guaranteed an answer exists.
 
- 
+
 
 Example 1:
 
@@ -23,7 +23,7 @@ Example 3:
 
 Input: N = 4, paths = [[1,2],[2,3],[3,4],[4,1],[1,3],[2,4]]
 Output: [1,2,3,4]
- 
+
 
 Note:
 
@@ -39,7 +39,7 @@ class Solution(object):
         :type N: int
         :type paths: List[List[int]]
         :rtype: List[int]
-        """            
+        """
         plant = [1, 2, 3, 4]
         result = [0 for _ in range(N)]
         if not paths:
@@ -49,17 +49,17 @@ class Solution(object):
         update = []
         for path in paths:
             x, y = path[0]-1, path[1]-1
-                
+
             if x in change:
                 change[x].append(y)
             else:
                 change[x] = [y]
-                
+
             if y in change:
                 change[y].append(x)
             else:
                 change[y] = [x]
-        
+
         for garden in range(N):
             color_used = []
             if garden in change:
@@ -72,4 +72,3 @@ class Solution(object):
                 result[garden] = color
                 break
         return result
- 

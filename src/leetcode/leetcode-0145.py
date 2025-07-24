@@ -27,7 +27,7 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
-        
+
         result = []
 
         def recursive(root, result):

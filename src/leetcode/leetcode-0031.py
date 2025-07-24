@@ -29,14 +29,13 @@ class Solution(object):
         		index_j -= 1
 
         	nums[index_i], nums[index_j] = nums[index_j], nums[index_i]
-            
+
         start = index_i + 1
         end = len(nums) - 1
-            
+
         while start < end:
             nums[start], nums[end] = nums[end], nums[start]
             start += 1
             end -= 1
-                
-            
-        
+
+

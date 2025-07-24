@@ -27,7 +27,7 @@ class Simulation:
 
     def add_event(self, event): self._eventq.enqueue(event)
     def cur_time(self): return self._time
-        
+
 class Customs:
     def __init__(self, gate_num, duration):
         self.simulation = Simulation(duration)
@@ -64,7 +64,7 @@ class Customs:
         Arrive(0, self) # initially generate one car
         self.simulation.run()
         self.statistics()
-        
+
     def statistics(self):
         print("Simulate " + str(self.duration) + " minutes, for "
               + str(len(self.gates)) + " gates")
@@ -86,7 +86,7 @@ class Car:
         return self.time
 
 def event_log(time, name): pass
-#    print("Event: " + name + ", happens at " + str(time)) 
+#    print("Event: " + name + ", happens at " + str(time))
 
 class Event:
     def __init__(self, event_time, customs):
@@ -121,7 +121,7 @@ class Arrive(Event):
             Leave(time + randint(*car_check_time), i, car, customs)
         else:
             customs.enqueue(car)
-            
+
 # a run of leaving event will cause some calculations
 class Leave(Event):
     def __init__(self, leave_time, gate_num, car, customs):
@@ -148,5 +148,5 @@ if __name__ == '__main__':
     cus = Customs(2, 480)
     cus.simulate()
     pass
-    
+
 

@@ -21,7 +21,7 @@ class Solution(object):
     		return
 
     	if grid[row][col] != '1':
-    		return 
+    		return
 
     	grid[row][col] = '#'
     	self.merge(grid, row+1, col)

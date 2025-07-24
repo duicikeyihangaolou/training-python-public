@@ -41,7 +41,7 @@ class Solution:
     # @return nothing
     def connect(self, root):
     	if root == None:
-    		return 
+    		return
     	queue = [root]
     	queue.append(None)
 

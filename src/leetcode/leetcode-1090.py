@@ -7,7 +7,7 @@ Then, we choose a subset S of these items, such that:
 For every label L, the number of items in S with label L is <= use_limit.
 Return the largest possible sum of the subset S.
 
- 
+
 
 Example 1:
 
@@ -29,7 +29,7 @@ Example 4:
 Input: values = [9,8,8,7,6], labels = [0,0,0,1,1], num_wanted = 3, use_limit = 2
 Output: 24
 Explanation: The subset chosen is the first, second, and fourth item.
- 
+
 
 Note:
 
@@ -58,4 +58,3 @@ class Solution(object):
             else:
                 break
         return result
-        

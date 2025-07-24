@@ -40,7 +40,7 @@ class Solution(object):
 						grid[new_x][new_y] = -1
 						queue.append([new_x, new_y])
 
-						
+
 						temp = distance_reach_map[new_x][new_y]
 						dist, reach = temp[0], temp[1]
 						dist += curr_dist
@@ -71,8 +71,8 @@ class Solution(object):
 		return result
 
 solution = Solution()
-grid = [[1, 0, 2, 0, 1], 
-		[0, 0, 0, 0, 0], 
+grid = [[1, 0, 2, 0, 1],
+		[0, 0, 0, 0, 0],
 		[0, 0, 1, 0 ,0]]
 print solution.shortestDistance(grid)
 

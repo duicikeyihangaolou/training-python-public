@@ -9,5 +9,5 @@ class Solution:
             if i != 31:
                 res = res << 1
         return res
-        
+
 print Solution().reverseBits(12)

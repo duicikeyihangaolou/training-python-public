@@ -6,8 +6,8 @@ class Solution:
         """
         str = str.strip()
         number = ""
-        
-        
+
+
         for x in str:
             if x.isalpha() and number == "":
                 return 0

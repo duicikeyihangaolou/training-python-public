@@ -434,11 +434,11 @@ created virtual environment CPython3.10.12.final.0-64 in 1299ms
 root@devopslab020:~/.ssh# ls
 authorized_keys  known_hosts
 
-root@devopslab020:~/.ssh# ssh-keygen 
+root@devopslab020:~/.ssh# ssh-keygen
 Generating public/private rsa key pair.
-Enter file in which to save the key (/root/.ssh/id_rsa): 
-Enter passphrase (empty for no passphrase): 
-Enter same passphrase again: 
+Enter file in which to save the key (/root/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
 Your identification has been saved in /root/.ssh/id_rsa.
 Your public key has been saved in /root/.ssh/id_rsa.pub.
 The key fingerprint is:
@@ -484,7 +484,7 @@ GSSAPIAuthentication no
 客户端 SSH 配置
 
 ```conf
-# cat ~/.ssh/config 
+# cat ~/.ssh/config
 Host *
     KexAlgorithms +diffie-hellman-group1-sha1
     HostKeyAlgorithms +ssh-rsa,ssh-dss
@@ -513,7 +513,7 @@ ProxyCommand    bash -c 'h=%h;ssh bastion -W ${h##prefix-}:%p'
 配置 hosts.ini
 
 ```ini
-# cat hosts.ini 
+# cat hosts.ini
 [webservers]
 test1
 test2
@@ -654,31 +654,31 @@ if __name__ == "__main__":
 #         self.api_url = "https://cmdb.example.com/api/servers"
 #         self.token = "your_api_token"
 #         self.inventory = {"_meta": {"hostvars": {}}}
-        
+
 #     def get_cmdb_data(self):
 #         headers = {"Authorization": f"Bearer {self.token}"}
 #         response = requests.get(self.api_url, headers=headers)
 #         return response.json()
-        
+
 #     def parse_data(self, cmdb_data):
 #         # 将CMDB数据转换为Ansible Inventory格式
 #         for server in cmdb_data.get("servers", []):
 #             hostname = server["hostname"]
 #             groups = server["groups"]
-            
+
 #             # 添加到组
 #             for group in groups:
 #                 if group not in self.inventory:
 #                     self.inventory[group] = {"hosts": []}
 #                 self.inventory[group]["hosts"].append(hostname)
-                
+
 #             # 添加主机变量
 #             self.inventory["_meta"]["hostvars"][hostname] = {
 #                 "ansible_host": server["ip_address"],
 #                 "os_family": server["os_family"],
 #                 "env": server["environment"]
 #             }
-            
+
 #     def run(self):
 #         cmdb_data = self.get_cmdb_data()
 #         self.parse_data(cmdb_data)
@@ -721,7 +721,7 @@ ansible all -m ping -i ./dynamic_host.py
         name: httpd
         state: present
       when: ansible_distribution_major_version|int <= 7
-    
+
     - name: 在RHEL 8及以上使用dnf
       dnf:
         name: httpd
@@ -753,7 +753,7 @@ ansible-playbook playbook.yml -i hosts.ini
         region: us-east-1
         state: present
       when: ansible_version.full is version('2.10', '<')
-    
+
     - name: 启动EC2（新版）
       aws_ec2_instance:
         instance_type: t2.micro
@@ -764,6 +764,8 @@ ansible-playbook playbook.yml -i hosts.ini
 ```
 
 #### 2.3.8 Playbook 语法基础
+
+##### 2.3.8.1 变量、选择和循环
 
 打印变量类型 & 长行字符串
 
@@ -819,6 +821,91 @@ ansible-playbook quotes_demo.yml
         - host
 ```
 
+条件执行
+
+```yaml
+# conditional_tasks.yml
+- name: 条件执行测试
+  hosts: localhost
+  gather_facts: yes
+  vars:
+    deploy_env: "production"
+    web_server: "nginx"
+
+  tasks:
+    - name: 在生产环境安装安全补丁
+      yum:
+        name: security-updates
+        state: latest
+      when: deploy_env == "production"
+
+    - name: 安装Nginx
+      yum:
+        name: nginx
+        state: present
+      when: web_server == "nginx"
+
+    - name: 安装Apache
+      yum:
+        name: httpd
+        state: present
+      when: web_server == "apache"
+```
+
+基于系统信息的条件执行
+
+```yaml
+# os_specific.yml
+- name: 跨平台任务
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+    - name: 在Debian系系统安装Python3
+      apt:
+        name: python3
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: 在RedHat系系统安装Python3
+      yum:
+        name: python3
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: 在Windows系统启用远程桌面
+      win_regedit:
+        path: HKLM:\System\CurrentControlSet\Control\Terminal Server
+        name: fDenyTSConnections
+        data: 0
+        type: dword
+      when: ansible_os_family == "Windows"
+```
+
+复杂条件组合，when 列表是 and 关系
+
+```yaml
+# complex_conditions.yml
+- name: 复杂条件测试
+  hosts: localhost
+  gather_facts: yes
+  vars:
+    min_ram: 2048  # MB
+    required_disk: 10  # GB
+
+  tasks:
+    - name: 检查内存和磁盘空间
+      debug:
+        msg: "系统资源满足要求"
+      when:
+        - ansible_memtotal_mb >= min_ram
+        - ansible_mounts[0].size_available / 1024 / 1024 >= required_disk
+        - (ansible_distribution == "CentOS" and ansible_distribution_major_version|int >= 7)
+          or ansible_distribution == "Ubuntu"
+```
+
+##### 2.3.8.2 任务的执行顺序
+
 任务的执行顺序：pre_tasks、tasks、post_tasks
 
 ```yaml
@@ -826,64 +913,64 @@ ansible-playbook quotes_demo.yml
 - name: 任务执行顺序测试
   hosts: localhost
   gather_facts: yes
-  
+
   pre_tasks:
     - name: 前置任务1
       debug:
         msg: "这是pre_tasks中的第一个任务"
-    
+
     - name: 前置任务2
       debug:
         msg: "这是pre_tasks中的第二个任务"
-  
+
   tasks:
     - name: 主任务1
       debug:
         msg: "这是主tasks中的第一个任务"
-    
+
     - name: 主任务2
       debug:
         msg: "这是主tasks中的第二个任务"
-  
+
   post_tasks:
     - name: 后置任务1
       debug:
         msg: "这是post_tasks中的第一个任务"
-    
+
     - name: 后置任务2
       debug:
         msg: "这是post_tasks中的第二个任务"
 ```
 
-错误处理
+##### 2.3.8.3 错误处理
 
 ```yaml
 # error_handling.yml
 - name: 异常处理测试
   hosts: localhost
   gather_facts: no
-  
+
   pre_tasks:
     - name: 前置任务
       debug:
         msg: "执行前置任务"
-  
+
   tasks:
     - name: 触发错误
       command: /bin/false
       ignore_errors: true
-    
+
     - name: 继续执行
       debug:
         msg: "错误被忽略，继续执行"
-  
+
   post_tasks:
     - name: 后置任务
       debug:
-        msg: "执行后置任务（无论是否出错）"
+        msg: "执行后置任务"
 ```
 
-调试复杂的的嵌套 YAML 结构
+##### 2.3.8.4 调试复杂的的嵌套 YAML 结构
 
 ```yaml
 # nested_structure.yml
@@ -915,12 +1002,12 @@ ansible-playbook quotes_demo.yml
           commands:
             - /usr/bin/git
             - /usr/bin/docker
-  
+
   tasks:
     - name: 打印嵌套结构
       debug:
         var: users
-    
+
     - name: 遍历用户和权限
       debug:
         msg: "用户 {{ item.key }} 属于组 {{ item.value.groups }}"
@@ -956,103 +1043,20 @@ Ansible 内置调试方法
           ip: 192.168.1.20
           ports:
             - 5432
-  
+
   tasks:
     - name: 调试输出
       debug:
         var: config.servers[0].ports[0]
-    
+
     - name: 使用to_nice_yaml过滤器
       debug:
         msg: "{{ config | to_nice_yaml }}"
 ```
 
-条件执行
-
-```yaml
-# conditional_tasks.yml
-- name: 条件执行测试
-  hosts: localhost
-  gather_facts: yes
-  vars:
-    deploy_env: "production"
-    web_server: "nginx"
-  
-  tasks:
-    - name: 在生产环境安装安全补丁
-      yum:
-        name: security-updates
-        state: latest
-      when: deploy_env == "production"
-    
-    - name: 安装Nginx
-      yum:
-        name: nginx
-        state: present
-      when: web_server == "nginx"
-    
-    - name: 安装Apache
-      yum:
-        name: httpd
-        state: present
-      when: web_server == "apache"
-```
-
-基于系统信息的条件执行
-
-```yaml
-# os_specific.yml
-- name: 跨平台任务
-  hosts: all
-  gather_facts: yes
-  
-  tasks:
-    - name: 在Debian系系统安装Python3
-      apt:
-        name: python3
-        state: present
-      when: ansible_os_family == "Debian"
-    
-    - name: 在RedHat系系统安装Python3
-      yum:
-        name: python3
-        state: present
-      when: ansible_os_family == "RedHat"
-    
-    - name: 在Windows系统启用远程桌面
-      win_regedit:
-        path: HKLM:\System\CurrentControlSet\Control\Terminal Server
-        name: fDenyTSConnections
-        data: 0
-        type: dword
-      when: ansible_os_family == "Windows"
-```
-
-复杂条件组合，when 列表是 and 关系
-
-```yaml
-# complex_conditions.yml
-- name: 复杂条件测试
-  hosts: all
-  gather_facts: yes
-  vars:
-    min_ram: 2048  # MB
-    required_disk: 10  # GB
-  
-  tasks:
-    - name: 检查内存和磁盘空间
-      debug:
-        msg: "系统资源满足要求"
-      when: 
-        - ansible_memtotal_mb >= min_ram
-        - ansible_mounts[0].size_available / 1024 / 1024 >= required_disk
-        - (ansible_distribution == "CentOS" and ansible_distribution_major_version|int >= 7)
-          or ansible_distribution == "Ubuntu"
-```
-
 #### 2.3.9 Playbook 高级编写技巧
 
-变量优先级层级和覆盖顺序
+##### 2.3.9.1 变量优先级层级和覆盖顺序
 
 ```text
 1. 命令行参数 (-e, --extra-vars)
@@ -1118,18 +1122,16 @@ ansible 2.10.17
   vars:
     # 优先级9: playbook vars
     test_var: "playbook_vars"
-  vars_files:
-    - vars/defaults.yml  # 优先级8: vars_files
   vars_prompt:
     - name: test_var
-      prompt: "请输入变量值"  # 优先级12: vars_prompt
+      prompt: "请输入变量值"  # 优先级3: vars_prompt
       private: no
-  
+
   tasks:
     - name: 打印变量值
       debug:
         var: test_var
-    
+
     - name: 命令行变量覆盖测试
       debug:
         msg: "命令行变量优先级最高: {{ test_var }}"
@@ -1144,28 +1146,1096 @@ ansible-playbook variable_priority.yml
 
 # 2. 使用命令行变量（extra_vars，优先级最高）
 ansible-playbook variable_priority.yml -e "test_var=extra_vars"
-
-# 3. 交互式输入变量（vars_prompt，优先级中等）
-ansible-playbook variable_priority.yml --skip-tags=extra
 ```
 
-角色依赖管理和角色的递归加载
+##### 2.3.9.2 Tag 的用法
+
+跳过部分测试，或者执行部分测试
+
+```yaml
+- name: tag 测试
+  hosts: localhost
+  tasks:
+    - name: 这个任务会被跳过
+      debug:
+        msg: "这是一个额外的调试任务"
+      tags: extra  # 标记为extra的任务会被跳过
+
+    - name: 这个任务会执行
+      debug:
+        msg: "这是一个常规任务"
+      tags: install
+```
+
+```bash
+# --skip-tags=extra 表示：跳过所有标记了 extra 标签的任务
+ansible-playbook variable_priority.yml --skip-tags=extra
+
+# --list-tags：查看 Playbook 中定义的所有标签
+ansible-playbook deploy.yml --list-tags
+
+# --tags：只执行标记了指定标签的任务
+ansible-playbook deploy.yml --tags=install
+```
+
+##### 2.3.9.3 如何定位变量冲突
+
+使用 debug 模块定位变量冲突
+
+```yaml
+# override.yml
+---
+app_port: 9090 
+
+# debug_conflict.yml
+- name: 变量冲突调试
+  hosts: localhost
+  gather_facts: yes
+  vars:
+    app_port: 8080
+  tasks:
+    - name: 打印所有变量
+      debug:
+        var: hostvars[inventory_hostname]
+      tags: debug_all
+
+    - name: 打印特定变量
+      debug:
+        var: app_port
+
+    - name: 检查变量来源
+      debug:
+        msg: "app_port: {{ hostvars[inventory_hostname]['app_port'] | d('未定义') }}"
+
+    - name: 使用vars_files覆盖变量
+      include_vars:
+        file: overrides.yml
+      tags: override
+
+    - name: 再次打印变量
+      debug:
+        var: app_port
+      tags: override
+```
+
+手动调试变量冲突
+
+```bash
+# 基础执行
+ansible-playbook debug_conflict.yml
+
+# 使用命令行变量制造冲突
+ansible-playbook debug_conflict.yml -e "app_port=9000"
+
+# 查看所有变量（用于调试）
+ansible-playbook debug_conflict.yml --tags=debug_all
+
+# 测试变量覆盖
+ansible-playbook debug_conflict.yml --tags=override
+```
+
+##### 2.3.9.4 角色依赖管理
+
+文件结构
 
 ```text
-roles/
-├── webserver/
-│   ├── tasks/
-│   │   └── main.yml
-│   └── meta/
-│       └── main.yml  # 定义依赖
-└── common/
-    └── tasks/
-        └── main.yml
+role_dependency_demo/
+├── hosts                  # 主机清单
+├── site.yml               # 主Playbook
+└── roles/
+    ├── webserver/         # 父角色
+    │   ├── tasks/
+    │   │   └── main.yml   # 角色任务
+    │   └── meta/
+    │       └── main.yml   # 依赖定义
+    ├── common/            # 子角色（被webserver依赖）
+    │   └── tasks/
+    │       └── main.yml
+    └── firewall/          # 孙角色（被common依赖，递归加载）
+        └── tasks/
+            └── main.yml
+```
+
+```yaml
+# roles/firewall/tasks/main.yml（孙角色任务）
+- name: [firewall] 配置基础防火墙规则
+  debug:
+    msg: "firewall: 允许80/tcp端口通过"
+
+# roles/common/meta/main.yml（子角色依赖定义）
+# common角色依赖firewall角色（递归依赖）
+dependencies:
+  - role: firewall
+
+# roles/common/tasks/main.yml（子角色任务）
+- name: [common] 安装基础系统工具
+  debug:
+    msg: "common: 安装vim、curl等基础工具"
+
+# roles/webserver/meta/main.yml（父角色依赖定义）
+# webserver角色依赖common角色
+dependencies:
+  - role: common
+    vars:
+      # 向依赖的common角色传递变量
+      app_env: "production"
+
+# roles/webserver/tasks/main.yml（父角色任务）
+- name: [webserver] 配置Nginx服务
+  debug:
+    msg: "webserver: 部署Nginx配置文件"
+- name: [webserver] 启动服务
+  debug:
+    msg: "webserver: 启动Nginx服务，监听80端口"
+
+# site.yml（主 Playbook）
+- name: 验证角色依赖的递归加载
+  hosts: localhost
+  gather_facts: no
+  roles:
+    - role: webserver  # 仅调用父角色，依赖会自动加载
+```
+
+预期输出
+
+```log
+TASK [firewall : [firewall] 配置基础防火墙规则] *********************************
+ok: [127.0.0.1] => {
+    "msg": "firewall: 允许80/tcp端口通过"
+}
+
+TASK [common : [common] 安装基础系统工具] **************************************
+ok: [127.0.0.1] => {
+    "msg": "common: 安装vim、curl等基础工具"
+}
+
+TASK [webserver : [webserver] 配置Nginx服务] **********************************
+ok: [127.0.0.1] => {
+    "msg": "webserver: 部署Nginx配置文件"
+}
+
+TASK [webserver : [webserver] 启动服务] ****************************************
+ok: [127.0.0.1] => {
+    "msg": "webserver: 启动Nginx服务，监听80端口"
+}
+```
+
+依赖说明：
+
+1. 任务执行顺序为 `firewall → common → webserver`，webserver 依赖 common（直接依赖），common 依赖 firewall（间接依赖，递归加载）
+2. 依赖传递：webserver 的 meta/main.yml 中定义的变量 `app_env: "production"` 会传递给 common 角色（可在 common 任务中通过
+   `{{ app_env }}` 使用）。
+3. 手动检查依赖关系：可通过 ansible-galaxy 命令查看角色依赖树：`ansible-galaxy role dependencies roles/webserver/`
+
+扩展场景 1：带条件的依赖
+
+```yaml
+# 在 meta/main.yml 中为依赖添加条件
+dependencies:
+  - role: firewall
+    when: enable_firewall is defined and enable_firewall
+```
+
+扩展场景 2：依赖版本控制
+
+```yaml
+# 从 Galaxy 安装角色时指定版本依赖
+dependencies:
+  - role: geerlingguy.nginx
+    version: 3.0.0  # 仅依赖3.0.0版本
+```
+
+##### 2.3.9.5 可复用的角色参数化方案
+
+角色参数化设计：
+
+```yaml
+# roles/nginx/defaults/main.yml (默认值)
+nginx_version: "latest"
+nginx_port: 80
+nginx_worker_processes: "auto"
+nginx_enable_ssl: false
+nginx_ssl_cert: ""
+nginx_ssl_key: ""
+```
+
+基于变量的条件任务：
+
+```yaml
+# roles/nginx/tasks/main.yml
+- name: 安装Nginx
+  yum:
+    name: "nginx-{{ nginx_version }}"
+    state: present
+  when: ansible_os_family == "RedHat"
+
+- name: 配置Nginx主文件
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: restart nginx
+
+- name: 配置HTTP站点
+  template:
+    src: http_site.conf.j2
+    dest: /etc/nginx/conf.d/default.conf
+  when: not nginx_enable_ssl
+  notify: reload nginx
+
+- name: 配置HTTPS站点
+  template:
+    src: https_site.conf.j2
+    dest: /etc/nginx/conf.d/default.conf
+  when: nginx_enable_ssl
+  notify: reload nginx
+```
+
+在 Playbook 中自定义角色参数
+
+```yaml
+# site.yml
+- name: 部署HTTP网站
+  hosts: webservers
+  roles:
+    - role: nginx
+      vars:
+        nginx_port: 8080
+        nginx_worker_processes: 2
+
+- name: 部署HTTPS网站
+  hosts: secure_webservers
+  roles:
+    - role: nginx
+      vars:
+        nginx_port: 443
+        nginx_enable_ssl: true
+        nginx_ssl_cert: /etc/ssl/certs/server.crt
+        nginx_ssl_key: /etc/ssl/private/server.key
+```
+
+验证参数化效果：
+
+```yaml
+# 部署HTTP网站
+ansible-playbook site.yml -l webservers
+
+# 部署HTTPS网站
+ansible-playbook site.yml -l secure_webservers
+
+# 使用命令行参数覆盖
+ansible-playbook site.yml -l webservers -e "nginx_port=8081"
 ```
 
 #### 2.3.10 自定义模块开发实战
 
+参考：[Ansible 自定义模块开发](https://docs.ansible.com/ansible/latest/dev_guide/developing_modules_general.html)
+
+1. 必须用 AnsibleModule 作为入口
+2. 参数声明（`argument_spec`）,用 `argument_spec` 字典声明所有支持的参数、类型、是否必需、默认值等。支持类型有：str、int、bool、list、dict 等。
+3. 参数获取：通过 `module.params['参数名']` 获取传入的参数。
+4. 返回数据（输出）：用 module.exit_json(**result) 正常返回。用 module.fail_json(msg='错误信息', **result) 返回错误。返回数据必须是 JSON 可序列化的字典，常见字段有：changed（bool）：是否有变更；failed（bool）：是否失败；其他自定义字段
+5. changed 字段：必须返回 changed 字段，表示本次操作是否对目标系统做了更改。
+6. 支持 check_mode（可选）如果支持 check_mode，要在参数里加 supports_check_mode=True，并在代码里判断 module.check_mode。
+7. 错误处理：用 module.fail_json(msg='...') 返回错误，Ansible 会自动处理异常和输出。
+8. 只允许标准输出/错误：模块不能直接 print，所有输出都要通过 exit_json 或 fail_json。
+
+##### 2.3.10.1 实现并验证标准 JSON 返回格式
+
+模块目录结构
+
+```text
+module_demo/
+├── library/            # 自定义模块目录
+│   └── user_info.py    # 用户信息模块
+└── test_user_info.yml  # 测试Playbook
+```
+
+标准返回格式模块实现
+
+```python
+# library/user_info.py
+from ansible.module_utils.basic import AnsibleModule
+import time
+
+def main():
+    module_args = dict(
+        name=dict(type='str', required=True),
+        age=dict(type='int', required=True),
+        hobbies=dict(type='list', elements='str', default=[])
+    )
+
+    module = AnsibleModule(
+        argument_spec=module_args,
+        supports_check_mode=True
+    )
+
+    # 获取参数
+    name = module.params['name']
+    age = module.params['age']
+    hobbies = module.params['hobbies']
+
+    # 模拟操作结果
+    result = dict(
+        changed=False,
+        failed=False,
+        msg=f"用户 {name} 信息已更新",
+        user_info=dict(
+            name=name,
+            age=age,
+            hobbies=hobbies,
+            timestamp=int(time.time())  # 用当前时间戳
+        )
+    )
+
+    # 模拟变更（实际模块中应基于系统状态判断）
+    if age > 30:
+        result['changed'] = True
+
+    # 成功返回
+    module.exit_json(**result)
+
+if __name__ == '__main__':
+    main()
+```
+
+测试 Playbook
+
+```yaml
+# test_user_info.yml
+- name: 测试用户信息模块
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: 创建用户信息
+      user_info:
+        name: "张三"
+        age: 35
+        hobbies:
+          - 阅读
+          - 编程
+      register: user_result
+
+    - name: 打印模块返回值
+      debug:
+        var: user_result
+
+    - name: 验证返回格式
+      assert:
+        that:
+          - user_result.changed == true
+          - user_result.failed == false
+          - user_result.user_info.name == "张三"
+```
+
+执行测试
+
+```bash
+ansible-playbook -i localhost test_user_info.yml
+```
+
+##### 2.3.10.2 参数类型检查
+
+```python
+# library/system_user.py
+from ansible.module_utils.basic import AnsibleModule
+
+def main():
+    module_args = dict(
+        name=dict(type='str', required=True, aliases=['username']),
+        state=dict(type='str', choices=['present', 'absent'], default='present'),
+        uid=dict(type='int', required=False),
+        group=dict(type='str', required=False),
+        shell=dict(type='str', choices=['/bin/bash', '/bin/sh', '/sbin/nologin'], default='/bin/bash'),
+        comment=dict(type='str', required=False)
+    )
+
+    module = AnsibleModule(
+        argument_spec=module_args,
+        supports_check_mode=True,
+        required_if=[
+            ('state', 'present', ['group']),  # state为present时，group参数必填
+        ],
+        mutually_exclusive=[
+            ('uid', 'comment'),  # uid和comment不能同时存在
+        ]
+    )
+
+    # 获取参数
+    name = module.params['name']
+    state = module.params['state']
+
+    # 参数验证示例
+    if module.params['uid'] and module.params['uid'] < 1000:
+        module.fail_json(msg="系统用户UID必须大于等于1000")
+
+    # 模拟操作结果
+    result = dict(
+        changed=False,
+        msg=f"用户 {name} 状态已更新为 {state}"
+    )
+
+    module.exit_json(**result)
+
+if __name__ == '__main__':
+    main()
+```
+
+```yaml
+# test_system_user.yml
+- name: 测试参数验证
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: 创建用户（正确参数）
+      system_user:
+        name: testuser
+        state: present
+        group: users
+        shell: /bin/bash
+      register: user_create
+
+    - name: 创建用户（缺少必需参数）
+      system_user:
+        name: testuser2
+        state: present
+      register: user_failure
+      ignore_errors: true
+
+    - name: 验证失败结果
+      assert:
+        that:
+          - user_failure.failed == true
+          - 'Missing required arguments: group' in user_failure.msg
+
+    - name: 使用别名参数
+      system_user:
+        username: testuser3  # 使用aliases定义的参数名
+        state: present
+        group: users
+```
+
+##### 2.3.10.3 支持 check_mode 的幂等性文件操作模块
+
+```python
+# library/file_content.py
+from ansible.module_utils.basic import AnsibleModule
+import os
+
+def main():
+    module_args = dict(
+        path=dict(type='str', required=True),
+        content=dict(type='str', required=True),
+        state=dict(type='str', choices=['present', 'absent'], default='present'),
+        mode=dict(type='str', default='0644'),
+        owner=dict(type='str'),
+        group=dict(type='str')
+    )
+
+    module = AnsibleModule(
+        argument_spec=module_args,
+        supports_check_mode=True,
+        required_if=[
+            ('state', 'present', ['content'])
+        ]
+    )
+
+    path = module.params['path']
+    state = module.params['state']
+    content = module.params['content']
+    mode = module.params['mode']
+    owner = module.params['owner']
+    group = module.params['group']
+
+    result = dict(
+        changed=False,
+        path=path
+    )
+
+    # 检查文件是否存在
+    file_exists = os.path.exists(path)
+
+    # 处理删除操作
+    if state == 'absent':
+        if file_exists:
+            if not module.check_mode:
+                os.remove(path)
+            result['changed'] = True
+        return module.exit_json(**result)
+
+    # 处理创建/更新操作
+    if file_exists:
+        # 检查内容是否相同
+        with open(path, 'r') as f:
+            current_content = f.read()
+        if current_content == content:
+            # 检查权限和所有者
+            file_mode = oct(os.stat(path).st_mode & 0o777)
+            if file_mode != mode:
+                result['changed'] = True
+                if not module.check_mode:
+                    os.chmod(path, int(mode, 8))
+            # 检查所有者和组（简化示例，实际需调用os.chown）
+            return module.exit_json(**result)
+
+    # 需要创建或更新文件
+    result['changed'] = True
+    if not module.check_mode:
+        with open(path, 'w') as f:
+            f.write(content)
+        os.chmod(path, int(mode, 8))
+        # 实际模块中应使用os.chown设置所有者和组
+
+    module.exit_json(**result)
+
+if __name__ == '__main__':
+    main()
+```
+
+```yaml
+# test_file_content.yml
+- name: 测试幂等性文件模块
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: 创建文件（首次执行）
+      file_content:
+        path: /tmp/test.txt
+        content: |
+          这是测试文件内容
+          用于验证模块幂等性
+        mode: '0640'
+      register: first_run
+
+    - name: 再次创建相同文件（应无变更）
+      file_content:
+        path: /tmp/test.txt
+        content: |
+          这是测试文件内容
+          用于验证模块幂等性
+        mode: '0640'
+      register: second_run
+
+    - name: 更新文件内容
+      file_content:
+        path: /tmp/test.txt
+        content: |
+          这是更新后的测试文件内容
+          用于验证模块幂等性
+        mode: '0640'
+      register: third_run
+
+    - name: 验证变更状态
+      assert:
+        that:
+          - first_run.changed == true
+          - second_run.changed == false
+          - third_run.changed == true
+
+    - name: 检查模式是否正确
+      stat:
+        path: /tmp/test.txt
+      register: file_stat
+
+    - name: 验证文件权限
+      assert:
+        that:
+          - file_stat.stat.mode == '0640'
+```
+
+执行
+
+```bash
+# 正常执行
+ansible-playbook -i localhost test_file_content.yml
+
+# 使用check_mode预览变更（不会实际修改文件）
+ansible-playbook -i localhost test_file_content.yml --check
+```
+
+##### 2.3.10.4 调试模块在远程主机的执行环境
+
+环境检查模块实现
+
+```python
+# library/env_check.py
+from ansible.module_utils.basic import AnsibleModule
+import os
+
+def main():
+    module_args = dict(
+        check_vars = dict(type='list', elements='str', default=['PATH', 'HOME', 'LANG'])
+    )
+
+    module = AnsibleModule(
+        argument_spec=module_args,
+        supports_check_mode=True
+    )
+
+    check_vars = module.params['check_vars']
+    env_info = {}
+
+    # 收集环境变量信息
+    for var in check_vars:
+        env_info[var] = os.environ.get(var, '未设置')
+
+    # 获取Python解释器路径
+    env_info['python_path'] = os.path.realpath(__file__)
+
+    # 获取模块执行目录
+    env_info['cwd'] = os.getcwd()
+
+    result = dict(
+        changed=False,
+        env_info=env_info,
+        ansible_tmp=module.params['_ansible_remote_tmp']
+    )
+
+    module.exit_json(**result)
+
+if __name__ == '__main__':
+    main()
+```
+
+```yaml
+# test_env_check.yml
+- name: 测试环境变量
+  hosts: localhost
+  gather_facts: yes
+  tasks:
+    - name: 检查环境变量
+      env_check:
+        check_vars:
+          - PATH
+          - HOME
+          - LANG
+          - ANSIBLE_CHECK_MODE
+      register: env_result
+
+    - name: 打印环境信息
+      debug:
+        var: env_result
+
+    - name: 验证环境变量
+      assert:
+        that:
+          - '/usr/bin' in env_result.env_info.PATH
+          - env_result.env_info.HOME == ansible_env.HOME
+```
+
+执行测试
+
+```bash
+# 正常执行
+ansible-playbook -i localhost test_env_check.yml
+
+# 在check_mode下执行，观察环境差异
+ansible-playbook -i localhost test_env_check.yml --check
+```
+
+调试技巧
+
+```bash
+# 1. 使用-vvvv参数获取详细执行信息
+ansible-playbook -i localhost, test_env_check.yml -vvvv
+
+# 2. 在模块中添加调试输出（仅用于开发）
+import sys
+sys.stderr.write(f"调试信息: PATH={os.environ.get('PATH')}\n")
+
+# 3. 使用临时文件保存中间状态
+with open('/tmp/module_debug.log', 'a') as f:
+    f.write(f"执行时间: {time.ctime()}\n")
+```
+
 #### 2.3.11 AI 辅助 Ansible 模块生成
+
+##### 2.3.11.1 审查高风险代码
+
+AI 生成的危险 Playbook
+
+```yaml
+# 需审查的AI生成代码（危险版本）
+- name: 部署应用
+  hosts: webservers
+  become: true  # 危险：不必要的全局提权
+  tasks:
+    - name: 安装依赖
+      apt:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+          - python3
+          - python3-pip
+          - sudo  # 危险：安装不必要的提权工具
+
+    - name: 创建配置目录
+      file:
+        path: /etc/app
+        state: directory
+        mode: 0777  # 危险：权限过于宽松
+
+    - name: 复制敏感脚本
+      copy:
+        src: scripts/setup.sh
+        dest: /root/setup.sh
+        mode: 0700
+
+    - name: 执行脚本（无输入过滤）
+      shell: /root/setup.sh {{ user_input }}  # 危险：未过滤的用户输入
+
+    - name: 部署应用（使用shell而非专用模块）
+      shell: "pip3 install {{ app_version }}"  # 危险：直接执行命令
+      args:
+        executable: /bin/bash
+```
+
+安全审查后的 Playbook
+
+```yaml
+# 审查修复后的安全版本
+- name: 安全部署应用
+  hosts: webservers
+  become: false  # 仅在必要时提权
+  tasks:
+    - name: 安装必要依赖
+      apt:
+        name:
+          - python3
+          - python3-pip
+        state: present
+      become: true  # 仅这个任务需要提权
+      when: ansible_os_family == "Debian"
+
+    - name: 创建配置目录
+      file:
+        path: /etc/app
+        state: directory
+        mode: 0750  # 更安全的权限
+        owner: app_user
+        group: app_group
+      become: true
+
+    - name: 复制敏感脚本
+      copy:
+        src: scripts/setup.sh
+        dest: /home/app_user/setup.sh
+        mode: 0750
+        owner: app_user
+        group: app_group
+
+    - name: 执行脚本（过滤输入）
+      shell: /home/app_user/setup.sh {{ user_input | regex_replace('[^a-zA-Z0-9_.-]', '') }}
+      vars:
+        user_input: "{{ user_input | default('') }}"
+      become: true
+      become_user: app_user
+
+    - name: 安全部署应用
+      pip:
+        name: myapp
+        version: "{{ app_version | default('latest') }}"
+        state: present
+        executable: pip3
+      become: true
+      become_user: app_user
+```
+
+执行安全审查
+
+```bash
+# 1. 使用ansible-lint检查潜在问题
+ansible-lint dangerous_playbook.yml
+
+# 2. 人工审查高风险模块
+grep -r "become:" playbooks/
+grep -r "shell:" playbooks/
+grep -r "command:" playbooks/
+```
+
+##### 2.3.11.2 防止命令注入攻击
+
+易受攻击的 Playbook
+
+```yaml
+# 不安全的示例
+- name: 危险的命令执行
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: 执行用户提供的命令
+      shell: "ls -l {{ user_dir }}"  # 未过滤的用户输入
+      vars:
+        user_dir: "{{ lookup('env', 'USER_DIR') | default('/tmp') }}"
+      register: result
+
+    - name: 打印结果
+      debug:
+        var: result.stdout
+```
+
+防御性编程的 Playbook
+
+```yaml
+# 安全的示例
+- name: 安全的目录列出
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: 验证输入目录
+      assert:
+        that:
+          - user_dir is defined
+          - user_dir is match("^/[a-zA-Z0-9_/-]+$")  # 验证目录格式
+          - user_dir not in ["/", "/root", "/etc"]  # 禁止敏感路径
+        msg: "user_dir必须是合法的绝对路径，且不能是根目录或敏感目录"
+      vars:
+        user_dir: "{{ lookup('env', 'USER_DIR') | default('/tmp') }}"
+
+    - name: 使用file模块替代shell
+      file:
+        path: "{{ user_dir }}"
+        state: directory
+      register: dir_info
+      ignore_errors: true
+
+    - name: 安全地列出目录内容
+      command: "ls -l {{ user_dir }}"
+      when: dir_info.failed == false
+      register: result
+
+    - name: 打印结果
+      debug:
+        var: result.stdout_lines
+```
+
+测试输入验证
+
+```bash
+# 正常执行
+ansible-playbook safe_playbook.yml -e "user_dir=/var/log"
+
+# 测试恶意输入（应失败）
+ansible-playbook safe_playbook.yml -e "user_dir='; rm -rf / #"
+
+# 使用环境变量测试
+USER_DIR="/tmp" ansible-playbook safe_playbook.yml
+```
+
+##### 2.3.11.3 重构 AI 冗余任务
+
+AI 生成的冗余 Playbook
+
+```yaml
+# 冗余的任务
+- name: 部署Web应用
+  hosts: webservers
+  tasks:
+    - name: 安装Python
+      apt:
+        name: python3
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: 安装pip
+      apt:
+        name: python3-pip
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: 安装Git
+      apt:
+        name: git
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: 安装Python（RedHat）
+      yum:
+        name: python3
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: 安装pip（RedHat）
+      yum:
+        name: python3-pip
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: 安装Git（RedHat）
+      yum:
+        name: git
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: 安装Flask框架
+      pip:
+        name: flask
+        state: present
+
+    - name: 安装Flask-RESTful
+      pip:
+        name: flask-restful
+        state: present
+
+    - name: 安装Flask-SQLAlchemy
+      pip:
+        name: flask-sqlalchemy
+        state: present
+```
+
+重构后的 Playbook
+
+```yaml
+# 优化后的任务
+- name: 部署Web应用
+  hosts: webservers
+  tasks:
+    - name: 批量安装系统包
+      package:
+        name:
+          - python3
+          - python3-pip
+          - git
+        state: present
+      when: ansible_os_family in ["Debian", "RedHat"]
+
+    - name: 批量安装Python包
+      pip:
+        name:
+          - flask
+          - flask-restful
+          - flask-sqlalchemy
+        state: present
+
+    - name: 确保目录存在
+      file:
+        path: /var/www/myapp
+        state: directory
+        mode: 0755
+      become: true
+
+    - name: 复制应用代码
+      copy:
+        src: app/
+        dest: /var/www/myapp/
+
+    - name: 启动应用（使用systemd）
+      systemd:
+        name: myapp
+        state: started
+        enabled: true
+        daemon_reload: true
+      become: true
+```
+
+验证重构效果
+
+```bash
+# 比较任务数量
+ansible-playbook redundant.yml --list-tasks | grep TASK | wc -l
+ansible-playbook optimized.yml --list-tasks | grep TASK | wc -l
+
+# 执行时间对比
+time ansible-playbook redundant.yml
+time ansible-playbook optimized.yml
+```
+
+##### 2.3.11.4 设计防御性 Playbook
+
+防御性 Playbook 示例：使用 assert 模块进行前置条件检查
+
+```yaml
+# defensive_playbook.yml
+- name: 防御性部署
+  hosts: webservers
+  gather_facts: yes
+  vars:
+    app_port: 8080
+    min_ram: 1024  # MB
+    required_disk: 5  # GB
+    allowed_envs: ["development", "staging", "production"]
+
+  tasks:
+    - name: 检查执行环境
+      assert:
+        that:
+          - deployment_env in allowed_envs
+          - ansible_memtotal_mb >= min_ram
+          - ansible_mounts[0].size_available / 1024 / 1024 >= required_disk
+          - ansible_distribution_version is version('18.04', '>=')
+        msg: "系统资源或环境不符合要求"
+      vars:
+        deployment_env: "{{ lookup('env', 'DEPLOYMENT_ENV') | default('development') }}"
+
+    - name: 检查应用端口是否可用
+      wait_for:
+        host: "{{ inventory_hostname }}"
+        port: "{{ app_port }}"
+        state: stopped
+        timeout: 5
+      ignore_errors: true
+      register: port_check
+
+    - name: 端口被占用时终止
+      fail:
+        msg: "端口 {{ app_port }} 已被占用，无法部署应用"
+      when: port_check.failed == false
+
+    - name: 验证数据库连接
+      uri:
+        url: "http://{{ db_host }}:{{ db_port }}/health"
+        status_code: 200
+      register: db_check
+      until: db_check.status == 200
+      retries: 3
+      delay: 5
+      when: db_host is defined
+
+    - name: 真正的部署任务
+      include_tasks: deploy_app.yml
+      when: not ansible_check_mode
+```
+
+测试防御性检查
+
+```bash
+# 正常执行
+ansible-playbook defensive_playbook.yml
+
+# 模拟资源不足（应失败）
+ansible-playbook defensive_playbook.yml -e "min_ram=4096"
+
+# 使用check_mode预览变更
+ansible-playbook defensive_playbook.yml --check
+```
+
+防御性技巧
+
+```yaml
+# 其他防御性检查示例
+- name: 检查文件权限
+  stat:
+    path: /etc/ssh/sshd_config
+  register: ssh_config
+
+- name: 验证SSH配置安全
+  assert:
+    that:
+      - ssh_config.stat.mode == '0600'
+      - ssh_config.stat.pw_name == 'root'
+      - ssh_config.stat.gr_name == 'root'
+
+- name: 检查敏感变量是否设置
+  assert:
+    that:
+      - db_password is defined and db_password != ""
+      - api_key is defined and api_key != ""
+  no_log: true  # 避免密码泄露到日志
+```
+
+##### 2.3.11.5 通过 AI 自动生成 Ansible Dashboard
+
+参考：ansible-dashboard demo：[Github](https://github.com/duicikeyihangaolou/project-ansible-dashboard)
 
 ### 2.4 Ansible 和容器技术
 
@@ -1218,6 +2288,107 @@ $ docker run -it -v "/root/.ssh":"/root/.ssh" -uroot -v "$(pwd)"/lab-django:/app
 
 - [kubeasz](https://github.com/easzlab/kubeasz)
 - [ks-installer](https://github.com/easzlab/kubeasz/blob/master/docs/guide/kubesphere.md)
+
+#### 2.4.3 Ansible 管理容器
+
+目录结构
+
+```text
+simple-docker-demo/
+├── hosts         # 主机清单
+└── deploy.yml    # 主Playbook
+```
+
+主机清单 (hosts)
+
+```ini
+[docker-host]
+localhost  # 本地部署，也可替换为远程主机IP
+```
+
+主 Playbook (deploy.yml)
+
+```yaml
+- name: 部署 REST API Demo 容器
+  hosts: docker-host
+  gather_facts: yes
+  become: true  # 需要root权限
+
+  tasks:
+    - name: 确保Docker已安装
+      apt:
+        name: docker.io
+        state: present
+      when: ansible_os_family == "Debian"  # 仅适用于Debian/Ubuntu
+
+    - name: 确保Docker服务运行
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: 拉取镜像
+      docker_image:
+        name: registry.cn-shanghai.aliyuncs.com/99cloud-sh/rest-api-demo
+        tag: 3.9.6
+        source: pull
+
+    - name: 运行容器（声明式+幂等）
+      docker_container:
+        name: rest-api-demo
+        image: registry.cn-shanghai.aliyuncs.com/99cloud-sh/rest-api-demo:3.9.6
+        state: started
+        restart_policy: always
+        ports:
+          - "9999:8888"  # 宿主机:容器
+        detach: true  # 后台运行
+
+    - name: 验证容器状态
+      docker_container_info:
+        name: rest-api-demo
+      register: container
+      failed_when: not container.exists or not container.container.State.Running
+```
+
+安装依赖 & 执行部署
+
+```
+# 安装Ansible
+sudo apt-get install ansible -y  # Debian/Ubuntu
+# 或
+sudo yum install ansible -y    # CentOS/RHEL
+
+# 安装Docker Python SDK（如果需要）
+pip3 install docker
+
+ansible-playbook -i hosts deploy.yml
+```
+
+验证部署
+
+```bash
+# 本地执行（如果部署到localhost）
+docker ps -a | grep rest-api-demo
+
+# 远程执行（如果部署到远程主机）
+ansible -i hosts docker-host -m shell -a "docker ps -a | grep rest-api-demo"
+
+curl http://localhost:9999
+# 或
+curl http://<远程主机IP>:9999
+```
+
+其他常用操作
+
+```yaml
+# deploy.yml
+docker_container:
+  name: rest-api-demo
+  state: stopped  # 改为停止状态
+  # state: absent  # 彻底删除容器
+```
+
+这个示例展示了 Ansible 管理 Docker 容器的最基本模式，通过声明式方式确保容器始终处于预期状态，无需编写复杂的过程式脚本。
 
 ### 2.5 Ansible 与云平台
 
@@ -1272,6 +2443,306 @@ Drone，参考：[Github](https://github.com/99cloud/lab-openstack/blob/master/d
 OIDC + Gitlab + Gerrit + Redmine +
 Drone，参考：[Github](https://github.com/99cloud/lab-openstack/blob/master/doc/cicd/cicd-install-guide.md)
 或 [Gitee](https://gitee.com/dev-99cloud/lab-openstack/blob/master/doc/cicd/cicd-install-guide.md)
+
+#### 3.4.1 Drone CI 流程
+
+Demo
+
+#### 3.4.2 Gitlab CI 流程
+
+GitOps 工作流架构
+
+```text
++----------------+    +------------------+    +------------------+    +----------------+
+|  开发人员提交    |    |    Git仓库        |    |    CI/CD工具     |    |   目标环境       |
+| 代码到Git分支    +--->+ (主分支/特性分支)+--->+ (Jenkins/GitLabCI)+--->+ (K8s/Docker)    |
++----------------+    +------------------+    +------------------+    +----------------+
+      ^                                                                     |
+      |                                                                     |
+      |                      +----------------------+                       |
+      +----------------------+   Ansible Playbooks  |<----------------------+
+                             |  (版本控制的配置)      |
+                             +----------------------+
+```
+
+Git 工作流与 CI/CD 集成
+
+```text
+ansible-gitops-demo/
+├── .gitlab-ci.yml          # GitLab CI配置
+├── ansible/                # Ansible相关文件
+│   ├── inventory/          # 主机清单
+│   │   ├── dev.ini
+│   │   ├── staging.ini
+│   │   └── production.ini
+│   ├── roles/              # 角色定义
+│   └── playbooks/          # Playbook集合
+│       ├── deploy_web.yml
+│       └── rollback.yml
+└── app/                    # 应用代码
+    ├── Dockerfile
+    └── src/
+```
+
+GitFlow 分支模型示例
+
+```yaml
+# .gitlab-ci.yml (GitLab CI流水线配置)
+stages:
+  - test
+  - deploy_dev
+  - deploy_staging
+  - deploy_production
+
+# 测试阶段
+test:
+  stage: test
+  script:
+    - echo "运行单元测试..."
+    - pytest
+
+# 开发环境部署（master分支提交触发）
+deploy_dev:
+  stage: deploy_dev
+  script:
+    - ansible-playbook -i ansible/inventory/dev.ini ansible/playbooks/deploy_web.yml
+  only:
+    - master
+
+# 预发环境部署（release分支提交触发）
+deploy_staging:
+  stage: deploy_staging
+  script:
+    - ansible-playbook -i ansible/inventory/staging.ini ansible/playbooks/deploy_web.yml
+  only:
+    - release/*
+
+# 生产环境部署（需手动触发）
+deploy_production:
+  stage: deploy_production
+  script:
+    - ansible-playbook -i ansible/inventory/production.ini ansible/playbooks/deploy_web.yml
+  when: manual
+  only:
+    - main
+```
+
+幂等性 Playbook 示例
+
+```yaml
+# ansible/playbooks/deploy_web.yml
+- name: 幂等性部署Web应用
+  hosts: webservers
+  gather_facts: yes
+  become: true
+
+  tasks:
+    - name: 确保Nginx已安装
+      apt:
+        name: nginx
+        state: present
+      register: nginx_install
+      until: nginx_install is success
+      retries: 3
+      delay: 5
+
+    - name: 确保配置目录存在
+      file:
+        path: /etc/nginx/sites-available
+        state: directory
+        mode: '0755'
+
+    - name: 部署Nginx配置（模板渲染）
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/sites-available/default
+        mode: '0644'
+      notify:
+        - 重启Nginx
+
+    - name: 确保应用目录存在
+      file:
+        path: /var/www/myapp
+        state: directory
+        mode: '0755'
+        owner: www-data
+        group: www-data
+
+    - name: 部署应用代码（使用Git）
+      git:
+        repo: 'https://github.com/example/myapp.git'
+        dest: /var/www/myapp
+        version: "{{ git_branch | default('master') }}"
+        force: yes
+      register: git_update
+      notify:
+        - 重启应用
+
+    - name: 安装Python依赖
+      pip:
+        requirements: /var/www/myapp/requirements.txt
+        virtualenv: /var/www/myapp/venv
+      when: git_update.changed
+
+    - name: 确保应用服务运行
+      systemd:
+        name: myapp
+        state: started
+        enabled: true
+        daemon_reload: true
+
+  handlers:
+    - name: 重启Nginx
+      service:
+        name: nginx
+        state: reloaded
+
+    - name: 重启应用
+      service:
+        name: myapp
+        state: restarted
+```
+
+手动回滚
+
+```yaml
+# ansible/playbooks/rollback.yml
+- name: 回滚到指定版本
+  hosts: webservers
+  gather_facts: yes
+  become: true
+
+  vars:
+    rollback_version: HEAD~1  # 默认回滚到上一个版本
+
+  tasks:
+    - name: 回滚应用代码
+      git:
+        repo: 'https://github.com/example/myapp.git'
+        dest: /var/www/myapp
+        version: "{{ rollback_version }}"
+        force: yes
+      register: git_rollback
+      notify:
+        - 重启应用
+
+    - name: 打印回滚信息
+      debug:
+        msg: "已回滚到版本: {{ rollback_version }}"
+
+  handlers:
+    - name: 重启应用
+      service:
+        name: myapp
+        state: restarted
+```
+
+执行回滚命令
+
+```bash
+# 回滚到上一个版本
+ansible-playbook -i inventory/production.ini rollback.yml
+
+# 回滚到指定提交ID
+ansible-playbook -i inventory/production.ini rollback.yml -e "rollback_version=abc123"
+```
+
+蓝绿部署 Playbook
+
+```bash
+# ansible/playbooks/blue_green_deploy.yml
+- name: 蓝绿部署Web应用
+  hosts: webservers
+  gather_facts: yes
+  become: true
+
+  vars:
+    current_color: blue
+    new_color: green
+    health_check_url: "http://{{ inventory_hostname }}:8000/health"
+    health_check_retries: 10
+    health_check_delay: 5
+
+  tasks:
+    - name: 部署新版本到新环境
+      include_tasks: deploy_version.yml
+      vars:
+        environment_color: "{{ new_color }}"
+
+    - name: 执行健康检查
+      uri:
+        url: "{{ health_check_url }}"
+        status_code: 200
+      register: health_check
+      until: health_check.status == 200
+      retries: "{{ health_check_retries }}"
+      delay: "{{ health_check_delay }}"
+      ignore_errors: true
+
+    - name: 检查健康状态
+      fail:
+        msg: "新环境健康检查失败，回滚中..."
+      when: health_check.status != 200
+
+    - name: 切换负载均衡器到新环境
+      include_tasks: switch_loadbalancer.yml
+      vars:
+        target_environment: "{{ new_color }}"
+
+    - name: 关闭旧环境
+      include_tasks: shutdown_environment.yml
+      vars:
+        environment_color: "{{ current_color }}"
+```
+
+健康检查
+
+```yaml
+# ansible/tasks/health_check.yml
+- name: 检查应用健康状态
+  uri:
+    url: "{{ health_check_url }}"
+    return_content: yes
+  register: app_health
+  until: app_health.status == 200 and "OK" in app_health.content
+  retries: 10
+  delay: 5
+  changed_when: false
+
+- name: 打印健康检查结果
+  debug:
+    var: app_health
+```
+
+应用部署
+
+```bash
+# 部署到开发环境
+ansible-playbook -i ansible/inventory/dev.ini ansible/playbooks/deploy_web.yml
+
+# 部署到生产环境（带版本控制）
+ansible-playbook -i ansible/inventory/production.ini ansible/playbooks/deploy_web.yml -e "git_branch=v1.0.0"
+
+# 蓝绿部署
+ansible-playbook -i ansible/inventory/production.ini ansible/playbooks/blue_green_deploy.yml
+
+# 检查服务状态
+ansible -i ansible/inventory/production.ini webservers -m shell -a "systemctl status myapp"
+
+# 测试应用响应
+curl http://<服务器IP>/
+```
+
+GitOps 最佳实践
+
+1. 基础设施即代码：所有配置和 Playbook 都通过 Git 版本控制
+2. 分支策略：
+   - master/main：开发环境
+   - release/*：预发环境
+   - tags：生产环境
+3. 审批流程：生产环境部署需通过 PR 合并触发
+4. 审计追踪：所有变更通过 Git 记录，可追溯
+5. 回滚机制：通过git revert快速回滚错误变更
 
 ### 3.5 K8S Cronjob
 

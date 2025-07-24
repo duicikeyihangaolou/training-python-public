@@ -3,17 +3,17 @@ Given two strings str1 and str2, return the shortest string that has both str1 a
 
 (A string S is a subsequence of string T if deleting some number of characters from T (possibly 0, and the characters are chosen anywhere from T) results in the string S.)
 
- 
+
 
 Example 1:
 
 Input: str1 = "abac", str2 = "cab"
 Output: "cabac"
-Explanation: 
+Explanation:
 str1 = "abac" is a substring of "cabac" because we can delete the first "c".
 str2 = "cab" is a substring of "cabac" because we can delete the last "ac".
 The answer provided is the shortest such string that satisfies these properties.
- 
+
 
 Note:
 
@@ -38,7 +38,7 @@ class Solution(object):
                     else:
                         dp[index_i][index_j] = max(dp[index_i-1][index_j], dp[index_i][index_j-1], key=len)
             return dp[-1][-1]
-        
+
         result = ""
         index_i, index_j = 0, 0
         for s in lcs(str1, str2):
@@ -48,8 +48,8 @@ class Solution(object):
             while str2[index_j] != s:
                 result += str2[index_j]
                 index_j += 1
-                
+
             result += s
             index_i, index_j = index_i+1, index_j+1
-            
+
         return result + str1[index_i:] + str2[index_j:]

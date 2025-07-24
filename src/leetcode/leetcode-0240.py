@@ -25,7 +25,7 @@ class Solution(object):
         :type target: int
         :rtype: bool
         """
-        
+
         if not matrix:
         	return False
 

@@ -39,7 +39,7 @@ Input:
   [".",".",".",".","8",".",".","7","9"]
 ]
 Output: false
-Explanation: Same as Example 1, except with the 5 in the top left corner being 
+Explanation: Same as Example 1, except with the 5 in the top left corner being
     modified to 8. Since there are two 8's in the top left 3x3 sub-box, it is invalid.
 Note:
 
@@ -57,7 +57,7 @@ class Solution(object):
         """
         import collections
         dict_row, dict_col, dict_cell = collections.defaultdict(set), collections.defaultdict(set), collections.defaultdict(set)
-        
+
         for row_index in range(1, 4):
             for col_index in range(1, 4):
                 for row in range(3*(row_index-1), 3*row_index):
@@ -67,9 +67,9 @@ class Solution(object):
                             continue
                         if cell_data in dict_row[row] or cell_data in dict_col[col] or cell_data in dict_cell[(row_index, col_index)]:
                             return False
-                        
+
                         dict_row[row].add(cell_data)
                         dict_col[col].add(cell_data)
                         dict_cell[(row_index, col_index)].add(cell_data)
-        
+
         return True

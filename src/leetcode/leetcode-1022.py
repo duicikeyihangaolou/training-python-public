@@ -5,7 +5,7 @@ For all leaves in the tree, consider the numbers represented by the path from th
 
 Return the sum of these numbers.
 
- 
+
 
 Example 1:
 
@@ -14,7 +14,7 @@ Example 1:
 Input: [1,0,1,0,1,0,1]
 Output: 22
 Explanation: (100) + (101) + (110) + (111) = 4 + 5 + 6 + 7 = 22
- 
+
 
 Note:
 
@@ -37,12 +37,12 @@ class Solution(object):
         """
         def traversal(root, paths, pathlen, allpaths):
             if not root:
-                return 
+                return
             if len(paths) > pathlen:
                 paths[pathlen] = root.val
             else:
                 paths.append(root.val)
-                
+
             pathlen +=1
             if not root.left and not root.right:
                 allpaths.append(int(''.join(str(val) for val in paths[0:pathlen]), 2))

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*- 
+# -*- coding: UTF-8 -*-
 import pandas as pd
 import time
 from collections import Counter
@@ -26,7 +26,7 @@ def getAlarmDataFromCache(csv):
     alarmData['告警恢复时间'] = pd.to_datetime(alarmData['告警恢复时间'], infer_datetime_format=True)
     alarmData.set_index('告警流水号', inplace=True)
     return alarmData
- 
+
 if __name__ == '__main__':
     startTime = time.time()
     bsData = getBsDataFromCache(r'../tmp/_bsData.csv')

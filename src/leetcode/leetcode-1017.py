@@ -20,7 +20,7 @@ Example 3:
 Input: 4
 Output: "100"
 Explantion: (-2) ^ 2 = 4
- 
+
 
 Note:
 

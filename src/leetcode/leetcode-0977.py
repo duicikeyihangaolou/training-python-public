@@ -1,7 +1,7 @@
 '''
 Given an array of integers A sorted in non-decreasing order, return an array of the squares of each number, also in sorted non-decreasing order.
 
- 
+
 
 Example 1:
 
@@ -35,9 +35,9 @@ class Solution(object):
         while i>= 0:
             result.append(A[i]**2)
             i -= 1
-            
+
         while j < N:
             result.append(A[j]**2)
             j += 1
-                
+
         return result

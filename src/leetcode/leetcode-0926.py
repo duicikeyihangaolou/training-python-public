@@ -5,7 +5,7 @@ We are given a string S of '0's and '1's, and we may flip any '0' to a '1' or a 
 
 Return the minimum number of flips to make S monotone increasing.
 
- 
+
 
 Example 1:
 
@@ -22,7 +22,7 @@ Example 3:
 Input: "00011000"
 Output: 2
 Explanation: We flip to get 00000000.
- 
+
 
 Note:
 

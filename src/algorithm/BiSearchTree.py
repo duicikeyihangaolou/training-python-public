@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*- 
+# -*- coding: UTF-8 -*-
 # https://blog.csdn.net/u010089444/article/details/70854510
 import re
 

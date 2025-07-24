@@ -30,4 +30,3 @@ class Solution(object):
                 parent.right = new_node
             stack.append(new_node)
         return root
-        

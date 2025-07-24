@@ -7,7 +7,7 @@ For the i-th query val = queries[i][0], index = queries[i][1], we add val to A[i
 
 Return the answer to all queries.  Your answer array should have answer[i] as the answer to the i-th query.
 
- 
+
 
 Example 1:
 
@@ -26,7 +26,7 @@ class Solution(object):
         for val in A:
             if val%2 == 0:
                 result += val
-        
+
         f_result = []
         for val_index in queries:
             val, index = val_index[0], val_index[1]
@@ -39,4 +39,3 @@ class Solution(object):
             A[index] = new_val
             f_result.append(result)
         return f_result
- 

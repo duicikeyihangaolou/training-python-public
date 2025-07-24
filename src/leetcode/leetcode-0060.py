@@ -5,7 +5,7 @@ class Solution(object):
         :type k: int
         :rtype: str
         """
-        
+
         nums = []
         for index in range(1, n+1):
         	nums.append(index)

@@ -25,4 +25,4 @@ class Solution(object):
         	result = max(result, end-start+1)
         	mapSet[s[end]] = end+1
 
-        return result 
+        return result

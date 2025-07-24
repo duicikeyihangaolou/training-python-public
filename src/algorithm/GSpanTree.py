@@ -1,4 +1,4 @@
-""" classes and functions for binary trees 
+""" classes and functions for binary trees
 """
 
 from 队列的实现方式.PrioQueue import PrioQueue

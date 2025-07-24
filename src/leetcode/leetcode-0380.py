@@ -39,7 +39,7 @@ class RandomizedSet(object):
         """
         self.values = []
         self.positions = {}
-        
+
 
     def insert(self, val):
         """
@@ -52,7 +52,7 @@ class RandomizedSet(object):
         	self.positions[val] = len(self.values) - 1
         	return True
         return False
-        
+
 
     def remove(self, val):
         """

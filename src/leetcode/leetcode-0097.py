@@ -19,7 +19,7 @@ class Solution(object):
         :type s3: str
         :rtype: bool
         """
-        
+
         if len(s3) != len(s1) + len(s2):
         	return False
 
@@ -27,7 +27,7 @@ class Solution(object):
         for row in range(len(s1)+1):
         	for col in range(len(s2)+1):
         		if row == 0 and col == 0:
-        			dp[row][col] = True 
+        			dp[row][col] = True
         		elif row == 0:
         			dp[row][col] =dp[row][col-1] and s2[col-1] == s3[row+col-1]
         		elif col == 0:

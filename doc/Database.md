@@ -6,7 +6,7 @@
 
   ```bash
   sudo apt-get update
-  sudo apt-get upgrade -y 
+  sudo apt-get upgrade -y
   sudo apt install mysql-server
   sudo mysql_secure_installation # 全选No
   ```

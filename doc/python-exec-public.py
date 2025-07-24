@@ -136,14 +136,14 @@ if abs(float(sumStr) - (aFloat+bFloat)) < MIN_DELTA:
 else:
     print("Wrong!")
 
-''' 
+'''
 Tip_020104. 随机生成4个[1-10]之间的自然数并输出到屏幕，要求输入24点的算法，输出True/False。
- 
+
 Run:
-Numbers are: 6, 1, 2, 6: 
+Numbers are: 6, 1, 2, 6:
 6*1*(6-2)
 Right!
- 
+
 Code:
 '''
 from random import choice, randint
@@ -159,7 +159,7 @@ if eval(aStr) == 24:
 else:
     print("Wrong!")
 
-''' 
+'''
 Tip_020105. 提示用户输入一个整数（X元人民币），输出这笔钱等于多少张50元，10元，5元，1元纸币（优先用大额纸币）。
 
 Run:
@@ -249,15 +249,15 @@ aStrNew = " ".join(aList)
 
 print(aStrNew)
 
-''' 
+'''
 Tip_020203. 提示用户输入一个字符串，判断该字符串是否回文（回文是指正读反读都一样，注意忽略用户输入的字符串两头的空白），并统计字符串长度。
- 
+
 Run:
 Please input a string:
    bob
 len = 3
 'bob' is a huiwen string
- 
+
 Code:
 '''
 aStr = input("Please input a string:\n")
@@ -471,7 +471,7 @@ Run:
 Please input a Str:
 abcdcdabcd
 The stat char list:
-a => 2 
+a => 2
 c => 3
 b => 2
 d => 3
@@ -487,7 +487,7 @@ aDict = {chr:aStr.count(chr) for chr in set(aStr)}
 #     aDict[i] = aDict.get(i, 0) + 1
 #     # aDict.setdefaut(i, 0)
 #     # aDict[i] += 1
-# 	
+#
 # from collections import Counter
 # aDict = Counter(aStr)
 
@@ -536,7 +536,7 @@ for word in wordList:
     firstChar = word[0]
     aDict.setdefault(firstChar, [])
     aDict[firstChar].append(word)
-    
+
 print("The stat char list:")
 for tmpKey, tmpValue in aDict.items():
     print("%s => %s" % (tmpKey, tmpValue))
@@ -614,9 +614,9 @@ if __name__ == '__main__':
     parser.add_option("-r", "--role", dest="role", default="staff",
                       help="role string", metavar="ROLE STRING")
     (options, args) = parser.parse_args()
-    
+
     #print(options)
-    
+
     print("Worker Information:")
     print("name => ", options.name)
     print("sex => ", options.sex)
@@ -646,7 +646,7 @@ for line in open(fileName):
     if subStr in line:
         print(line, end='')
 
-'''        
+'''
 Tip_020602 统计指定的文件中单词的个数，并追加写到文件末尾。
 a.txt文件中内容如下：
 test 1 apples
@@ -665,18 +665,18 @@ for line in open(fileName):
     wordCount += len(line.split())
 open(fileName, 'a').write("\n%d" % wordCount)
 
-''' 
+'''
 Tip_020603 打印指定文件中的内容，在打印时将A字符串替换为B字符串(原文件中的内容则不改变)
 a.txt文件中内容如下：
 test 1 apples
 apple store
 pear banana
- 
+
 Run: python replace.py a.txt apple other
 test 1 others
 other store
 pear banana
- 
+
 Code:
 '''
 import sys
@@ -687,7 +687,7 @@ repStr = sys.argv[3]
 for line in open(fileName):
     print(line.replace(subStr, repStr), end='')
 
-''' 
+'''
 Tip_020604 将字典序列化到文件，再从文件读出
     略
 '''
@@ -780,7 +780,7 @@ while(count < GUESS_MAX):
     a = input("please input number:\n")
     a = int(a)
 
-    count = count + 1 
+    count = count + 1
     if a > c:
         print("too large")
     elif a < c:
@@ -788,7 +788,7 @@ while(count < GUESS_MAX):
     else:
         print("good ,right")
         print("count number times = %d" % count)
-        break  
+        break
 else:
     print("answer = %d" % c)
 
@@ -838,7 +838,7 @@ fileName = sys.argv[1]
 print(max(open(fileName), key=len))
 
 
-''' 
+'''
 Tip_030203 多维列表求和
     略
 '''
@@ -888,7 +888,7 @@ Run:
       1 2 1
      1 3 3 1
     1 4 6 4 1
-	
+
 Code:
 '''
 N = 5
@@ -928,19 +928,19 @@ def mySort(aList, key=lambda x:x):
 print(mySort([1, 5, 3, 6, 2]))
 print(mySort(list(aDict.keys()), lambda x:aDict[x]))
 
-''' 
+'''
 Tip_040101 打印输出math模块的所有方法属性和字段属性，打印输出其中fsum函数的用法
- 
+
 Run:
- 
+
 ['pow', 'fsum', 'cosh', 'ldexp', 'hypot', 'acosh', 'tan', 'asin', 'isnan', 'log', 'fabs', 'floor', 'atanh', 'modf', 'sqrt', 'frexp', 'degrees', 'lgamma', 'log10', 'asinh', 'fmod', 'atan', 'factorial', 'copysign', 'expm1', 'ceil', 'isinf', 'sinh', 'trunc', 'cos', 'tanh', 'radians', 'sin', 'atan2', 'erf', 'erfc', 'exp', 'acos', 'log1p', 'gamma']
 ['__package__', '__doc__', '__file__', '__name__', 'pi', 'e']
- 
+
 fsum(iterable)
- 
+
 Return an accurate floating point sum of values in the iterable.
 Assumes IEEE-754 floating point arithmetic.
- 
+
 Code:
 '''
 import math
@@ -980,7 +980,7 @@ FUNCTIONS
 
 aFun
 
-Code: 
+Code:
 '''
 '''
 Title example
@@ -1043,29 +1043,29 @@ moduleName = input("Please input module name:")
 aMoObj = __import__(moduleName)
 print(aMoObj.__dict__)
 
-# 
+#
 # Tip_040201 编写一个类Name，能被如下代码调用：
-# 
+#
 # aName = Name("John Green")
 # print(aName.getLastName())
 # print(len(aName))
 # print(aName.split())
 # print(aName.lower())
-# 
+#
 # Run:
-# 
+#
 # Green
 # 10
 # ['John', 'Green']
 # john green
-# 
+#
 # Code:
 
 class Name(str):
     def getLastName(self):
         return self.split()[-1] if self else ""
 
-'''  
+'''
 Tip_040202 实现一个队列类FIFO，push/pull
 
 客户端代码/Run：
@@ -1090,9 +1090,9 @@ class Queue(object):
     def __len__(self):
         return len(self.__list)
 
-''' 
+'''
 Tip_040203 实现tail功能(每隔1秒检查文件中的内容，并将新增的行输出)
- 
+
 Code:
 '''
 import time
@@ -1130,20 +1130,20 @@ Code:
 https://github.com/maodouzi/python-tail
 '''
 
-''' 
+'''
 Tip_050101 让用户输入两个实数，输出他们的和。如果用户的输入有误，给出提示。
- 
+
 Run:
- 
+
 Please input A: 4
 Please input B: 56
 Sum = 60.0
- 
+
 Please input A: dd
 Please input B: 3
 Value Error!
 could not convert string to float: dd
- 
+
 Code:
 '''
 
@@ -1194,18 +1194,18 @@ if flag:
     sumNum = float(aNum) + float(bNum)
     print("Sum =", sumNum)
 
-''' 	
+'''
 Tip_050202 统计一个文件所有包含数字的行。
 测试文件如下：
 apple banana 2
-3hello 
+3hello
 good orange
- 
+
 Run:
- 
+
 apple banana 2
-3hello 
- 
+3hello
+
 Code:
 '''
 import re
@@ -1221,7 +1221,7 @@ for line in open("test.txt"):
 Tip_050203 找出一个文件中所有整数，打印输出它们的和。
 测试文件如下：
 apple banana 23
-33hello 
+33hello
 good 45 orange
 
 Run:
@@ -1247,7 +1247,7 @@ print(sum(aList))
 Tip_050204. 随机生成4个[1-10]之间的自然数并输出到屏幕，要求输入24点的算法，输出True/False。
 
 Run:
-Numbers are: 6, 1, 2, 6: 
+Numbers are: 6, 1, 2, 6:
 6*1*(6-2)
 Right!
 
@@ -1264,7 +1264,7 @@ for i in range(100):
     aStr = input('Numbers: %s' % intList)
     aStr = re.sub(r'\s+', '', aStr)
     print(aStr)
-    
+
     if not reCmp.search(aStr):
         print('Input error!')
         continue
@@ -1292,7 +1292,7 @@ print(hello())
 
 Run:
 <b><i>hello world</i></b>
-	
+
 Code:
 '''
 def makebold(fn):
@@ -1337,7 +1337,7 @@ opener = urllib.request.build_opener(auth_handler)
 urllib.request.install_opener(opener)
 
 try:
-    req = urllib.request.Request(top_level_url, headers={'Content-Type': 'application/json'})    
+    req = urllib.request.Request(top_level_url, headers={'Content-Type': 'application/json'})
     result = opener.open(req)
     messages = result.read()
     print (messages)
@@ -1411,7 +1411,7 @@ if __name__ == "__main__":
     aProcess.start()
     bProcess = multiprocessing.Process(target=doWork, name="bProcess")
     bProcess.start()
-    
+
     aProcess.join()
     bProcess.join()
     print("== ", time.time() - startTime)
@@ -1470,7 +1470,7 @@ ret = u'哈'
 print(ret)
 #print(ret.encode(encoding='utf_8', errors='strict'))
 
-######## test.py ######### 
+######## test.py #########
 import subprocess
 
 ret = subprocess.check_output([r'C:\Users\pear\AppData\Local\Programs\Python\Python36\python.exe',
@@ -1485,7 +1485,7 @@ Tip_070101 Scrapy Demo，获取http://quotes.toscrape.com/tag/humor/中的箴言
 [官方文档] https://docs.scrapy.org/en/latest/
 [css & xpath] https://github.com/scrapy/quotesbot
 
-scrapy runspider /Users/wxdev_mac/eclipse-workspace/test3/test.py -o test.json 
+scrapy runspider /Users/wxdev_mac/eclipse-workspace/test3/test.py -o test.json
 
 Code:
 '''
@@ -1519,7 +1519,7 @@ Tip_080101 TK，编写加法计算器
 |  (Button)     |
 +---------------+
 
-Code: 
+Code:
 '''
 from tkinter import Label, Frame, Tk, Button, Entry
 from tkinter import RIGHT, LEFT
@@ -1542,7 +1542,7 @@ for lable,entry,frame in zip(labelList, entryList, frameList):
     lable.pack(side=LEFT)
     entry.pack(side=RIGHT)
     frame.pack()
-    
+
 btn = Button(tk, text="Add", command=cmd)
 btn.pack(side=RIGHT)
 
@@ -1652,16 +1652,16 @@ def checkWeb(addr, port, resource):
         return True
     return False
 
-class HttpConnTest(unittest.TestCase):            
+class HttpConnTest(unittest.TestCase):
     def test_checkWebOK(self):
         mockResp = MagicMock()
         mockResp.status = 200
-        
+
         mockHttpConn = MagicMock()
         mockHttpConn.getresponse.return_value = mockResp
 
         http.client.HTTPConnection = MagicMock(return_value = mockHttpConn)
-        
+
         ret = checkWeb("www.bing.com", 80, "/")
         self.assertTrue(ret)
 
@@ -1694,14 +1694,14 @@ CREATE TABLE `users` (
 
 try:
     connection.begin()
-    
+
     # 插入数据(元组或列表)
     effect_row = cursor.execute('INSERT INTO `users` (`name`, `age`) VALUES (%s, %s)', ('mary', 18))
-    
+
     # 插入数据(字典)
     info = {'name': 'test', 'age': 19}
     effect_row = cursor.execute('INSERT INTO `users` (`name`, `age`) VALUES (%(name)s, %(age)s)', info)
-    
+
     connection.commit()
 except:
     connection.rollback()
@@ -1854,7 +1854,7 @@ print(ret)
 
 ret = session.query(User).all()
 for obj in ret:
-    print(obj.nid,obj.name, 
+    print(obj.nid,obj.name,
           obj.favor,
           obj.favor.tid if obj.favor else None,
           obj.favor.caption if obj.favor else None)
@@ -2014,7 +2014,7 @@ Tip_100206 XPath
 # pip install lxml
 # https://doc.scrapy.org/en/xpath-tutorial/topics/xpath-tutorial.html
 # https://www.w3schools.com/xml/xpath_syntax.asp
-# https://cuiqingcai.com/2621.html 
+# https://cuiqingcai.com/2621.html
 
 from lxml import etree
 text = '''
@@ -2204,17 +2204,17 @@ print(IP('127.0.0.1').make_net('255.0.0.0'))
 
 # Convert address to string
 # Nearly all class methods which return a string have an optional parameter 'wantprefixlen' which controls if the prefixlen or netmask is printed. Per default the prefilen is always shown if the network contains more than one address:
-# 
+#
 # wantprefixlen == 0            / None                  1.2.3.0
 # wantprefixlen == 1            /prefix                 1.2.3.0/24
 # wantprefixlen == 2            /netmask                1.2.3.0/255.255.255.0
 # wantprefixlen == 3            -lastip                 1.2.3.0-1.2.3.255
 # You can also change the defaults on an per-object basis by fiddling with the class members:
-# 
+#
 # NoPrefixForSingleIp
 # WantPrefixLen
 # Examples of string conversions:
-# 
+#
 print(IP('10.0.0.0/32').strNormal())
 # '10.0.0.0'
 print(IP('10.0.0.0/24').strNormal())
@@ -2269,44 +2269,44 @@ Tip_110103 dnspython
 # https://github.com/rthalley/dnspython
 
 # Get the MX target and preference of a name:
- 
+
 import dns.resolver
- 
+
 answers = dns.resolver.query('dnspython.org', 'MX')
 for rdata in answers:
     print('Host', rdata.exchange, 'has preference', rdata.preference)
-           
+
 # Transfer a zone from a server and print it with the names sorted in DNSSEC order:
 # import dns.query
 # import dns.zone
-#  
+#
 # z = dns.zone.from_xfr(dns.query.xfr('204.152.189.147', 'dnspython.org'))
 # names = z.nodes.keys()
 # names.sort()
 # for n in names:
 #     print(z[n].to_text(n))
-           
+
 # Use DNS dynamic update to set the address of a host to a value specified on the command line:
- 
+
 # import dns.query
 # import dns.tsigkeyring
 # import dns.update
 # import sys
-#  
+#
 # keyring = dns.tsigkeyring.from_text({
 #     'host-example.' : 'XXXXXXXXXXXXXXXXXXXXXX=='
 # })
-#  
+#
 # update = dns.update.Update('dyn.test.example', keyring=keyring)
 # update.replace('host', 300, 'a', sys.argv[1])
-#  
+#
 # response = dns.query.tcp(update, '10.0.0.1')
 # print(response)
-           
+
 # Manipulate domain names:
- 
+
 import dns.name
- 
+
 n = dns.name.from_text('www.dnspython.org')
 o = dns.name.from_text('dnspython.org')
 print(n.is_subdomain(o))         # True
@@ -2316,9 +2316,9 @@ rel = n.relativize(o)            # rel is the relative name 'www'
 n2 = rel + o
 print(n2 == n)                   # True
 print(n.labels)                  # ('www', 'dnspython', 'org', '')
-           
+
 # Generate reverse mapping information
- 
+
 # Usage: reverse.py ...
 #
 # This demo script will load in all of the zones specified by the
@@ -2334,14 +2334,14 @@ print(n.labels)                  # ('www', 'dnspython', 'org', '')
 #
 # If this weren't a demo script, there'd be a way of specifying the
 # origin for each zone instead of constructing it from the filename.
- 
+
 import dns.zone
 import dns.ipv4
 import os.path
 import sys
- 
+
 reverse_map = {}
- 
+
 for filename in sys.argv[1:]:
     zone = dns.zone.from_file(filename, os.path.basename(filename),
                               relativize=False)
@@ -2351,23 +2351,23 @@ for filename in sys.argv[1:]:
             l = []
             reverse_map[rdata.address] = l
         l.append(name)
- 
+
 keys = reverse_map.keys()
 for k in sorted(keys, key=lambda a1: dns.ipv4.inet_aton(a1)):
     v = reverse_map[k]
     v.sort()
     l = map(str, v)     # convert names to strings for prettier output
     print(k, l)
-           
+
 # Convert IPv4 and IPv6 addresses to/from their corresponding DNS reverse map names:
- 
+
 import dns.reversename
 n = dns.reversename.from_address("127.0.0.1")
 print(n)
 print(dns.reversename.to_address(n))
-           
+
 # Convert E.164 numbers to/from their corresponding ENUM names:
- 
+
 import dns.e164
 n = dns.e164.from_e164("+1 555 1212")
 print(n)
@@ -2462,14 +2462,14 @@ Tip_120102 Pandas快速入门
 Code:
 '''
 # -*- coding: utf-8 -*-
-import pandas as pd 
+import pandas as pd
 
-s = pd.Series([1,2,3], index=['a', 'b', 'c']) 
-d = pd.DataFrame([[1, 2, 3], [4, 5, 6]], columns = ['a', 'b', 'c']) 
-d2 = pd.DataFrame(s) 
+s = pd.Series([1,2,3], index=['a', 'b', 'c'])
+d = pd.DataFrame([[1, 2, 3], [4, 5, 6]], columns = ['a', 'b', 'c'])
+d2 = pd.DataFrame(s)
 
 print(d.head())
-print(d.describe()) 
+print(d.describe())
 
 #读取文件，注意文件的存储路径不能带有中文，否则读取可能出错。
 pd.read_excel('data.xls') #读取Excel文件，创建DataFrame。
@@ -2481,11 +2481,11 @@ Tip_120103 Pandas，如何实现在多列值情况下的Vlookup
 Code:
 '''
 import pandas as pd
- 
+
 data = {'name': ['Alice', 'Bob', 'Charles', 'David', 'Eric'],
         'year': [2017, 2016, 2016, 2017, 2017],
         'salary': [40000, 20000, 30000, 20000, 30000]}
- 
+
 df = pd.DataFrame(data)
 
 df2 = pd.DataFrame({'name': ['Alice', 'Bob'],
@@ -2517,7 +2517,7 @@ class User(Base):
     name = Column(String(20))
     def __repr__(self):
         return '<{}::{}>'.format(self.id, self.name)
-    
+
 engine = create_engine(r'sqlite:///database.db')
 Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
@@ -2533,7 +2533,7 @@ import pandas as pd
 df_old = pd.read_sql('user', con=engine)
 df_old.set_index('id', inplace=True)
 
-df = pd.DataFrame({'id': [str(i) for i in range(10, 12)], 
+df = pd.DataFrame({'id': [str(i) for i in range(10, 12)],
                    'name': ['Name-{}'.format(i) for i in range(10, 12)]})
 df.set_index('id', inplace=True)
 df = df.append(df_old)
@@ -2630,14 +2630,14 @@ print('原数据：')
 print(X_train)
 print('二值化：')
 binarizer = preprocessing.Binarizer(threshold=0.0)
-binarizer.fit(X_train)  
+binarizer.fit(X_train)
 print(binarizer.transform(X_train))
 
 from sklearn.impute import SimpleImputer
 X = [[np.nan, 2], [6, np.nan], [7, 6]]
 print('原数据：')
 print(X)
-imp = SimpleImputer(missing_values=np.nan, strategy='mean') 
+imp = SimpleImputer(missing_values=np.nan, strategy='mean')
 print('----------')
 print('按列均值填充缺失：')
 imp.fit(X)
@@ -2739,7 +2739,7 @@ plt.show()
 
 n_samples = len(digits.images)
 data = digits.images.reshape((n_samples, -1))
- 
+
 print(digits.images[0])    #原数据集第一个记录
 print(data[0])    #转换后的数据集的第一个记录
 
@@ -2755,7 +2755,7 @@ for index, (image, prediction) in enumerate(images_and_predictions[:4]):
     plt.axis('off')
     plt.imshow(image, cmap=plt.cm.gray_r, interpolation='nearest')
     plt.title('Prediction: %i' % prediction)
- 
+
 plt.show()
 
 '''
@@ -2886,7 +2886,7 @@ from sklearn.utils import shuffle
 
 n_colors = 64
 china = load_sample_image("china.jpg") #加载图片
-china = np.array(china, dtype=np.float64) / 255 
+china = np.array(china, dtype=np.float64) / 255
 #转化数据位float64，且除以255(三原色最大值) 使得数据在0-1之间
 
 w, h, d = original_shape = tuple(china.shape)
@@ -3029,7 +3029,7 @@ plt.ylim((-2, 2))
 plt.legend(loc="best")
 plt.show()
 
-degrees = [1, 4, 15]   
+degrees = [1, 4, 15]
 plt.figure(figsize=(14, 5))
 for i in range(len(degrees)):
     ax = plt.subplot(1, len(degrees), i + 1)
@@ -3082,14 +3082,14 @@ y[::5] += 3 * (0.5 - rng.rand(X.shape[0] // 5))
 
 N = 100
 
-svr = SVR(kernel='rbf', C=1e1, gamma=0.1) 
+svr = SVR(kernel='rbf', C=1e1, gamma=0.1)
 kr = KernelRidge(kernel='rbf', alpha=0.1, gamma=0.1)
 train_sizes, train_scores_svr, test_scores_svr = \
-                   learning_curve(svr, X[:N], y[:N], 
+                   learning_curve(svr, X[:N], y[:N],
                    train_sizes=np.linspace(0.1, 1, 20),
                    scoring="neg_mean_squared_error")
 train_sizes_abs, train_scores_kr, test_scores_kr = \
-                   learning_curve(kr, X[:N], y[:N], 
+                   learning_curve(kr, X[:N], y[:N],
                    train_sizes=np.linspace(0.1, 1, 20),
                    scoring="neg_mean_squared_error")
 
@@ -3137,7 +3137,7 @@ print("Feature ranking:")
 
 for f in range(X.shape[1]):
     print("%d. feature %d (%f)" % (f + 1, indices[f], importances[indices[f]]))
-    
+
 plt.figure()
 plt.title("Feature importances")
 plt.bar(range(X.shape[1]), importances[indices],color="r", yerr=std[indices], align="center")
@@ -3158,7 +3158,7 @@ rng = np.random.RandomState(42)
 
 # 产生训练数据集
 X = 0.3 * rng.randn(100, 2)
-X_train = np.r_[X + 2, X - 2]     
+X_train = np.r_[X + 2, X - 2]
 # 产生一些新的正常的数据点
 X = 0.3 * rng.randn(20, 2)
 X_test = np.r_[X + 2, X - 2]

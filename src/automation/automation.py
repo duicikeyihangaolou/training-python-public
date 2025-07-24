@@ -43,7 +43,7 @@ with tempfile.NamedTemporaryFile() as tmpFile:
 
 # print(open(path).read()) # NotFound
 
-path = tempfile.mkdtemp() 
+path = tempfile.mkdtemp()
 tmp = tempfile.NamedTemporaryFile(dir=path)
 print(tmp.name)
 #临时目录不会被自动删除，需要手动删除
@@ -67,10 +67,10 @@ p1.stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
 output = p2.communicate()[0]
 
 output=subprocess.check_output("ls -l | grep py", shell=True)
- 
+
 sts = os.system("ls" + " -l")
 sts = subprocess.call("ls" + " -l", shell=True)
- 
+
 try:
     retcode = subprocess.call("ls" + " -l", shell=True)
     if retcode < 0:
@@ -131,7 +131,7 @@ import paramiko
 from fabric import Connection
 
 paramiko.util.log_to_file('ssh.log')
-result = Connection(host="pear@65.52.172.145", 
+result = Connection(host="pear@65.52.172.145",
     connect_kwargs={"password": "a44e604C3279", "look_for_keys": False}).run('uname -s', hide=True)
 msg = "Ran {0.command!r} on {0.connection.host}, got stdout:\n{0.stdout}"
 print(msg.format(result))

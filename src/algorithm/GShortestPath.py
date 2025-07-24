@@ -1,4 +1,4 @@
-""" classes and functions for binary trees 
+""" classes and functions for binary trees
 """
 
 from myQueue.PrioQueue import PrioQueue

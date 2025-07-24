@@ -5,7 +5,7 @@ Suppose you triangulate the polygon into N-2 triangles.  For each triangle, the 
 
 Return the smallest possible total score that you can achieve with some triangulation of the polygon.
 
- 
+
 
 Example 1:
 
@@ -26,7 +26,7 @@ Example 3:
 Input: [1,3,1,4,1,5]
 Output: 13
 Explanation: The minimum score triangulation has score 1*1*3 + 1*1*4 + 1*1*5 + 1*1*1 = 13.
- 
+
 
 Note:
 
@@ -40,7 +40,7 @@ class Solution(object):
         :type A: List[int]
         :rtype: int
         """
-        
+
         n = len(A)
         dp = [[0]*n for _ in range(n)]
         for length in range(n):

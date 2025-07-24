@@ -1,4 +1,4 @@
-""" Dictionary and searching 
+""" Dictionary and searching
 """
 
 from BiTree1 import BiTNode

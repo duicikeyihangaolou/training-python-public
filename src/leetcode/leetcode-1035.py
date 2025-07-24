@@ -5,7 +5,7 @@ Now, we may draw a straight line connecting two numbers A[i] and B[j] as long as
 
 Return the maximum number of connecting lines we can draw in this way.
 
- 
+
 
 Example 1:
 
@@ -22,7 +22,7 @@ Example 3:
 
 Input: A = [1,3,7,1,7,5], B = [1,9,2,5,1]
 Output: 2
- 
+
 
 Note:
 
@@ -39,18 +39,18 @@ class Solution(object):
         :rtype: int
         """
         dp = [[0]*len(A) for _ in range(len(B))]
-        
+
         dp[0][0] = 1 if A[0] == B[0] else 0
         for index_i in range(1, len(dp)):
             dp[index_i][0] = dp[index_i-1][0]
             if A[0] == B[index_i]:
                 dp[index_i][0] = 1
-                
+
         for index_j in range(1, len(dp[0])):
             dp[0][index_j] = dp[0][index_j-1]
             if B[0] == A[index_j]:
                 dp[0][index_j] = 1
-                
+
         for index_i in range(1, len(dp)):
             for index_j in range(1, len(dp[0])):
                 if A[index_j] == B[index_i]:

@@ -22,7 +22,7 @@ class Solution(object):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
-        """   
+        """
         result = [[]]
         for num in nums:
         	for index in range(len(result)):

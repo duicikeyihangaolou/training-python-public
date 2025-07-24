@@ -3,7 +3,7 @@ Given an array A of integers, return true if and only if we can partition the ar
 
 Formally, we can partition the array if we can find indexes i+1 < j with (A[0] + A[1] + ... + A[i] == A[i+1] + A[i+2] + ... + A[j-1] == A[j] + A[j-1] + ... + A[A.length - 1])
 
- 
+
 
 Example 1:
 
@@ -19,7 +19,7 @@ Example 3:
 Input: [3,3,6,5,-2,2,5,1,-9,4]
 Output: true
 Explanation: 3 + 3 = 6 = 5 - 2 + 2 + 5 + 1 - 9 + 4
- 
+
 
 Note:
 
@@ -36,10 +36,10 @@ class Solution(object):
         total_sum = 0
         for val in A:
             total_sum += val
-            
+
         if(total_sum%3 != 0):
             return False
-        
+
         curr_sum, groups = 0, 0
         for val in A:
             curr_sum += val
@@ -48,4 +48,4 @@ class Solution(object):
                 groups +=1
         print groups
         return groups == 3
-            
+

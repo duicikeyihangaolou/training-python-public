@@ -7,7 +7,7 @@ Return an array of integers answer, where answer[i] = next_larger(node_{i+1}).
 
 Note that in the example inputs (not outputs) below, arrays such as [2,1,5] represent the serialization of a linked list with a head node value of 2, second node value of 1, and third node value of 5.
 
- 
+
 
 Example 1:
 
@@ -21,7 +21,7 @@ Example 3:
 
 Input: [1,7,5,1,9,2,5,1]
 Output: [7,9,9,9,0,5,0,0]
- 
+
 
 Note:
 
@@ -45,7 +45,7 @@ class Solution(object):
         while head:
             result.append(head.val)
             head = head.next
-        
+
         stack = [result[-1]]
         ans = [0]
         for val in range(len(result)-2, -1, -1):

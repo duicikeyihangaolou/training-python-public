@@ -22,9 +22,9 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        
+
         if not matrix:
-        	return 0 
+        	return 0
 
         import heapq
         heap = []

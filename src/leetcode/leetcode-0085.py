@@ -56,14 +56,13 @@ class Solution(object):
         m, n = len(matrix), len(matrix[0])
         heights = [0 for index in range(n)]
         result = 0
-        
+
         for index_i in range(m):
             for index_j in range(n):
                 if matrix[index_i][index_j] != '0':
                     heights[index_j] = heights[index_j] + 1
                 else:
                     heights[index_j] = 0
-                    
+
             result = max(result, self.largestRectangleArea(heights))
         return result
-        

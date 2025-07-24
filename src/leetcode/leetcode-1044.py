@@ -3,7 +3,7 @@ Given a string S, consider all duplicated substrings: (contiguous) substrings of
 
 Return any duplicated substring that has the longest possible length.  (If S does not have a duplicated substring, the answer is "".)
 
- 
+
 
 Example 1:
 
@@ -13,7 +13,7 @@ Example 2:
 
 Input: "abcd"
 Output: ""
- 
+
 
 Note:
 
@@ -31,7 +31,7 @@ class Suffix(object):
 		if self.first_rank == other.first_rank:
 			return self.adjacent_rank < other.adjacent_rank
 		return self.first_rank < other.first_rank
-        
+
 def create_suffix_array(s):
 	N = len(s)
 	suffix_array = []
@@ -65,7 +65,7 @@ def create_suffix_array(s):
 			suffix_array[index].adjacent_rank = suffix_array[index_map[adjacent_index]] if adjacent_index < N else -1
 
 		suffix_array.sort()
-		no_char *= 2    
+		no_char *= 2
 
 	return [suffix.index for suffix in suffix_array]
 
@@ -96,7 +96,7 @@ def lcp_w_suffix_str(array, s):
 
 	return lcp_array
 
-		
+
 class Solution(object):
     def longestDupSubstring(self, S):
         """
@@ -105,14 +105,14 @@ class Solution(object):
         """
         suffix_array = create_suffix_array(S)
         lcp_array = lcp_w_suffix_str(suffix_array, S)
-        
+
         start, end = 0, 0
-		
+
         for index in range(len(S)):
             if lcp_array[index] > end:
                 end = lcp_array[index]
                 start = suffix_array[index]
-            
+
         if end == 0:
             return ""
         # print start, end

@@ -15,9 +15,9 @@ Longest consecutive sequence path is 3-4-5, so return 3.
    2
     \
      3
-    / 
-   2    
-  / 
+    /
+   2
+  /
  1
 Longest consecutive sequence path is 2-3,not3-2-1, so return 2.
 '''

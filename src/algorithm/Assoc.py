@@ -1,4 +1,4 @@
-""" class Assoc 
+""" class Assoc
 """
 
 class Assoc:
@@ -14,7 +14,7 @@ class Assoc:
 
     def __str__(self):
         return "Assoc({0},{1})".format(self.key, self.value)
-    
+
 if __name__ == '__main__':
     a1 = Assoc(1,2)
     print(str(a1))

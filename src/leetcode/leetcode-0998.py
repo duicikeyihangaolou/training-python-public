@@ -14,7 +14,7 @@ Suppose B is a copy of A with the value val appended to it.  It is guaranteed th
 
 Return Construct(B).
 
- 
+
 
 Example 1:
 
@@ -38,7 +38,7 @@ Explanation: A = [2,1,5,4], B = [2,1,5,4,3]
 #         self.right = None
 
 class Solution(object):
-        
+
     def insertIntoMaxTree(self, root, val):
         """
         :type root: TreeNode
@@ -48,27 +48,27 @@ class Solution(object):
         new_node = TreeNode(val)
         if not root:
             return new_node
-        
+
         if root.val < val:
             new_node.left = root
             return new_node
-        
+
         nrwwt = root
         start, prev = root.right, root
-    
+
         while start:
             if(start.val > val):
                 prev = start
                 start = start.right
             else:
                 break
-            
+
 
         prev.right = new_node
         if not start:
             new_node.right = start
         else:
             new_node.left = start
-        
+
         return root
-        
+

@@ -63,7 +63,7 @@ def eval_exp(e):
         return eval_div(a, b)
     else:
         raise ValueError("Unknown operator:", op)
-        
+
 def eval_sum(a, b):
     if isinstance(a, Number) and isinstance(b, Number):
         return a + b
@@ -104,20 +104,20 @@ def eval_div(a, b):
     if isinstance(b, Number) and b == 1:
         return a
     return make_div(a, b)
-    
-   
+
+
 if __name__ == '__main__':
     t1 = BiTree(2, BiTree(4, [], []), BiTree(8, [], []))
     print(t1)
 #     set_leftch(leftch(t1), BiTree(5, [], []))
 #     print(t1)
-# 
+#
 #     e1 = make_prod(make_sum(2, 3), make_diff(4, 5))
 #     e2 = make_prod(make_diff(make_prod(2, 'a'), 3), make_diff(4, 5))
 #     e3 = make_div(make_sum(make_prod(2, 7), make_div(0, 'b')), make_div('a', 1))
-# 
+#
 #     ret = eval_exp(['+', 2, 3])
 #     print(ret)
 #     eval_exp(['$', 2, 3]) # This will cause an exception because $ is not a valid operator
-#     
+#
 

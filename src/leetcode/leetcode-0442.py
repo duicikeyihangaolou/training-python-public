@@ -21,7 +21,7 @@ class Solution(object):
         """
         if not nums:
             return []
-        
+
         result = []
         for _, num in enumerate(nums):
             index = abs(num)-1

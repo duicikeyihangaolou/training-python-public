@@ -3,7 +3,7 @@ For strings S and T, we say "T divides S" if and only if S = T + ... + T  (T con
 
 Return the largest string X such that X divides str1 and X divides str2.
 
- 
+
 
 Example 1:
 
@@ -17,7 +17,7 @@ Example 3:
 
 Input: str1 = "LEET", str2 = "CODE"
 Output: ""
- 
+
 
 Note:
 
@@ -35,19 +35,19 @@ class Solution(object):
         """
         if len(str1)  > len(str2):
             str1, str2 = str2, str1
-            
+
         l_str1 = len(str1)
         for index in range(1, len(str1)+1):
             if l_str1%index != 0:
                 continue
-                
+
             size_to_take = int(l_str1/index)
             substr1 = str1[:size_to_take]
             substr2 = str2
-            
+
             while substr1 == substr2[:size_to_take]:
                 substr2 = substr2[size_to_take:]
-                
+
             if substr2 == "":
                 return substr1
         return ""

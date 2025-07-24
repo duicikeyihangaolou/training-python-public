@@ -182,6 +182,6 @@ if __name__ == "__main__":
 #     check_pares("([]{}]")
 #     check_pares("(abbvbb[hhh]jhg{lkii288}9000)000fhjsh")
 #     check_pares("jkdsjckd(mfkk[fdjjfk],,,{kckjfc}jskdjkc]kkk")
- 
+
     suffix_demo()
     # suffix_exp_calculator()

@@ -6,7 +6,7 @@
 	Input:  [1,2,3,4]
 	Output: [24,12,8,6]
 	 1 1 2 6
-	 	12 8 6 
+	 	12 8 6
 '''
 
 class Solution(object):

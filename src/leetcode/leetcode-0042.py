@@ -28,4 +28,4 @@ class Solution(object):
         			result += (rightMax - height[right])
         		right -= 1
 
-        return result 
+        return result

@@ -22,7 +22,7 @@ class Solution(object):
         """
         if not nums:
         	return 0
-        	
+
         index_i = 0
 
         for index_j in range(1, len(nums)):

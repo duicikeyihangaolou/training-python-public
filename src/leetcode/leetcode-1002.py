@@ -3,7 +3,7 @@ Given an array A of strings made only from lowercase letters, return a list of a
 
 You may return the answer in any order.
 
- 
+
 
 Example 1:
 
@@ -27,7 +27,7 @@ class Solution(object):
                 char_map[char] += 1
             else:
                 char_map[char] = 1
-    
+
         int_map = {}
         for index in range(1, len(A)):
             for char in char_map.keys():
@@ -36,7 +36,7 @@ class Solution(object):
                     char_map[char] = char_count
                 else:
                     del char_map[char]
-                    
+
         result = []
         for key, value in char_map.items():
             result.extend([key]*value)

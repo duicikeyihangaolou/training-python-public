@@ -7,15 +7,15 @@ The bookstore owner knows a secret technique to keep themselves not grumpy for X
 
 Return the maximum number of customers that can be satisfied throughout the day.
 
- 
+
 
 Example 1:
 
 Input: customers = [1,0,1,2,1,1,7,5], grumpy = [0,1,0,1,0,1,0,1], X = 3
 Output: 16
-Explanation: The bookstore owner keeps themselves not grumpy for the last 3 minutes. 
+Explanation: The bookstore owner keeps themselves not grumpy for the last 3 minutes.
 The maximum number of customers that can be satisfied = 1 + 1 + 1 + 1 + 7 + 5 = 16.
- 
+
 
 Note:
 

@@ -37,8 +37,8 @@ class Trie(object):
         	if char not in node.children:
         		return False
         	node = node.children[char]
-        return node.word 
-        
+        return node.word
+
 
     def startsWith(self, prefix):
         """
@@ -52,7 +52,7 @@ class Trie(object):
         		return False
         	node = node.children[char]
         return True
-        
+
 
 
 # Your Trie object will be instantiated and called as such:

@@ -3,7 +3,7 @@ Given words first and second, consider occurrences in some text of the form "fir
 
 For each such occurrence, add "third" to the answer, and return the answer.
 
- 
+
 
 Example 1:
 
@@ -13,7 +13,7 @@ Example 2:
 
 Input: text = "we will we will rock you", first = "we", second = "will"
 Output: ["we","rock"]
- 
+
 
 Note:
 

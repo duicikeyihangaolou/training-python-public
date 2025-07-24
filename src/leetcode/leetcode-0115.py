@@ -47,4 +47,4 @@ class Solution(object):
         			dp[r][c] = dp[r-1][c]
         			if s[r-1] == t[c-1]:
         				dp[r][c] += dp[r-1][c-1]
-        return dp[row][col] 
+        return dp[row][col]

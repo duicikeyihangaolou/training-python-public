@@ -14,7 +14,7 @@ Example 1:
 Input:
 rows = 2, cols = 8, sentence = ["hello", "world"]
 
-Output: 
+Output:
 1
 
 Explanation:
@@ -27,11 +27,11 @@ Example 2:
 Input:
 rows = 3, cols = 6, sentence = ["a", "bcd", "e"]
 
-Output: 
+Output:
 2
 
 Explanation:
-a-bcd- 
+a-bcd-
 e-a---
 bcd-e-
 
@@ -41,7 +41,7 @@ Example 3:
 Input:
 rows = 4, cols = 5, sentence = ["I", "had", "apple", "pie"]
 
-Output: 
+Output:
 1
 
 Explanation:

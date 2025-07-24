@@ -24,7 +24,7 @@ class Solution(object):
         def backtracking(S, left, right):
         	if len(S) == 2*n:
         		result.append(S)
-        		return 
+        		return
 
         	if left < n:
         		backtracking(S+'(', left+1, right)

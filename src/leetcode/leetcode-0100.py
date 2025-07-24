@@ -29,7 +29,7 @@ class Solution(object):
         :rtype: bool
         """
         if not p and not q:
-        	return True 
+        	return True
 
         stack = [(p, q)]
 
@@ -40,6 +40,6 @@ class Solution(object):
         		stack.append((node1.right, node2.right))
         	else:
         		if not node1 == node2:
-        			return False 
+        			return False
 
         return True

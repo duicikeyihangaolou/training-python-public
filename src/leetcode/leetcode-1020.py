@@ -5,21 +5,21 @@ A move consists of walking from one land square 4-directionally to another land 
 
 Return the number of land squares in the grid for which we cannot walk off the boundary of the grid in any number of moves.
 
- 
+
 
 Example 1:
 
 Input: [[0,0,0,0],[1,0,1,0],[0,1,1,0],[0,0,0,0]]
 Output: 3
-Explanation: 
+Explanation:
 There are three 1s that are enclosed by 0s, and one 1 that isn't enclosed because its on the boundary.
 Example 2:
 
 Input: [[0,1,1,0],[0,0,1,0],[0,0,1,0],[0,0,0,0]]
 Output: 0
-Explanation: 
+Explanation:
 All 1s are either on the boundary or can reach the boundary.
- 
+
 
 Note:
 
@@ -42,19 +42,19 @@ class Solution(object):
                 result += A[row][col]
                 if (row*col == 0 or row == len(A)-1 or col == len(A[0])-1) and A[row][col] == 1:
                     queue.append((row, col))
-                    
+
         x_move = [-1, 0, 1, 0]
         y_move = [0, 1, 0, -1]
-        
+
         while queue:
             x, y = queue.pop(0)
             A[x][y] = 0
             result -= 1
-            
+
             for xm, ym in zip(x_move, y_move):
                 nx = x + xm
                 ny = y + ym
-                
+
                 if 0<= nx <len(A) and 0 <= ny < len(A[0]) and A[nx][ny] == 1 and (nx, ny) not in queue:
                     queue.append((nx, ny))
 

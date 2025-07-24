@@ -25,7 +25,7 @@ class Solution(object):
         	result = s[index]
 
         length = 2
-        
+
         while length <= len(s):
         	index_i = 0
         	while index_i < len(s) - length + 1:

@@ -34,7 +34,7 @@ class Solution(object):
         :type intervals: List[Interval]
         :rtype: List[Interval]
         """
-        
+
         intervals = sorted(intervals, key= compare)
         # intervals.sort(key=lambda x: x.start)
         merged = []

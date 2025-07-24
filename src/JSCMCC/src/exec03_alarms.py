@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*- 
+# -*- coding: UTF-8 -*-
 import pandas as pd
 import time
 from exec01_count import getCityData, getProvinceData, getBsDataFromCache
@@ -8,7 +8,7 @@ def filterAlarmData(alarmData, tsStart, tsEnd):
     alarmData = alarmData[alarmData['网管告警ID'] == '007-103-00-040012']
     alarmData = alarmData[(alarmData['工程状态'] != '退网')
                           & (alarmData['工程状态'] != '工程')]
-    alarmData = alarmData[(alarmData['告警发生时间'] < tsEnd) & 
+    alarmData = alarmData[(alarmData['告警发生时间'] < tsEnd) &
                           (alarmData['告警恢复时间'] >= tsStart)]
     return alarmData
 
@@ -19,7 +19,7 @@ def buildAlarmCount(alarmData):
     alarmCount.sort_values(by=['告警时间'], inplace=True)
     alarmCount['Count'] = 0
     alarmCount.reset_index(inplace=True, drop=True)
-    
+
     zoneSet = set(alarmCount['地市'])
     zoneDict = dict(zip(zoneSet, [0]*len(zoneSet)))
     for i,delta,zone in zip(alarmCount.index, alarmCount['Delta'],
@@ -48,7 +48,7 @@ def buildAlarmStat(alarmCount, num, alarmId, alarmName):
     alarmStat['网管告警ID'] = alarmId
     alarmStat['告警标题'] = alarmName
     return alarmStat
- 
+
 if __name__ == '__main__':
     startTime = time.time()
     provinceData = getProvinceData(r'../data/省区域.csv')
@@ -64,7 +64,7 @@ if __name__ == '__main__':
     alarmStat1 = buildAlarmStat(alarmCount, 150, '007-103-00-840001', '本地网大面积断站一级预警')
     alarmStat = pd.concat([alarmStat1, alarmStat2], axis=0)
     alarmStat['告警对象名称'] = alarmStat['告警对象ID'].apply(lambda x:cityData.loc[x]['区域名称'])
-    
+
     columns = ['网管告警ID', '告警发生时间', '告警恢复时间', '告警对象名称', '告警标题', '告警对象ID']
     output = open(r'../tmp/alarms.csv', 'w', encoding='utf-8')
     for _i, row in alarmStat.iterrows():

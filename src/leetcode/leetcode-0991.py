@@ -7,7 +7,7 @@ Initially, the calculator is displaying the number X.
 
 Return the minimum number of operations needed to display the number Y.
 
- 
+
 
 Example 1:
 

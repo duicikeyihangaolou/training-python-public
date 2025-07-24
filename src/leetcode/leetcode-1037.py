@@ -3,7 +3,7 @@ A boomerang is a set of 3 points that are all distinct and not in a straight lin
 
 Given a list of three points in the plane, return whether these points are a boomerang.
 
- 
+
 
 Example 1:
 
@@ -13,7 +13,7 @@ Example 2:
 
 Input: [[1,1],[2,2],[3,3]]
 Output: false
- 
+
 
 Note:
 

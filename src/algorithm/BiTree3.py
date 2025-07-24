@@ -102,8 +102,7 @@ if __name__ == '__main__':
     later_rec(root)
     postOrder = ','.join(map(str, postOrderList))
     print(postOrder)
-    
+
 #     print(_checkNodeInBiTree(root, 6))
     print(findNearestPreNode_Rec(root, 6, 8))
     print(findNearestPreNode_Stack(root, 6, 8))
-    

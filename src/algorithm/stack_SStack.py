@@ -1,11 +1,11 @@
-""" a stack class implemented using Python list 
+""" a stack class implemented using Python list
 """
 
 class StackUnderflow(ValueError):
     pass
 
 # 用列表实现栈
-class SStack(): 
+class SStack():
     def __init__(self):
         self.elems = []
     def is_empty(self):
@@ -21,7 +21,7 @@ class SStack():
             raise StackUnderflow
         return self.elems.pop()
 
-    
+
 if __name__ == '__main__':
     st = SStack()
     st.push(1)

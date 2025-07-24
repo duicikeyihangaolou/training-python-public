@@ -3,7 +3,7 @@ Given a positive integer K, you need find the smallest positive integer N such t
 
 Return the length of N.  If there is no such N, return -1.
 
- 
+
 
 Example 1:
 

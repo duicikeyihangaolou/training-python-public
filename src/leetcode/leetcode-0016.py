@@ -15,7 +15,7 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        
+
         nums.sort()
         result, min_diff = 0, float('inf')
 

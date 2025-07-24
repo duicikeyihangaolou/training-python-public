@@ -3,7 +3,7 @@ In a warehouse, there is a row of barcodes, where the i-th barcode is barcodes[i
 
 Rearrange the barcodes so that no two adjacent barcodes are equal.  You may return any answer, and it is guaranteed an answer exists.
 
- 
+
 
 Example 1:
 
@@ -13,7 +13,7 @@ Example 2:
 
 Input: [1,1,1,1,2,2,3,3]
 Output: [1,3,1,3,2,1,2,1]
- 
+
 
 Note:
 
@@ -37,13 +37,13 @@ class Solution(object):
             freq1, barcode1 = heapq.heappop(pq)
             freq2, barcode2 = heapq.heappop(pq)
             result.extend([barcode1, barcode2])
-            
-            if freq1 + 1: 
+
+            if freq1 + 1:
                 heapq.heappush(pq, (freq1 + 1, barcode1))
-            if freq2 + 1: 
+            if freq2 + 1:
                 heapq.heappush(pq, (freq2 + 1, barcode2))
-                
+
         if pq:
             result.append(pq[0][1])
-        
+
         return result

@@ -10,7 +10,7 @@ The passes allow that many days of consecutive travel.  For example, if we get a
 
 Return the minimum number of dollars you need to travel every day in the given list of days.
 
- 
+
 
 Example 1:
 

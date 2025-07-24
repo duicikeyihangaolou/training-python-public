@@ -1,7 +1,7 @@
 '''
 	Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
 
-	Note: 
+	Note:
 	You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
 
 	Example 1:
@@ -24,7 +24,7 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        
+
         if not root:
         	return 0
 

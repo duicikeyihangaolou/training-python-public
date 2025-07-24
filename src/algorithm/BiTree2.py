@@ -20,7 +20,7 @@ class Tree(object):
     def __init__(self):
         self.root = Node()
         self.myQueue = []
-    
+
     def __repr__(self):
         return str(self.root)
 
@@ -137,20 +137,20 @@ if __name__ == '__main__':
     """主函数"""
     elems = range(10)           #生成十个数据作为树节点
     tree = Tree()          #新建一个树对象
-    for elem in elems:                  
+    for elem in elems:
         tree.add(elem)           #逐个添加树的节点
         print(tree)
 
     print('队列实现层次遍历:')
     tree.level_queue(tree.root)
- 
+
 #     print('\n\n递归实现先序遍历:')
 #     tree.front_digui(tree.root)
 #     print('\n递归实现中序遍历:')
 #     tree.middle_digui(tree.root)
 #     print('\n递归实现后序遍历:')
 #     tree.later_digui(tree.root)
-# 
+#
 #     print('\n\n堆栈实现先序遍历:')
 #     tree.front_stack(tree.root)
 #     print('\n堆栈实现中序遍历:')

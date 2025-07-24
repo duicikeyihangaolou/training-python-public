@@ -28,7 +28,7 @@ class Solution(object):
 
         while left < len(matrix) and right >= 0:
         	if matrix[left][right] == target:
-        		return True 
+        		return True
         	elif matrix[left][right] < target:
         		left += 1
         	else:

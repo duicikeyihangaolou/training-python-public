@@ -60,7 +60,7 @@ class Solution(object):
 
         def recursive(root, result):
         	if not root:
-        		return 
+        		return
         	result.append(root.val)
         	recursive(root.left, result)
         	recursive(root.right, result)

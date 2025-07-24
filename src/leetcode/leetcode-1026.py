@@ -14,14 +14,14 @@ Example 1:
 
 Input: [8,3,10,1,6,null,14,null,null,4,7,13]
 Output: 7
-Explanation: 
+Explanation:
 We have various ancestor-node differences, some of which are given below :
 |8 - 3| = 5
 |3 - 7| = 4
 |8 - 1| = 7
 |10 - 13| = 3
 Among all possible differences, the maximum value of 7 is obtained by |8 - 1| = 7.
- 
+
 
 Note:
 
@@ -37,13 +37,13 @@ Each node will have value between 0 and 100000.
 #         self.right = None
 
 class Solution(object):
-    
+
     def maxAncestorDiff(self, root):
         """
         :type root: TreeNode
         :rtype: int
         """
-        
+
         def utility_fun(root, res):
             if not root:
                 return 2147483648, -2147483648, res
@@ -53,10 +53,10 @@ class Solution(object):
             right_t, rmax_t, res = utility_fun(root.right, res)
             m_val = min(left_t, right_t)
             max_val = max(lmax_t, rmax_t)
-                
+
             res = max(res, max(abs(root.val-m_val), abs(root.val-max_val)))
             # print res
             return min(m_val, root.val), max(max_val, root.val), res
-        
+
         x, x2, res = utility_fun(root, -2147483648)
         return abs(res)

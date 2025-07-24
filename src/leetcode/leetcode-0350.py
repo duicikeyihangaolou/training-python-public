@@ -20,7 +20,7 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: List[int]
         """
-        
+
         nums1.sort()
         nums2.sort()
 

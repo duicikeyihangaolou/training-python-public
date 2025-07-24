@@ -10,7 +10,7 @@ You are given trust, an array of pairs trust[i] = [a, b] representing that the p
 
 If the town judge exists and can be identified, return the label of the town judge.  Otherwise, return -1.
 
- 
+
 
 Example 1:
 
@@ -39,10 +39,9 @@ class Solution(object):
                 mapping[truste_list[1]] += 1
             else:
                 mapping[truste_list[1]] = 1
-            
+
         unique_set = len(unique)
         for key, value in mapping.items():
             if value == unique_set:
                 return key
         return -1
-        

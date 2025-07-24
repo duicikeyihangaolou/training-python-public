@@ -9,7 +9,7 @@ Also, if a player cannot make a move, they lose the game.
 
 Return True if and only if Alice wins the game, assuming both players play optimally.
 
- 
+
 
 Example 1:
 
@@ -21,7 +21,7 @@ Example 2:
 Input: 3
 Output: false
 Explanation: Alice chooses 1, Bob chooses 1, and Alice has no more moves.
- 
+
 
 Note:
 
@@ -36,7 +36,7 @@ class Solution(object):
         """
         if N == 0:
             return False
-    
+
         move = 0
         while N > 1:
             for num in range(1, N):

@@ -9,7 +9,7 @@ You may assume no duplicate exists in the array.
 
 Example 1:
 
-Input: [3,4,5,1,2] 
+Input: [3,4,5,1,2]
 Output: 1
 Example 2:
 
@@ -35,7 +35,7 @@ class Solution(object):
         while left <= right:
         	while nums[left] == nums[right] and left != right:
         		left += 1
-        		
+
         	if nums[left] <= nums[right]:
         		return nums[left]
 

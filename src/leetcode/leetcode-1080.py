@@ -5,7 +5,7 @@ A node is insufficient if every such root to leaf path intersecting this node ha
 
 Delete all insufficient nodes simultaneously, and return the root of the resulting binary tree.
 
- 
+
 
 Example 1:
 
@@ -19,7 +19,7 @@ Example 2:
 Input: root = [5,4,8,11,null,17,4,7,1,null,null,5,3], limit = 22
 
 Output: [5,4,8,11,null,17,4,7,null,null,null,5]
- 
+
 
 Example 3:
 
@@ -27,7 +27,7 @@ Example 3:
 Input: root = [1,2,-3,-5,null,4,null], limit = -1
 
 Output: [1,null,-3,4]
- 
+
 
 Note:
 
@@ -53,13 +53,13 @@ class Solution(object):
         def reduce_tree(root, limit, curr_sum):
             if not root:
                 return None
-            
+
             l_sum = [curr_sum[0] + root.val]
             r_sum = [l_sum[0]]
-            
+
             root.left = reduce_tree(root.left, limit, l_sum)
             root.right = reduce_tree(root.right, limit, r_sum)
-            
+
             curr_sum[0] = max(l_sum[0], r_sum[0])
             if curr_sum[0] < limit:
                 root = None

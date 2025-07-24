@@ -24,4 +24,4 @@ class Solution:
                     q.append(i+k-1)
             if q and q[0] == i: q.popleft()
             if q and q[-1] >= len(a): return -1
-        return res    
+        return res

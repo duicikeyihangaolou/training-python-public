@@ -4,7 +4,7 @@ Given two integers A and B, return any string S such that:
 S has length A + B and contains exactly A 'a' letters, and exactly B 'b' letters;
 The substring 'aaa' does not occur in S;
 The substring 'bbb' does not occur in S.
- 
+
 
 Example 1:
 
@@ -20,7 +20,7 @@ class Solution(object):
         :type B: int
         :rtype: str
         """
-        
+
         result = ''
         if A > B:
             while B > 0 and A > 0:
@@ -58,5 +58,5 @@ class Solution(object):
                 result += 'a'*A
             if B > 0:
                 result += 'b'*B
-                
+
         return result

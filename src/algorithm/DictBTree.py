@@ -1,4 +1,4 @@
-""" Dictionary and searching 
+""" Dictionary and searching
 """
 
 from BiTree1 import BiTNode
@@ -26,7 +26,7 @@ class DictBTree:
     def preorder(self):
         t, s = self._root, SStack()
         while t is not None or not s.is_empty():
-            while t is not None: 
+            while t is not None:
                 s.push(t.right)
                 yield t.data
                 t = t.left
@@ -73,7 +73,7 @@ class DictBTree:
             else:
                 bt.data.value = value
                 return
-    
+
     def delete(self, key):
         p, q = None, self._root # keep p the parent of q
         while q is not None and q.data.key != key:
@@ -84,7 +84,7 @@ class DictBTree:
         # Now q refers to key node, p is its parent or _root
         if q.left == None: # q has no left child
             if p == None: self._root = q.right # q == self._root
-            elif q == p.left: p.left = q.right 
+            elif q == p.left: p.left = q.right
             else: p.right = q.right # here q == p.right
             return
         r = q.left
@@ -116,6 +116,6 @@ if __name__ == '__main__':
         print(entry.key, entry.value)
 
     pass
-        
-    
+
+
 

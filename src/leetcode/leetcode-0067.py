@@ -21,7 +21,7 @@ class Solution(object):
         :type b: str
         :rtype: str
         """
-        
+
         result = ""
 
         carry = 0

@@ -30,7 +30,7 @@ class Solution(object):
         """
         if not root:
             return []
-        
+
         stack, result = [root], []
         while stack:
             if root.left:
@@ -39,7 +39,7 @@ class Solution(object):
             else:
                 node = stack.pop()
                 result.append(node.val)
-                
+
                 if node.right:
                     stack.append(node.right)
                     root = node.right

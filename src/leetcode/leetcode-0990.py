@@ -3,7 +3,7 @@ Given an array equations of strings that represent relationships between variabl
 
 Return true if and only if it is possible to assign integers to variable names so as to satisfy all the given equations.
 
- 
+
 
 Example 1:
 
@@ -38,7 +38,7 @@ class Solution(object):
                 if x == y:
                     return False
                 unequal_list.append([x, y])
-        
+
         for val in unequal_list:
             for equal in equal_list:
                 if val[0] in equal and val[1] in equal:

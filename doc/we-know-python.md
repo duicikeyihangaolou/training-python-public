@@ -45,6 +45,7 @@
 |       |    | Ansible 与容器技术集成        | [Ansible 和容器技术](automation.md#24-ansible-与容器技术)             |
 |       |    |                        | [Ansible 和云平台](automation.md#25-ansible-与云平台)               |
 |       |    | Ansible 与 GitOps 自动化部署 | [3.1 Git 和 GitOps 运维脚本](#31-版本控制)                           |
+|       |    |                        | [CICD](automation.md#34-cicd)                               |
 |       |    |                        | [4.3 自动化部署](#43-服务部署)                                       |
 
 ## 1. 基础
@@ -2482,6 +2483,8 @@ demo，[Github](https://github.com/duicikeyihangaolou/fastapi-demo)，[Gitee](ht
 
 参考：fastapi todolist
 demo，[Github](https://github.com/duicikeyihangaolou/fastapi-todo-list-demo)，[Gitee](https://gitee.com/duicikeyihangaolou/fastapi-todo-list-demo)
+
+参考：ansible-dashboard demo：[Github](https://github.com/duicikeyihangaolou/project-ansible-dashboard)
 
 ### 4.3 服务部署
 

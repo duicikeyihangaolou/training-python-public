@@ -18,7 +18,7 @@ class Solution(object):
         :type p: str
         :rtype: bool
         """
-        
+
         if len(p) == 0:
         	return len(s) == 0
 

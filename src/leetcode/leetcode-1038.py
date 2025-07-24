@@ -6,12 +6,12 @@ As a reminder, a binary search tree is a tree that satisfies these constraints:
 The left subtree of a node contains only nodes with keys less than the node's key.
 The right subtree of a node contains only nodes with keys greater than the node's key.
 Both the left and right subtrees must also be binary search trees.
- 
+
 
 Example 1:
 Input: [4,1,6,0,2,5,7,null,null,null,3,null,null,null,8]
 Output: [30,36,21,36,35,26,15,null,null,null,33,null,null,null,8]
- 
+
 
 Note:
 
@@ -37,11 +37,11 @@ class Solution(object):
         self.curr_sum = 0
         def greaterSum(root):
             if not root:
-                return 
+                return
             greaterSum(root.right)
             self.curr_sum += root.val
             root.val = self.curr_sum
             greaterSum(root.left)
-        
+
         greaterSum(root)
         return root

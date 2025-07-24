@@ -21,14 +21,14 @@ Example 2:
 	   	   1
 	     /   \
        2	  5
-     /	     /    
-   3	    6	   
+     /	     /
+   3	    6
  /         /
 4		  7
 
 Input: "1-2--3---4-5--6---7"
 Output: [1,2,5,3,null,6,null,4,null,7]
- 
+
 
 Example 3:
 
@@ -36,11 +36,11 @@ Example 3:
 
 Input: "1-401--349---90--88"
 Output: [1,401,null,349,88,90]
- 
+
 
 Note:
 
-The number of nodes in the original tree is between 1 and 1000. 
+The number of nodes in the original tree is between 1 and 1000.
 Each node will have a value between 1 and 10^9.
 '''
 

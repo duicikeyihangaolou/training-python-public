@@ -1,9 +1,9 @@
 '''
-In a list of songs, the i-th song has a duration of time[i] seconds. 
+In a list of songs, the i-th song has a duration of time[i] seconds.
 
 Return the number of pairs of songs for which their total duration in seconds is divisible by 60.  Formally, we want the number of indices i < j with (time[i] + time[j]) % 60 == 0.
 
- 
+
 
 Example 1:
 
@@ -39,13 +39,13 @@ class Solution(object):
             result += count_arr[complement]
             count_arr[remainder] += 1
         return result
- 
+
  '''
-	Explanation: 
-	Q1: why create array of size 60? 
+	Explanation:
+	Q1: why create array of size 60?
 		it is similar to the map which store the count. Why only 60 because 60 modulo of number cannot be more than 60
 	Q2: why we need complement?
 		to check the pair if it exisit with given value or not example: if remainder is 20 then we need to check if we have any number with remainder 40 or not.
 	Q3: why 60 modulo complement?
-		for handle cause when remainder is zero 
+		for handle cause when remainder is zero
  '''

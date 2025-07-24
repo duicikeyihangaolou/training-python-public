@@ -28,9 +28,9 @@ class Solution(object):
         :type m: int
         :rtype: int
         """
-        
+
         left, right = max(nums), sum(nums)
-        
+
         while left < right:
             mid = left + ((right-left) >> 1)
             curr_sum, invalid, groups = 0, True, 0
@@ -47,4 +47,3 @@ class Solution(object):
             else:
                 left = mid + 1
         return left
- 

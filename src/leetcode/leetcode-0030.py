@@ -58,7 +58,7 @@ class Solution(object):
         	if index_j == numOfWords:
         		result.append(index)
 
-    	return 
+    	return
 
 # Time: O(N^2)
 # Space: O(N)

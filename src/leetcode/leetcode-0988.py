@@ -17,7 +17,7 @@ class Solution(object):
         :rtype: str
         """
         self.result = "~"
-        
+
         def dfs(node, A):
             if node:
                 A.append(chr(node.val + ord('a')))

@@ -1,4 +1,4 @@
-""" topological sort of direct graph 
+""" topological sort of direct graph
 """
 
 from 图.Graph import *
@@ -30,7 +30,7 @@ def toposort(graph):
     return toposeq
 
 
-""" generate critical path of AOE 
+""" generate critical path of AOE
 """
 
 # AOE 网，关键路径

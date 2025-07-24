@@ -17,7 +17,7 @@ class Solution(object):
         :type head: ListNode
         :rtype: bool
         """
-        
+
         if not head:
         	return False
 

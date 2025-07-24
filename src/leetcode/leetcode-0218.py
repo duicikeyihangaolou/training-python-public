@@ -16,7 +16,7 @@ class f(object):
 				return self.h < other.h
 			else:
 				return self.s > other.s
-            
+
 class Solution(object):
     def getSkyline(self, buildings):
         """
@@ -25,27 +25,27 @@ class Solution(object):
         """
         if len(buildings) == 0:
             return []
-        
+
         building_list = []
         for x in range(len(buildings)):
             building_list.append(f(buildings[x][0], buildings[x][2], 1))
             building_list.append(f(buildings[x][1], buildings[x][2], 0))
-            
+
         building_list = sorted(building_list)
         for buil in building_list:
             print buil.x, buil.h, buil.s
         heap = [0]
         result = []
         curr_max = heap[0]
-        
+
         for building in building_list:
             heapq._heapify_max(heap)
-            
+
             if building.s:
                 heap.append(building.h)
                 heapq._heapify_max(heap)
                 new_max = heap[0]
-                
+
                 if curr_max != new_max:
                     result.append([building.x, building.h])
                     curr_max = new_max
@@ -53,13 +53,12 @@ class Solution(object):
                 heap.remove(building.h)
                 heapq._heapify_max(heap)
                 new_max = heap[0]
-                
+
                 if new_max != curr_max:
                     result.append([building.x, new_max])
                     curr_max = new_max
-                    
+
         return result
-                
-            
-            
-        
+
+
+

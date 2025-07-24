@@ -54,7 +54,7 @@ def partition(alist,first,last):
     pivot = alist[first]
     l = first+1
     r = last
-    
+
     done = False
     while not done:
         while l <= r and alist[l] <= pivot:
@@ -169,18 +169,18 @@ def heap_sort(arr):
 if __name__ == '__main__':
     iterObj = [1, 9, 7, 3, 2, 0, 81, 9, 32, 2, 6]
     exp = [0, 1, 2, 2, 3, 6, 7, 9, 9, 32, 81]
-    
+
     def _assertEqual(a, b, prefix):
         msg = 'pass'
         if a != b:
             msg = 'Error! %s != %s' % (a, b)
         print('[%s]: %s' % (prefix, msg))
-        
+
     def _testAlgo(algo):
         arr = list(iterObj)
         algo(arr)
         _assertEqual(arr, exp, algo.__name__)
-    
+
     selfMod = __import__(__name__)
     algoList = [v for k,v in selfMod.__dict__.items()
                 if k.endswith('_sort') and callable(v)]

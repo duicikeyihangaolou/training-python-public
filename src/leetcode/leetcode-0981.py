@@ -20,7 +20,7 @@ class TimeMap(object):
         """
         self.time_dict = {}
         self.key_map = {}
-        
+
 
     def set(self, key, value, timestamp):
         """
@@ -35,9 +35,9 @@ class TimeMap(object):
         else:
             self.time_dict[key] = [timestamp]
             self.key_map[key] = [value]
-        
-        
-        
+
+
+
 
     def get(self, key, timestamp):
         """
@@ -52,7 +52,7 @@ class TimeMap(object):
                 return ''
 
             return self.key_map[key][index-1]
-        
+
 
 
 # Your TimeMap object will be instantiated and called as such:

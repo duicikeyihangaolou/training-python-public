@@ -22,8 +22,8 @@ class MinStack(object):
         """
         initialize your data structure here.
         """
-        self.stack = []  
-        self.minimum = float('inf')      
+        self.stack = []
+        self.minimum = float('inf')
 
     def push(self, x):
         """
@@ -41,7 +41,7 @@ class MinStack(object):
         		self.stack.append(x)
 
         print self.stack
-                
+
 
     def pop(self):
         """
@@ -51,7 +51,7 @@ class MinStack(object):
         	top = self.stack.pop()
         	if top < self.minimum:
         		self.minimum = 2*self.minimum - top
-        
+
 
     def top(self):
         """
@@ -65,7 +65,7 @@ class MinStack(object):
         		return self.minimum
         	else:
         		return top
-        
+
 
     def getMin(self):
         """

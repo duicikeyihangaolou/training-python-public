@@ -3,7 +3,7 @@ Given an array A of integers, we must modify the array in the following way: we 
 
 Return the largest possible sum of the array after modifying it in this way.
 
- 
+
 
 Example 1:
 
@@ -20,7 +20,7 @@ Example 3:
 Input: A = [2,-3,-1,5,-4], K = 2
 Output: 13
 Explanation: Choose indices (1, 4) and A becomes [2,3,-1,5,4].
- 
+
 
 Note:
 

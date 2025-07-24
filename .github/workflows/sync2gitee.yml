@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - uses: wearerequired/git-mirror-action@master 
+      - uses: wearerequired/git-mirror-action@master
         env:
           SSH_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
         with:

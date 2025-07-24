@@ -24,7 +24,7 @@ class Solution(object):
  		for index in range(1, len(dp[0])):
             if p[index-1] == '*':
                 dp[0][index] = dp[0][index - 2]
-                
+
         for index_i in range(1, len(dp)):
         	for index_j in range(1, len(dp[0])):
         		if s[index_i - 1] == p[index_j - 1] or p[index_j - 1] == '.':
@@ -40,4 +40,3 @@ class Solution(object):
 
 
         return dp[len(s)][len(p)]
-        

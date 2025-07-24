@@ -11,7 +11,7 @@ class Solution(object):
         :type height: List[int]
         :rtype: int
         """
-        left, right, maxArea = 0, len(height) - 1, 0 
+        left, right, maxArea = 0, len(height) - 1, 0
 
         while left < right:
         	maxArea = max(maxArea, min(height[left], height[right])*(right-left))
@@ -20,7 +20,7 @@ class Solution(object):
         	else:
         		right -= 1
 
-        return maxArea 
+        return maxArea
 
 # Space : O(1)
 # Time: O(N)

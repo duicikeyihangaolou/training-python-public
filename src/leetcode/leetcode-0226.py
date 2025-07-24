@@ -59,7 +59,7 @@ class Solution(object):
         """
         if not root:
         	return None
-        
+
         queue = [root]
         while queue:
         	node = queue.pop(0)

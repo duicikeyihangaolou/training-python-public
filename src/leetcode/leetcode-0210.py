@@ -9,9 +9,9 @@
 
 	Example 1:
 
-	Input: 2, [[1,0]] 
+	Input: 2, [[1,0]]
 	Output: [0,1]
-	Explanation: There are a total of 2 courses to take. To take course 1 you should have finished   
+	Explanation: There are a total of 2 courses to take. To take course 1 you should have finished
 	             course 0. So the correct course order is [0,1] .
 '''
 

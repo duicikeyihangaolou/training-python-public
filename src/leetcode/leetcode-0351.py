@@ -11,7 +11,7 @@ Explanation:
 | 1 | 2 | 3 |
 | 4 | 5 | 6 |
 | 7 | 8 | 9 |
-Invalid move: 4 - 1 - 3 - 6 
+Invalid move: 4 - 1 - 3 - 6
 Line 1 - 3 passes through key 2 which had not been selected in the pattern.
 
 Invalid move: 4 - 1 - 9 - 2
@@ -34,7 +34,7 @@ class Solution(object):
 				return 0
 			if reamin == 0:
 				return 1
-			visited[current] = True 
+			visited[current] = True
 			result = 0
 			for index in range(1, 10):
 				if not visited[index] and (skip[current][index] == 0 || visited[skip[current][index]])

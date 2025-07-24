@@ -17,7 +17,7 @@ class Trie(object):
                 curr = curr.links[offset]
             curr.value = word
         return
-        
+
 class Solution(object):
     def helper(self, x, y, board, trie_node, result):
         if trie_node.value:
@@ -28,7 +28,7 @@ class Solution(object):
                 self.helper(x1, y1, board, trie_node.links[ord(ch)-ord('a')], result)
                 board[x1][y1] = ch
         return
-    
+
     def findWords(self, board, words):
         """
         :type board: List[List[str]]
@@ -41,8 +41,8 @@ class Solution(object):
         result = set([])
         for i in range(len(board)):
             for j in range(len(board[0])):
-                if trie.root.links[ord(board[i][j])-ord('a')]: 
+                if trie.root.links[ord(board[i][j])-ord('a')]:
                     ch, board[i][j] = board[i][j], -1
                     self.helper(i, j, board, trie.root.links[ord(ch)-ord('a')], result)
                     board[i][j] = ch
-        return [x for x in result]    
+        return [x for x in result]

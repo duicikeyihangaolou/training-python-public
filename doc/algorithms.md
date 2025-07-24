@@ -701,7 +701,7 @@ if __name__ == '__main__':
             //求节点root的深度
             int maxDepth(TreeNode* root) {
                 //终止条件
-                if(root == NULL){ 
+                if(root == NULL){
                     return 0;
                 }
 
@@ -1368,7 +1368,7 @@ if __name__ == '__main__':
 ```python
 def greatestCommonDivisor(m, n):
     if m < n:
-    m, n = n, m 
+    m, n = n, m
     if m % n == 0:
     return n
     return greatestCommonDivisor(n, m % n)
@@ -1752,7 +1752,7 @@ print(greatestCommonDivisor(16, 12))
           # Visited to make sure we don't repeat processing same word.
           visited = {beginWord: True}
           while queue:
-              current_word, level = queue.pop(0)      
+              current_word, level = queue.pop(0)
               for i in range(L):
                   # Intermediate words for current word
                   intermediate_word = current_word[:i] + "*" + current_word[i+1:]
@@ -1802,7 +1802,7 @@ print(greatestCommonDivisor(16, 12))
           retList = []
 
           while queue:
-              current_word, level, current_path = queue.pop(0)      
+              current_word, level, current_path = queue.pop(0)
               # print(current_word, level, current_path)
               if retList and level >= len(retList[0]):
                   continue

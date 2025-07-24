@@ -1,4 +1,4 @@
-""" topological sort of direct graph 
+""" topological sort of direct graph
 """
 
 infinity = float("inf")
