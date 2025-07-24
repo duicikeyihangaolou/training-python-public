@@ -616,7 +616,8 @@ Prerequisite：
       ```bash
       docker stop rest-api-demo
       docker rm rest-api-demo
-      docker run -d -p 9999:8888 --name=rest-api-demo maodouzi/rest-api-demo:3.9.6
+      # docker run -d -p 9999:8888 --name=rest-api-demo maodouzi/rest-api-demo:3.9.6
+      docker run -d -p 9999:8888 --name=rest-api-demo registry.cn-shanghai.aliyuncs.com/99cloud-sh/rest-api-demo:3.9.6
 
       # 访问：http://<外网IP>:9999/api/
       ```
@@ -1076,7 +1077,8 @@ class TelClient(base.TelClient):
 ```bash
 docker stop rest-api-demo
 docker rm rest-api-demo
-docker run -d -p 9999:8888 --name=rest-api-demo maodouzi/rest-api-demo:3.9.6
+# docker run -d -p 9999:8888 --name=rest-api-demo maodouzi/rest-api-demo:3.9.6
+docker run -d -p 9999:8888 --name=rest-api-demo registry.cn-shanghai.aliyuncs.com/99cloud-sh/rest-api-demo:3.9.6
 ```
 
 测试脚本：
