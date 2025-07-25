@@ -1952,6 +1952,8 @@ AI 生成的危险 Playbook
 
 ```bash
 # 1. 使用ansible-lint检查潜在问题
+# apt install ansible-lint
+# 虚拟环境下，pip install ansible-lint
 ansible-lint dangerous_playbook.yml
 
 # 2. 人工审查高风险模块
@@ -2036,7 +2038,7 @@ AI 生成的冗余 Playbook
 ```yaml
 # 冗余的任务
 - name: 部署Web应用
-  hosts: webservers
+  hosts: localhost
   tasks:
     - name: 安装Python
       apt:
@@ -2095,7 +2097,7 @@ AI 生成的冗余 Playbook
 ```yaml
 # 优化后的任务
 - name: 部署Web应用
-  hosts: webservers
+  hosts: localhost
   tasks:
     - name: 批量安装系统包
       package:
@@ -2113,26 +2115,6 @@ AI 生成的冗余 Playbook
           - flask-restful
           - flask-sqlalchemy
         state: present
-
-    - name: 确保目录存在
-      file:
-        path: /var/www/myapp
-        state: directory
-        mode: 0755
-      become: true
-
-    - name: 复制应用代码
-      copy:
-        src: app/
-        dest: /var/www/myapp/
-
-    - name: 启动应用（使用systemd）
-      systemd:
-        name: myapp
-        state: started
-        enabled: true
-        daemon_reload: true
-      become: true
 ```
 
 验证重构效果
@@ -2317,7 +2299,7 @@ localhost  # 本地部署，也可替换为远程主机IP
 
 ```yaml
 - name: 部署 REST API Demo 容器
-  hosts: docker-host
+  hosts: localhost
   gather_facts: yes
   become: true  # 需要root权限
 
@@ -2327,6 +2309,11 @@ localhost  # 本地部署，也可替换为远程主机IP
         name: docker.io
         state: present
       when: ansible_os_family == "Debian"  # 仅适用于Debian/Ubuntu
+
+    - name: 安装 requests 库
+      pip:
+        name: requests
+        state: present
 
     - name: 确保Docker服务运行
       service:
