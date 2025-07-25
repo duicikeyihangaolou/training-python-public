@@ -2238,7 +2238,7 @@ ansible-playbook defensive_playbook.yml --check
 
 - 作业：安装 Ansible Docker 模块
 
-部署 Django 应用，参考：[Github](https://github.com/duicikeyihangaolou/ZZLARGE-Project-DjangoTest) 或
+部署 Django 应用，参考：[Github](https://github.com/duicikeyihangaolou/lab-django) 或
 [Gitee](https://gitee.com/duicikeyihangaolou/lab-django/)
 
 - 作业：通过 Docker 部署容器应用
