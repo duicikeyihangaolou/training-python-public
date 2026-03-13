@@ -6,6 +6,7 @@
 ## 学习进度安排
 
 - [Python 学习讲义](doc/we-know-python.md)
+- [Python AI 编程](doc/we-know-python-coding-with-ai.md)
 
 ## 参考
 

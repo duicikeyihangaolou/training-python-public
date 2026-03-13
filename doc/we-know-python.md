@@ -1080,6 +1080,31 @@ Python 语法
     - `return 3,5` == `return (3,5)`
     - `a, b = fun()` == `aTuple = fun(); a, b = aTuple`
 
+- 类型标注（PEP 484）
+  - Python 3.5+ 支持在形参和返回值上写类型标注，**运行时不会做类型检查**，但可供 IDE 补全、mypy 等工具做静态分析和提示，提升可读性与可维护性。
+  - 写法：`def 函数名(形参: 类型, ...) -> 返回类型:`；无返回值时写 `-> None`。
+  - 常用类型：`int` / `str` / `float` / `bool`、`list[str]`（Python 3.9+）或
+    `List[str]`（`typing`）、`dict[str, int]` 或 `Dict[str, int]`、`Optional[T]` 或 `T | None` 表示可为
+    `None`。
+  - 示例：带类型标注的函数
+
+    ```python
+    def add(a: int, b: int = 3) -> int:
+        """两数相加，默认 b=3。"""
+        return a + b
+
+    def parse_int(value: str, default: int | None = None) -> int | None:
+        """将字符串转为整数；失败时返回 default（若为 None 则抛出 ValueError）。"""
+        try:
+            return int(value.strip())
+        except ValueError:
+            if default is not None:
+                return default
+            raise ValueError(f"无法将 {value!r} 转为整数") from None
+    ```
+
+  - 可用 `mypy` 做静态检查：`pip install mypy`，`mypy 脚本名.py`（不改变运行时行为）。
+
 #### 2.1.2 高阶函数
 
 - Lambda 函数

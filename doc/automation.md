@@ -1440,7 +1440,8 @@ ansible-playbook site.yml -l webservers -e "nginx_port=8081"
 1. 必须用 AnsibleModule 作为入口
 2. 参数声明（`argument_spec`）,用 `argument_spec` 字典声明所有支持的参数、类型、是否必需、默认值等。支持类型有：str、int、bool、list、dict 等。
 3. 参数获取：通过 `module.params['参数名']` 获取传入的参数。
-4. 返回数据（输出）：用 module.exit_json(**result) 正常返回。用 module.fail_json(msg='错误信息', **result) 返回错误。返回数据必须是 JSON 可序列化的字典，常见字段有：changed（bool）：是否有变更；failed（bool）：是否失败；其他自定义字段
+4. 返回数据（输出）：用 module.exit_json(**result) 正常返回。用 module.fail_json(msg='错误信息', **result) 返回错误。返回数据必须是
+   JSON 可序列化的字典，常见字段有：changed（bool）：是否有变更；failed（bool）：是否失败；其他自定义字段
 5. changed 字段：必须返回 changed 字段，表示本次操作是否对目标系统做了更改。
 6. 支持 check_mode（可选）如果支持 check_mode，要在参数里加 supports_check_mode=True，并在代码里判断 module.check_mode。
 7. 错误处理：用 module.fail_json(msg='...') 返回错误，Ansible 会自动处理异常和输出。
