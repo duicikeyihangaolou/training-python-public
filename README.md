@@ -7,6 +7,7 @@
 
 - [Python 学习讲义](doc/we-know-python.md)
 - [Python AI 编程](doc/we-know-python-coding-with-ai.md)
+- [AI 赋能编程](doc/we-know-ai-coding.md)
 
 ## 参考
 
