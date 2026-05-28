@@ -6,11 +6,11 @@
 
 ## 框架介绍
 
-| 框架               | 开发者           | Stars      | 特点                              |
-| ---------------- | ------------- | ---------- | ------------------------------- |
-| **Hermes Agent** | Nous Research | 140k+      | GEPA 自优化、6 大消息平台、MIT 许可证        |
-| **OpenHuman**    | tinyhumans    | 10k+（快速增长） | Rust+Tauri、Memory Tree、118+ 数据源 |
-| **OpenClaw**     | 原 Clawdbot    | 370k+      | 50+ 平台集成，但有安全事件（慎用）             |
+| 框架             | 开发者        | Stars            | 特点                                  |
+| ---------------- | ------------- | ---------------- | ------------------------------------- |
+| **Hermes Agent** | Nous Research | 140k+            | GEPA 自优化、6 大消息平台、MIT 许可证 |
+| **OpenHuman**    | tinyhumans    | 10k+（快速增长） | Rust+Tauri、Memory Tree、118+ 数据源  |
+| **OpenClaw**     | 原 Clawdbot   | 370k+            | 50+ 平台集成，但有安全事件（慎用）    |
 
 ## Hermes Agent（推荐）
 
@@ -112,21 +112,23 @@ pip install -r requirements.txt
 
 ### 注意
 
-> ⚠️ 2026 年 3 月发生安全事件：4 天内发现 9 个 CVE，341 个恶意技能。建议仅用于学习，**不要在生产环境使用**。
+> ⚠️ 2026 年 3 月发生安全事件：4 天内发现 9 个 CVE，341
+> 个恶意技能。建议仅用于学习，**不要在生产环境使用**。
 
 ### 替代方案
 
-如果需要类似 OpenClaw 的多平台集成能力，推荐使用 **Hermes Agent**（支持 `hermes claw migrate` 导入 OpenClaw 工作流）。
+如果需要类似 OpenClaw 的多平台集成能力，推荐使用 **Hermes Agent**（支持 `hermes claw migrate` 导入
+OpenClaw 工作流）。
 
 ---
 
 ## 对比总结
 
-| 需求         | 推荐框架                             |
-| ---------- | -------------------------------- |
-| 快速落地、多平台消息 | **Hermes Agent**                 |
-| 桌面优先、本地隐私  | **OpenHuman**                    |
-| 学习研究（仅限）   | OpenClaw（仅学习，勿生产）                |
+| 需求                 | 推荐框架                          |
+| -------------------- | --------------------------------- |
+| 快速落地、多平台消息 | **Hermes Agent**                  |
+| 桌面优先、本地隐私   | **OpenHuman**                     |
+| 学习研究（仅限）     | OpenClaw（仅学习，勿生产）        |
 | 自托管、多数据源整合 | **Hermes Agent** 或 **OpenHuman** |
 
 ---

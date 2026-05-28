@@ -7,46 +7,46 @@
 
 ## 课程目录
 
-| 日程    | 时间 | 课程                     | 内容                                                          |
-| ----- | -- | ---------------------- | ----------------------------------------------------------- |
-| 第 1 天 | 上午 | Python 开发环境优化与 AI 工具集成 | [1.1 简介](#11-简介)                                            |
-|       |    |                        | [1.2 开发环境搭建](#12-开发环境搭建)                                    |
-|       |    |                        | [3.6 使用 AI 工具快速生成代码](#36-使用-ai-工具快速生成代码)                    |
-|       |    |                        | [3.2.4 没有 IDE 时的调试技巧](#324-pdb-调试)                          |
-|       |    |                        | [6.1.2 部署不同的 python 版本](#612-部署不同的-python-版本)               |
-|       |    | 动态类型与对象存储深度解析          | [1.3 变量和对象](#13-变量和对象)                                      |
-|       |    |                        | [1.4.1 & 1.4.2 数字](#141-整数对象int)                            |
-|       |    | 字符串处理与 Unicode         | [1.4.3 字符串](#143-字符串str)                                    |
-|       | 下午 | 常见算法和文件处理              | [1.4.4 & 1.4.5 对象的可变性](#144-元组tuple)                        |
-|       |    |                        | [1.4.6 & 1.4.7 & 1.4.8 序列和散列](#146-序列和散列)                   |
-|       |    |                        | [6.3 文件和目录](#63-文件和目录)                                      |
-|       |    | 函数的作用域陷阱与参数机制          | [2.1.1 函数](#211-函数的定义和调用)                                   |
-|       |    | 高阶函数                   | [2.1.2 高阶函数](#212-高阶函数)                                     |
-| 第 2 天 | 上午 | 面向对象与反射机制              | [2.2.1 类的定义和实例化](#221-类的定义和实例化)                             |
-|       |    | 运算符重载与并发编程             | [2.2.2 钩子方法和运算符重载](#222-钩子方法和运算符重载)                         |
-|       |    |                        | [2.2.3 继承和组合](#223-继承和组合)                                   |
-|       |    |                        | [6.2 父子进程调用](#62-父子进程调用)                                    |
-|       |    |                        | [6.4 并行计算](#64-并行计算)                                        |
-|       |    | 自动化测试框架实战              | [3.2 自动化测试](#32-自动化测试)                                      |
-|       |    |                        | [4.1 Web 开发原理](#41-mvc-框架)                                  |
-|       |    |                        | [4.2 Restful API](#42-restful-api)                          |
-|       |    |                        | [4.2 FastAPI 和 OpenAPI（Swagger）](#42-restful-api)           |
-|       | 下午 | Ansible 架构与应用场景        | [自动化运维框架](automation.md#21-自动化运维框架)                         |
-|       |    |                        | [Ansible 基础](automation.md#23-ansible-基础)                   |
-|       |    |                        | [Ansible 简介](automation.md#231-关于-ansible-你需要知道的二三事)        |
-|       |    | 环境部署与配置优化              | [Ansible 安装](automation.md#232-ansible-安装)                  |
-|       |    |                        | [SSH 配置](automation.md#232-配置-ssh)                          |
-|       |    | 主机清单与版本管理              | [动态 Inventory](automation.md#236-动态-inventory)              |
-|       |    |                        | [版本兼容性](automation.md#237-版本兼容性)                            |
-| 第 3 天 | 上午 | Playbook 基础语法与结构       | [Playbook 语法基础](automation.md#238-playbook-语法基础)            |
-|       |    | Playbook 高级编写技巧        | [Playbook 高级编写技巧](automation.md#239-playbook-高级编写技巧)        |
-|       |    | 自定义模块开发实战              | [自定义模块开发](automation.md#2310-自定义模块开发实战)                     |
-|       | 下午 | AI 辅助 Ansible 模块生成     | [AI 辅助 Ansible 模块生成](automation.md#2311-ai-辅助-ansible-模块生成) |
-|       |    | Ansible 与容器技术集成        | [Ansible 和容器技术](automation.md#24-ansible-与容器技术)             |
-|       |    |                        | [Ansible 和云平台](automation.md#25-ansible-与云平台)               |
-|       |    | Ansible 与 GitOps 自动化部署 | [3.1 Git 和 GitOps 运维脚本](#31-版本控制)                           |
-|       |    |                        | [CICD](automation.md#34-cicd)                               |
-|       |    |                        | [4.3 自动化部署](#43-服务部署)                                       |
+| 日程    | 时间 | 课程                              | 内容                                                                    |
+| ------- | ---- | --------------------------------- | ----------------------------------------------------------------------- |
+| 第 1 天 | 上午 | Python 开发环境优化与 AI 工具集成 | [1.1 简介](#11-简介)                                                    |
+|         |      |                                   | [1.2 开发环境搭建](#12-开发环境搭建)                                    |
+|         |      |                                   | [3.6 使用 AI 工具快速生成代码](#36-使用-ai-工具快速生成代码)            |
+|         |      |                                   | [3.2.4 没有 IDE 时的调试技巧](#324-pdb-调试)                            |
+|         |      |                                   | [6.1.2 部署不同的 python 版本](#612-部署不同的-python-版本)             |
+|         |      | 动态类型与对象存储深度解析        | [1.3 变量和对象](#13-变量和对象)                                        |
+|         |      |                                   | [1.4.1 & 1.4.2 数字](#141-整数对象int)                                  |
+|         |      | 字符串处理与 Unicode              | [1.4.3 字符串](#143-字符串str)                                          |
+|         | 下午 | 常见算法和文件处理                | [1.4.4 & 1.4.5 对象的可变性](#144-元组tuple)                            |
+|         |      |                                   | [1.4.6 & 1.4.7 & 1.4.8 序列和散列](#146-序列和散列)                     |
+|         |      |                                   | [6.3 文件和目录](#63-文件和目录)                                        |
+|         |      | 函数的作用域陷阱与参数机制        | [2.1.1 函数](#211-函数的定义和调用)                                     |
+|         |      | 高阶函数                          | [2.1.2 高阶函数](#212-高阶函数)                                         |
+| 第 2 天 | 上午 | 面向对象与反射机制                | [2.2.1 类的定义和实例化](#221-类的定义和实例化)                         |
+|         |      | 运算符重载与并发编程              | [2.2.2 钩子方法和运算符重载](#222-钩子方法和运算符重载)                 |
+|         |      |                                   | [2.2.3 继承和组合](#223-继承和组合)                                     |
+|         |      |                                   | [6.2 父子进程调用](#62-父子进程调用)                                    |
+|         |      |                                   | [6.4 并行计算](#64-并行计算)                                            |
+|         |      | 自动化测试框架实战                | [3.2 自动化测试](#32-自动化测试)                                        |
+|         |      |                                   | [4.1 Web 开发原理](#41-mvc-框架)                                        |
+|         |      |                                   | [4.2 Restful API](#42-restful-api)                                      |
+|         |      |                                   | [4.2 FastAPI 和 OpenAPI（Swagger）](#42-restful-api)                    |
+|         | 下午 | Ansible 架构与应用场景            | [自动化运维框架](automation.md#21-自动化运维框架)                       |
+|         |      |                                   | [Ansible 基础](automation.md#23-ansible-基础)                           |
+|         |      |                                   | [Ansible 简介](automation.md#231-关于-ansible-你需要知道的二三事)       |
+|         |      | 环境部署与配置优化                | [Ansible 安装](automation.md#232-ansible-安装)                          |
+|         |      |                                   | [SSH 配置](automation.md#232-配置-ssh)                                  |
+|         |      | 主机清单与版本管理                | [动态 Inventory](automation.md#236-动态-inventory)                      |
+|         |      |                                   | [版本兼容性](automation.md#237-版本兼容性)                              |
+| 第 3 天 | 上午 | Playbook 基础语法与结构           | [Playbook 语法基础](automation.md#238-playbook-语法基础)                |
+|         |      | Playbook 高级编写技巧             | [Playbook 高级编写技巧](automation.md#239-playbook-高级编写技巧)        |
+|         |      | 自定义模块开发实战                | [自定义模块开发](automation.md#2310-自定义模块开发实战)                 |
+|         | 下午 | AI 辅助 Ansible 模块生成          | [AI 辅助 Ansible 模块生成](automation.md#2311-ai-辅助-ansible-模块生成) |
+|         |      | Ansible 与容器技术集成            | [Ansible 和容器技术](automation.md#24-ansible-与容器技术)               |
+|         |      |                                   | [Ansible 和云平台](automation.md#25-ansible-与云平台)                   |
+|         |      | Ansible 与 GitOps 自动化部署      | [3.1 Git 和 GitOps 运维脚本](#31-版本控制)                              |
+|         |      |                                   | [CICD](automation.md#34-cicd)                                           |
+|         |      |                                   | [4.3 自动化部署](#43-服务部署)                                          |
 
 ## 1. 基础
 
@@ -62,17 +62,21 @@
 
 TIOBE Index：<https://tiobe.com/tiobe-index/>
 
-_TIOBE 编程社区指数是编程语言流行度的一个指标。该索引每月更新一次。评级基于全球熟练工程师的数量、课程和第三方供应商的数量。Google、Bing、Yahoo!、维基百科、亚马逊、YouTube
+_TIOBE
+编程社区指数是编程语言流行度的一个指标。该索引每月更新一次。评级基于全球熟练工程师的数量、课程和第三方供应商的数量。Google、Bing、Yahoo!、维基百科、亚马逊、YouTube
 和百度等流行搜索引擎用于计算评级。_
 
 截至 2025 年 7 月，编程语言流行趋势图如下：
 
 ![](images/tiobe-202507.png)
 
-_Python 于 2021 年初从 TIOBE 索引的第 3 位开始，将 Java 和 C 抛在后面，成为 TIOBE 索引的断层第一名。Python
-已经成为许多领域事实上的标准编程语言。没有迹象表明 Python 的胜利行军将很快停止。_
+_Python 于 2021 年初从 TIOBE 索引的第 3 位开始，将 Java 和 C 抛在后面，成为 TIOBE
+索引的断层第一名。Python 已经成为许多领域事实上的标准编程语言。没有迹象表明 Python
+的胜利行军将很快停止。_
 
-_Python 有没有真正的竞争者？未来可能会竞争的任何新的闪亮语言？如果我们看看过去几年有前途的语言，我们会看到 Go 和 Rust 进步明显。_
+_Python
+有没有真正的竞争者？未来可能会竞争的任何新的闪亮语言？如果我们看看过去几年有前途的语言，我们会看到
+Go 和 Rust 进步明显。_
 
 一种编程语言为什么会流行？
 
@@ -98,7 +102,8 @@ _Python 有没有真正的竞争者？未来可能会竞争的任何新的闪亮
   - Python 中的 for 循环也只有一种写法 `for i in items: ...`
 - **简单优于复杂**
   - Python 只有很少的语法糖，比如装饰器
-  - Python 的对象属性设计基本都是可以自圆其说的，包括切片和 range 的开闭区间一致性，装饰器没有黑魔法，for 和 while 中的 else，迭代器的设计，等等。
+  - Python 的对象属性设计基本都是可以自圆其说的，包括切片和 range
+    的开闭区间一致性，装饰器没有黑魔法，for 和 while 中的 else，迭代器的设计，等等。
 - **明确优于晦涩**（复杂优于难懂，要始终保持代码的易读性，“让易读的代码进行性能优化”远比“让高效的代码变得易读”要容易）
 
 更具体一点：
@@ -119,8 +124,8 @@ _Python 有没有真正的竞争者？未来可能会竞争的任何新的闪亮
   - 代码搜索库：<https://www.programcreek.com/python/>
 - 到开源项目中去读代码、提交代码
 
-  Python 开源项目非常多，其中 [OpenStack](https://opendev.org/openstack) 是集 Python 工程实现之大成的 IaaS 云计算项目，囊括几乎所有
-  Python 的应用相关技术，包括：
+  Python 开源项目非常多，其中 [OpenStack](https://opendev.org/openstack) 是集 Python
+  工程实现之大成的 IaaS 云计算项目，囊括几乎所有 Python 的应用相关技术，包括：
 
   - 基于 MVC 的 Web 网站（Horizon 用了 Django 框架）
   - 基于 Restful API 的 Web Service（Pecan / Webob / Flask / Paste 等框架）
@@ -159,18 +164,23 @@ _Python 有没有真正的竞争者？未来可能会竞争的任何新的闪亮
 
 **AI 擅长做什么？不擅长做什么？**
 
-1. AI 擅长：生成标准化代码（如基础语法、重复逻辑）、转换格式（如自然语言转脚本）、提供备选方案（如多解法对比）。
-2. AI 不擅长：理解模糊需求、处理业务逻辑的隐性约束（如 “这个接口需要兼容 3 年前的遗留系统”）、确保代码的安全性 / 可维护性（如生成的 Ansible 模块可能忽略权限校验）。
+1. AI
+   擅长：生成标准化代码（如基础语法、重复逻辑）、转换格式（如自然语言转脚本）、提供备选方案（如多解法对比）。
+2. AI 不擅长：理解模糊需求、处理业务逻辑的隐性约束（如 “这个接口需要兼容 3
+   年前的遗留系统”）、确保代码的安全性 / 可维护性（如生成的 Ansible 模块可能忽略权限校验）。
 
-鉴于当下的 AI 智能情况，还是需要遵守：以 “人主导决策，AI 辅助执行” 的原则，对 AI 输出的代码 / 方案做 “必要性校验”（是否符合业务目标）和 “完备性校验”（是否遗漏边界条件）。
+鉴于当下的 AI 智能情况，还是需要遵守：以 “人主导决策，AI 辅助执行” 的原则，对 AI 输出的代码 / 方案做
+“必要性校验”（是否符合业务目标）和 “完备性校验”（是否遗漏边界条件）。
 
 **AI 时代的程序员应该是怎样的？**
 
 譬如盖房子，砌砖灌水泥已经可以自动化，懂架构和原理的工程师可以更快地盖摩天大楼；不懂的人盖个平房也可能有结构问题。
 
-1. 意图澄清优先于工具使用（**意在笔先**）：先用结构化规范明确 “要什么”，再用 AI 生成 “怎么做” 的代码。
-2. 规范是比代码更重要的 “源码”（**工程即规矩**）：规范需版本化、可测试、可传递，承载 80-90% 的工作价值。程序员的核心技能是 “写规范”（**规范是架构的显化**）：从
-   “能写出正确代码” 转变为 “能定义清晰的成功标准”。
+1. 意图澄清优先于工具使用（**意在笔先**）：先用结构化规范明确 “要什么”，再用 AI 生成 “怎么做”
+   的代码。
+2. 规范是比代码更重要的 “源码”（**工程即规矩**）：规范需版本化、可测试、可传递，承载 80-90%
+   的工作价值。程序员的核心技能是 “写规范”（**规范是架构的显化**）：从 “能写出正确代码” 转变为
+   “能定义清晰的成功标准”。
 3. 坚持敏捷思维，防微杜渐，从赢到赢。不尽知则不用。
 
 **AI 时代的 Python 学习应该是怎样的？**
@@ -273,7 +283,8 @@ Python 语法
 
   支持：4>3>2, 5>4<6>5>3，只要所有相邻两个值关系成立，结果即为 True
 
-  冷知识（用不到，单纯介绍）：序列的比较是从头开始，依次比较每一个元素；集合的比较是：子集/超集；字典的比较是将 key 排序，然后逐个比较 key 值
+  冷知识（用不到，单纯介绍）：序列的比较是从头开始，依次比较每一个元素；集合的比较是：子集/超集；字典的比较是将
+  key 排序，然后逐个比较 key 值
 
 - 逻辑运算符：not, and, or，存在短路效应
 - python 的循环语法
@@ -516,7 +527,9 @@ Python 语法
 2
 ```
 
-> **练习作业**：随机生成两个 10 以内的实数（精确到小数点后两位）并输出到屏幕，要求用户输入它们的和，然后判断用户的输入值，然后输出 True/False。
+> **练习作业**：随机生成两个 10
+> 以内的实数（精确到小数点后两位）并输出到屏幕，要求用户输入它们的和，然后判断用户的输入值，然后输出
+> True/False。
 
 > ```python
 > 程序运行后界面上显示 Please input sum for 4.96 + 4.91 =
@@ -630,7 +643,8 @@ Python 语法
   f'{a} + {b} = {c}'
   ```
 
-> **练习作业**：提示用户输入一个字符串，判断该字符串是否回文（回文是指正读反读都一样，比如 accbcca / 123321 是回文）。
+> **练习作业**：提示用户输入一个字符串，判断该字符串是否回文（回文是指正读反读都一样，比如 accbcca /
+> 123321 是回文）。
 
 > [参考](python-exec-public.py#L252-271)
 
@@ -865,7 +879,8 @@ Python 语法
 
 > **练习作业**：translations 由哪些不同的字母组成？
 
-> **练习作业**：smiles 和 translations 这两个单词有哪些共有字母（s/i/l），哪些独有的字母（比如 smile 有 m/e）？
+> **练习作业**：smiles 和 translations 这两个单词有哪些共有字母（s/i/l），哪些独有的字母（比如 smile
+> 有 m/e）？
 
 #### 1.4.8 字典（dict）
 
@@ -1081,11 +1096,12 @@ Python 语法
     - `a, b = fun()` == `aTuple = fun(); a, b = aTuple`
 
 - 类型标注（PEP 484）
-  - Python 3.5+ 支持在形参和返回值上写类型标注，**运行时不会做类型检查**，但可供 IDE 补全、mypy 等工具做静态分析和提示，提升可读性与可维护性。
+  - Python 3.5+ 支持在形参和返回值上写类型标注，**运行时不会做类型检查**，但可供 IDE 补全、mypy
+    等工具做静态分析和提示，提升可读性与可维护性。
   - 写法：`def 函数名(形参: 类型, ...) -> 返回类型:`；无返回值时写 `-> None`。
   - 常用类型：`int` / `str` / `float` / `bool`、`list[str]`（Python 3.9+）或
-    `List[str]`（`typing`）、`dict[str, int]` 或 `Dict[str, int]`、`Optional[T]` 或 `T | None` 表示可为
-    `None`。
+    `List[str]`（`typing`）、`dict[str, int]` 或 `Dict[str, int]`、`Optional[T]` 或 `T | None`
+    表示可为 `None`。
   - 示例：带类型标注的函数
 
     ```python
@@ -1156,7 +1172,8 @@ Python 语法
   filter函数的本质
 
   - 第一个参数是函数对象，第二个参数是一个可迭代对象
-  - 会将可迭代对象的每一个元素作为参数传递给函数对象，并将返回值为 True的可迭代对象组合成一个生成器返回
+  - 会将可迭代对象的每一个元素作为参数传递给函数对象，并将返回值为
+    True的可迭代对象组合成一个生成器返回
 
   举例
 
@@ -1424,8 +1441,8 @@ print(aObj.newVar, AClass.newVar)
     print(a, str(a), repr(a))
     ```
 
-    `str()` 和 `print` 在找不到 `__str__` 方法会去找 `__repr__`，`repr()` 则不会找 `__str__`，所以应该优先实现 `__repr__`
-    方法。
+    `str()` 和 `print` 在找不到 `__str__` 方法会去找 `__repr__`，`repr()` 则不会找
+    `__str__`，所以应该优先实现 `__repr__` 方法。
 
   - 点号运算符（访问属性）：`__getattr__`
 
@@ -1501,7 +1518,8 @@ print(aObj.newVar, AClass.newVar)
   s.score = 99 # AttributeError
   ```
 
-  slots 定义的属性仅对当前类起作用，对继承的子类是不起作用的，除非在子类中也定义 slots，这样子类允许定义的属性就是自身的 `__slots__` 加上父类的 `__slots__`。
+  slots 定义的属性仅对当前类起作用，对继承的子类是不起作用的，除非在子类中也定义
+  slots，这样子类允许定义的属性就是自身的 `__slots__` 加上父类的 `__slots__`。
 
 #### 2.2.3 继承和组合
 
@@ -1655,7 +1673,8 @@ def OptFactory(optStr):
 
 [返回目录](#课程目录)
 
-正则表达式是最犀利的字符串处理工具。以 Perl 语言的正则表达式规范为基础形成的正则表达式 POSIX 标准，被广泛应用于各种语言和各种场合。
+正则表达式是最犀利的字符串处理工具。以 Perl 语言的正则表达式规范为基础形成的正则表达式 POSIX
+标准，被广泛应用于各种语言和各种场合。
 
 - 模式匹配的步骤
   - 模式编译
@@ -1794,7 +1813,8 @@ def OptFactory(optStr):
   assert not isIPv4('8.8.8.8.')
   ```
 
-> 作业：输入一个字符串，带空格，比如 "hello 2000000 21 34.5 567.8 book test dddd dffdfd 444"，希望输出大于 444 的数字列表
+> 作业：输入一个字符串，带空格，比如 "hello 2000000 21 34.5 567.8 book test dddd dffdfd
+> 444"，希望输出大于 444 的数字列表
 
 > ```python
 > # 提示：re.findall(r'(\d{3,}(\.\d+)?)', aStr)
@@ -1811,7 +1831,8 @@ def OptFactory(optStr):
   - 可以提高程序的容错性，管理在预料之内的错误
 - 基本语法
 
-  Python 中异常处理沿用了 try/catch/finally 的大致结构，并添加了 else，else 中的语句会在没有遇到任何异常时触发
+  Python 中异常处理沿用了 try/catch/finally 的大致结构，并添加了 else，else
+  中的语句会在没有遇到任何异常时触发
 
   ```python
   a = input("input: ")
@@ -1893,7 +1914,8 @@ def OptFactory(optStr):
 
 #### 2.4.2 With 语句
 
-With 在 Python2.6 后被正式引入，如果要在2.6之前的版本中使用，需要future import: `from __future__ import with_statement`
+With 在 Python2.6 后被正式引入，如果要在2.6之前的版本中使用，需要future import:
+`from __future__ import with_statement`
 
 - 基本语法：
 
@@ -2178,9 +2200,11 @@ commit message 要求
 
 1. 明确 commit 的提交类型，例如：feat、fix、refactor、style、docs、test等
 2. commit message 标题首字母大写，尽可能用英文一句话概括
-3. commit message 描述部分可以根据 [5W1H 分析法](https://baike.baidu.com/item/5W1H%E5%88%86%E6%9E%90%E6%B3%95)
-   描述，让 commit 具有高可读性
-4. commit message 页脚部分可以添加 commit 参考的网页链接，commit 相关的问题链接，以及和 CI/CD 系统相关的 ID 号等，需要符合对应系统的格式标准
+3. commit message 描述部分可以根据
+   [5W1H 分析法](https://baike.baidu.com/item/5W1H%E5%88%86%E6%9E%90%E6%B3%95) 描述，让 commit
+   具有高可读性
+4. commit message 页脚部分可以添加 commit 参考的网页链接，commit 相关的问题链接，以及和 CI/CD
+   系统相关的 ID 号等，需要符合对应系统的格式标准
 5. 在标题、描述、页脚之间需要有空行分隔
 
 #### 3.1.7 GitOps
@@ -2195,11 +2219,13 @@ GitOps: <https://icloudnative.io/posts/what-is-gitops/> AlgoCD
 
 #### 3.2.1 unittest 模块
 
-unittest 基于 Kent 和 Erich 提出的 XUnit 框架设计的，同样的设计模式在很多语言都有，包括 C/Java/C# 等等
+unittest 基于 Kent 和 Erich 提出的 XUnit 框架设计的，同样的设计模式在很多语言都有，包括 C/Java/C#
+等等
 
 参考：<http://blog.wuwenxiang.net/Python-Unittest>
 
-XUnit 框架包括两个部分：固件和测试本身。固件是测试所需的外部资源，通常会 hook 在测试过程中，比如：setUp/tearDown
+XUnit 框架包括两个部分：固件和测试本身。固件是测试所需的外部资源，通常会 hook
+在测试过程中，比如：setUp/tearDown
 
 - setUp 用于在每个测试用例开始之前准备资源
 - tearDown 用于在每个测试用例结束之后完成清理工作
@@ -2402,7 +2428,8 @@ python -m doctest -v test.py
     (4454769784, 4454769784, 4454769784)
     ```
 
-  - **import 会逐个运行模块路径上的所有包和模块一次且仅运行一次。初次 import 的过程，是运行一个模块，然后将其关心的对象映射到一个变量。**
+  - **import 会逐个运行模块路径上的所有包和模块一次且仅运行一次。初次 import
+    的过程，是运行一个模块，然后将其关心的对象映射到一个变量。**
 
     ```python
     import aModule
@@ -2509,7 +2536,8 @@ demo，[Github](https://github.com/duicikeyihangaolou/fastapi-demo)，[Gitee](ht
 参考：fastapi todolist
 demo，[Github](https://github.com/duicikeyihangaolou/fastapi-todo-list-demo)，[Gitee](https://gitee.com/duicikeyihangaolou/fastapi-todo-list-demo)
 
-参考：ansible-dashboard demo：[Github](https://github.com/duicikeyihangaolou/project-ansible-dashboard)
+参考：ansible-dashboard
+demo：[Github](https://github.com/duicikeyihangaolou/project-ansible-dashboard)
 
 ### 4.3 服务部署
 
@@ -2640,17 +2668,24 @@ demo，[Github](https://github.com/duicikeyihangaolou/fastapi-todo-list-demo)，
 
 1. [CLRS] Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. Introduction
    to Algorithms. The MIT Press and McGraw-Hill, second edition, 2001.
-   国内有高教版影印。也有中文版。这本书一出来就取代了做了20年的经典教材 [AHU]。提供了初级到中级课程的材料，而且 chapter notes 指引了进一步阅读的方向。四个作者都极猛。
-2. [KT] Jon Kleinberg and Eva Tardos, Algorithm Design, Addison-Wesley, 2005. 国内有清华影印版。观点很新的书。两个作者都在
-   Cornell 教了好多年的算法课，而且在纯理论之外都有所侧重。习题非常之精彩，而且大部分都是 Cornell 这些年的作业或者习题。
+   国内有高教版影印。也有中文版。这本书一出来就取代了做了20年的经典教材
+   [AHU]。提供了初级到中级课程的材料，而且 chapter notes 指引了进一步阅读的方向。四个作者都极猛。
+2. [KT] Jon Kleinberg and Eva Tardos, Algorithm Design, Addison-Wesley, 2005.
+   国内有清华影印版。观点很新的书。两个作者都在 Cornell
+   教了好多年的算法课，而且在纯理论之外都有所侧重。习题非常之精彩，而且大部分都是 Cornell
+   这些年的作业或者习题。
 3. [S] Robert Sedgewick, Algorithms. 有电力和 xx 两种影印版。第三版有 1-5 卷，共两本书。只推荐 C
-   语言的版本；而且不推荐看中文版，中文版翻译得非常之差。这是一本非常重视算法实现的书，即使是资深的优化程序的人也不会对 Sedgewick 的 C
-   程序有不满。作者对于基本算法都给了很多很多形象的图示，比较容易读懂，Princeton 把 C 语言和第一本书连在一起上。
+   语言的版本；而且不推荐看中文版，中文版翻译得非常之差。这是一本非常重视算法实现的书，即使是资深的优化程序的人也不会对
+   Sedgewick 的 C 程序有不满。作者对于基本算法都给了很多很多形象的图示，比较容易读懂，Princeton 把 C
+   语言和第一本书连在一起上。
 4. [GT] Michael T. Goodrich and Roberto Tamassia，Algorithm Design - Foundations, Analysis, and
-   Internet Examples. 好像只有中文版，翻译的还可以。和其它书算法使用了不同的体系，偏应用。两个作者都是计算几何专家。和这本书配套一个 Data Structures
-   Library in Java，提供所有的源代码。虽然代码仅仅实现了最简单的东西。但可以是一个很好的软件工程的参考。
+   Internet Examples.
+   好像只有中文版，翻译的还可以。和其它书算法使用了不同的体系，偏应用。两个作者都是计算几何专家。和这本书配套一个
+   Data Structures Library in
+   Java，提供所有的源代码。虽然代码仅仅实现了最简单的东西。但可以是一个很好的软件工程的参考。
 5. [DPV] S. Dasgupta, C. H. Papadimitriou, and U. V. Vazirani, Algorithms.
-   应该已经出版了。国内肯定没有，清华图书馆已经买了，但是还没有上架。成书前的 lecture notes 可以找到，这本书的图论和动态规划部分的习题，很不错。HKUST COMP271H
+   应该已经出版了。国内肯定没有，清华图书馆已经买了，但是还没有上架。成书前的 lecture notes
+   可以找到，这本书的图论和动态规划部分的习题，很不错。HKUST COMP271H
    的教材。想获得相关资料的可以去看Berkeley的CS170.http://inst.eecs.berkeley.edu/~cs170/archives.html，注意找
    Papadimitriou 上的那些课。
 6. [B]Jon Bentley, Programming Pearls. 2nd edition. Addison-Wesley.
@@ -2693,6 +2728,7 @@ demo，[Github](https://github.com/duicikeyihangaolou/fastapi-todo-list-demo)，
 - 计数器（字典唱票算法）：aabbcccdd -> {'a':2, 'b':2, 'c':3, 'd':2,}
 
   > **练习作业**：提示用户输入一个句子，按首字母统计句中的单词（限定每个单词都只能由字母组成），输出统计结果。
+  >
   > ```python
   > Please input a string:
   > it is my book.
@@ -2700,11 +2736,14 @@ demo，[Github](https://github.com/duicikeyihangaolou/fastapi-todo-list-demo)，
   > i => ['it', 'is']
   > m => ['my']
   > ```
+  >
   > [参考](python-exec-public.py#L519-543)
 
 - 集合算法
 
-  > **练习作业**：提示用户输入 A、B 两个整数数列，统计并排序输出 A 数列中独有的整数，B 中独有的整数，以及 A、B 公有的整数。
+  > **练习作业**：提示用户输入 A、B 两个整数数列，统计并排序输出 A 数列中独有的整数，B
+  > 中独有的整数，以及 A、B 公有的整数。
+  >
   > ```python
   > Please input int list A: 1 3 5 7 9
   > Please input int list B: 5 6 7
@@ -2712,6 +2751,7 @@ demo，[Github](https://github.com/duicikeyihangaolou/fastapi-todo-list-demo)，
   > Only in B: [6]
   > Both in A & B: [5, 7]
   > ```
+  >
   > [参考](python-exec-public.py#L498-518)
 
 #### 5.2.4 递归和递推
@@ -2979,8 +3019,9 @@ sorted(aDict)
 
 1. for 循环会调用 `iter(xObject)`，从而得到迭代器 xIterator
 2. 无限循环调用地调用 ·xIterator.**next**()`，直到遇上 StopIteration 异常才会结束
-3. 可迭代对象在迭代环境中迭代时，会被用作 iter() 函数的参数，从而产生一个迭代器，然后迭代环境循环地对这个迭代器调用 `__next__` 方法，直至 `__next__` 方法抛出
-   StopIteration 异常才结束迭代
+3. 可迭代对象在迭代环境中迭代时，会被用作 iter()
+   函数的参数，从而产生一个迭代器，然后迭代环境循环地对这个迭代器调用 `__next__` 方法，直至
+   `__next__` 方法抛出 StopIteration 异常才结束迭代
 
 单迭代和多迭代
 
@@ -2994,7 +3035,8 @@ sorted(aDict)
 - 生成器函数中可以没有 return 语句，但是它的返回值不是 None，而是一个生成器对象
 - 生成器对象是一个迭代器，iter(aGenerator) -> 返回自身
 - 生成器对象是一个单迭代的可迭代对象
-- 生成器每次调用 next 才会返回一个值，用后即丢弃，比元组或列表对象更节省时间和空间的开销，因而在 3.0 中被广泛使用。
+- 生成器每次调用 next 才会返回一个值，用后即丢弃，比元组或列表对象更节省时间和空间的开销，因而在 3.0
+  中被广泛使用。
 
 ```python
 def genSeq(N):
@@ -3033,7 +3075,8 @@ StopIteration
 【可选】扩展生成器协议
 
 - Python2.5 以后，yield 关键字被重新定义，它不再是语句，而是变成了一个表达式，具备了返回值
-- 相应的，生成器也被添加了 send 方法，用于向 yield 运算符发送对象，这个对象也就是 yield 表达式的返回值
+- 相应的，生成器也被添加了 send 方法，用于向 yield 运算符发送对象，这个对象也就是 yield
+  表达式的返回值
 - `x = yield i` 语义：`put(i); x = wait_and_get()`
 - 还增加了 throw 和 close 方法，用于从生成器中抛出异常，以及结束一个生成器
 - 扩展生成器协议为生成器增加了交互性，使得生成器在初始化后仍能得到扩展和修改
@@ -3544,10 +3587,12 @@ aProcess.start() # run
 
 #### 7.1.1 线性模型和非线性模型
 
-**线性模型**：线性模型假设数据之间的关系是线性的，也就是说，数据的输出随着输入的增加或减少按比例变化。在数学表示上，如果两个变量 x 和 y 满足 `y=ax+b` 的关系（其中 a 和 b
+**线性模型**：线性模型假设数据之间的关系是线性的，也就是说，数据的输出随着输入的增加或减少按比例变化。在数学表示上，如果两个变量
+x 和 y 满足 `y=ax+b` 的关系（其中 a 和 b
 是常数），那么这种关系就是线性的。线性模型的一个重要特性是，它满足叠加原理，即多个输入同时作用于系统的响应等于各个输入单独作用于系统的响应之和。这种模型的特性使其在许多领域中都非常有用，如回归分析、时间序列分析和经济预测等。
 
-**非线性模型**：与线性模型相反，非线性模型描述的关系不是线性的。这意味着数据的输出不按固定的比例变化，可能随着输入的增加或减少而发生非线性的变化。在数学表示上，如果关系不能表示为 `y=ax+b`
+**非线性模型**：与线性模型相反，非线性模型描述的关系不是线性的。这意味着数据的输出不按固定的比例变化，可能随着输入的增加或减少而发生非线性的变化。在数学表示上，如果关系不能表示为
+`y=ax+b`
 的形式，那么它就是非线性的。非线性模型的一个重要特性是，它不满足叠加原理。尽管非线性模型的应用不如线性模型广泛，但在某些特定情况下，如生物医学研究、金融预测和环境科学等，非线性模型是非常重要的。
 
 ![](images/xianxing-feixianxing.jpeg)
@@ -3579,7 +3624,8 @@ y 为 1，表示该神经元激活，否则输出 y 为 -1 表示该神经元抑
 3. 2 维的面可以把 3 维的体分成两部分
 4. 以此类推，n-1 维的子空间可以把 n 维空间分成两部分
 
-超平面就是这个 n-1 维子空间。类似二维**平面**切割三维**立体**空间，这里的**超**表示高维空间，**超平面**对应**超立体**。
+超平面就是这个 n-1
+维子空间。类似二维**平面**切割三维**立体**空间，这里的**超**表示高维空间，**超平面**对应**超立体**。
 
 **这里的超平面就是“释经权”，在机器学习里先通过核函数进行升维，再分类（向量机）里也用过。**
 
@@ -3640,7 +3686,8 @@ y 为 1，表示该神经元激活，否则输出 y 为 -1 表示该神经元抑
 
 神经网络经历许多次的描述+判断，使得判断的结果**无限**逼近于真相。
 
-所有神经网络实现方式的本质，都是**加权求和**。不同的结构方案（CNN / RNN / Transform），只是为了让不同输入（图像处理 / 音视频流 / 自然语言）对应模型的加权求和更容易。
+所有神经网络实现方式的本质，都是**加权求和**。不同的结构方案（CNN / RNN /
+Transform），只是为了让不同输入（图像处理 / 音视频流 / 自然语言）对应模型的加权求和更容易。
 
 ### 7.3 卷积神经网络基础（选讲）
 
@@ -4001,7 +4048,8 @@ LLM：Large Language Model 大语言模型
 - Ollama
 - FastChat
 
-Supabase：一个开源的 Firebase 替代方案，提供 PostgreSQL 数据库、认证、即时 API、边缘函数、实时订阅、存储和向量嵌入等服务。
+Supabase：一个开源的 Firebase 替代方案，提供 PostgreSQL 数据库、认证、即时
+API、边缘函数、实时订阅、存储和向量嵌入等服务。
 
 ##### 7.7.1.3 实现
 

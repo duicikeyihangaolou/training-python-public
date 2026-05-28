@@ -31,7 +31,8 @@
   - 第 5 行：循环条件，一共循环 10 次
   - 第 6 行：创建一个 `test_0…9.txt` 文件
   - 第 7 行：循环体结束
-- `mkdir`, `touch`都是系统自带的程序，一般在`/bin`或者`/usr/bin`目录下。`for`，`do`，`done` 是 `sh` 脚本语言的关键字。
+- `mkdir`, `touch`都是系统自带的程序，一般在`/bin`或者`/usr/bin`目录下。`for`，`do`，`done` 是 `sh`
+  脚本语言的关键字。
 
 ## 一些概念
 
@@ -43,19 +44,21 @@
     - Windows Explorer 是一个典型的**图形界面 Shell**，Windows cmd 和 powershell 是命令行 Shell
   - shell 脚本（shell script），是一种为 shell 编写的脚本程序
     - 业界所说的 shell 通常都是指 shell 脚本
-    - 但 shell 和 shell script 是两个不同的概念。由于习惯的原因，本文出现的 **shell 编程**都是指 **shell 脚本编程**，不是指开发 shell 自身（如
-      Windows Explorer 扩展开发）
+    - 但 shell 和 shell script 是两个不同的概念。由于习惯的原因，本文出现的 **shell 编程**都是指
+      **shell 脚本编程**，不是指开发 shell 自身（如 Windows Explorer 扩展开发）
 - 开发环境
-  - shell 编程跟 java、php 编程一样，只要有一个能编写代码的文本编辑器和一个能解释执行的脚本解释器就可以了
+  - shell 编程跟 java、php
+    编程一样，只要有一个能编写代码的文本编辑器和一个能解释执行的脚本解释器就可以了
   - 一般文本编译器要支持语法高亮、代码自动补全、语法纠错等特性
   - 常见的用于 Shell 开发的文本编辑器包括：Vim，Sublime 等，eclispe 之类的 IDE 也可以
 - 运行环境
   - 当前主流的操作系统都支持 shell 编程
-  - 本文所述的 shell 编程是指 POSIX（Portable Operating System Interface）标准，适用于 Linux、Unix 及 BSD（如 Mac OS）
+  - 本文所述的 shell 编程是指 POSIX（Portable Operating System Interface）标准，适用于 Linux、Unix
+    及 BSD（如 Mac OS）
     - Linux 默认安装就带了 shell 解释器
     - Mac OS不仅带了 sh、bash 这两个最基础的解释器，还内置了ksh、csh、zsh 等不常用的解释器
-    - windows 10 以前出厂时没有内置 posix shell 解释器，需要安装 [cygwin](http://www.cygwin.com) 或者
-      [mingw](http://www.mingw.org) 来模拟 linux 环境
+    - windows 10 以前出厂时没有内置 posix shell 解释器，需要安装 [cygwin](http://www.cygwin.com)
+      或者 [mingw](http://www.mingw.org) 来模拟 linux 环境
 
 ## 脚本解释器
 
@@ -63,7 +66,8 @@
   - 它的二进制文件路径通常是 `/bin/sh`，由 Bell Labs 开发。
 - Bash 是 Bourne shell 的替代品，更为通用，属 GNU Project。
   - 二进制文件路径通常是 `/bin/bash`。
-  - 业界通常混用 bash、sh、和shell，比如招聘运维工程师的文案：熟悉 Linux Bash 编程，精通 Shell 编程。
+  - 业界通常混用 bash、sh、和shell，比如招聘运维工程师的文案：熟悉 Linux Bash 编程，精通 Shell
+    编程。
 - 在大部分 Linux 系统（比如 CentOS 里），/bin/sh 是一个指向 /bin/bash 的符号链接:
 
   ```console
@@ -116,7 +120,8 @@
   - 新增的学习成本很小，只要学会怎么使用shell解释器（Jshell、AdaScript）就可以了
 - 选适合的
   - 如果只是想做一些备份文件、安装软件、下载数据之类的事情，学着使用 sh，bash 会是一个好主意
-  - 如果你的脚本程序复杂度较高，或者要操作的数据结构比较复杂，还是应该使用 Python、Perl 这样的脚本语言，Bash 功能有限，比如说：
+  - 如果你的脚本程序复杂度较高，或者要操作的数据结构比较复杂，还是应该使用 Python、Perl
+    这样的脚本语言，Bash 功能有限，比如说：
     - 它的函数只能返回字串，无法返回数组
     - 它不支持面向对象，你无法实现一些优雅的设计模式
     - 它是解释型的，连 PHP那种预编译都不是，如果脚本包含错误，只要没执行到这一行，就不会报错
@@ -152,7 +157,8 @@
       - 所以写成 test.sh 是会找不到命令的，要用 ./test.sh 告诉系统说，就在当前目录找
     - 通过这种方式运行 bash 脚本，第一行一定要写对，好让系统查找到正确的解释器。
       - 这里的"系统"，其实就是 shell 这个应用程序（想象一下Windows Explorer），写成系统，是方便理解
-      - 既然这个系统就是指 shell，那么一个使用 /bin/sh 作为解释器的脚本是不是可以省去第一行呢？是的。
+      - 既然这个系统就是指 shell，那么一个使用 /bin/sh
+        作为解释器的脚本是不是可以省去第一行呢？是的。
   - 作为解释器参数
 
     ```bash
@@ -181,9 +187,10 @@
     done
     ```
 
-  - 如果不给 skill 变量加花括号，写成 `echo "I am good at $skillScript"`，解释器就会把 `$skillScript`
-    当成一个变量（其值为空），代码执行结果就不是我们期望的样子了。
-  - 推荐给所有变量加上花括号，这是个好的编程习惯。IntelliJ IDEA 编写 shell script 时，IDE 就会提示加花括号。
+  - 如果不给 skill 变量加花括号，写成 `echo "I am good at $skillScript"`，解释器就会把
+    `$skillScript` 当成一个变量（其值为空），代码执行结果就不是我们期望的样子了。
+  - 推荐给所有变量加上花括号，这是个好的编程习惯。IntelliJ IDEA 编写 shell script 时，IDE
+    就会提示加花括号。
 - 重定义变量
   - 已定义的变量，可以被重新定义，如：
 
@@ -195,7 +202,8 @@
     echo $your_name
     ```
 
-  - 这样写是合法的，但注意，第二次赋值的时候**不能写** `$your_name="alibaba"`，使用变量的时候才加美元符。
+  - 这样写是合法的，但注意，第二次赋值的时候**不能写**
+    `$your_name="alibaba"`，使用变量的时候才加美元符。
 
 ## 注释
 
@@ -220,7 +228,8 @@
   ```
 
 - 如果在开发过程中，遇到大段的代码需要临时注释起来，过一会儿又取消注释，怎么办呢？
-  - 每一行加个 `#` 符号太费力了，可以把这一段要注释的代码用一对花括号括起来，定义成一个函数，没有地方调用这个函数，这块代码就不会执行，达到了和注释一样的效果
+  - 每一行加个 `#`
+    符号太费力了，可以把这一段要注释的代码用一对花括号括起来，定义成一个函数，没有地方调用这个函数，这块代码就不会执行，达到了和注释一样的效果
   - 用一个关爱开发者的 IDE，用快捷键快速对大段代码注释/反注视，比如 eclispe 里的 `ctrl+/`
 
 ## 字符串
@@ -414,7 +423,8 @@
     esac
     ```
 
-  - case 语法需要一个 esac（就是 case 反过来）作为结束标记，每个 case 分支用右圆括号，用两个分号表示 break
+  - case 语法需要一个 esac（就是 case 反过来）作为结束标记，每个 case 分支用右圆括号，用两个分号表示
+    break
 - 循环结构语法
   - `for`
 
@@ -541,7 +551,8 @@ exit 0
 - 可以使用 source 和 . 关键字，如：
   - `source ./function.sh`
   - `. ./function.sh`
-- 在 bash 里，source 和 . 是等效的，他们都是读入 function.sh 的内容并执行其内容（类似 PHP 里的 include）
+- 在 bash 里，source 和 . 是等效的，他们都是读入 function.sh 的内容并执行其内容（类似 PHP 里的
+  include）
 - 为了更好的可移植性，推荐使用第二种写法。
 - 包含一个文件和执行一个文件一样，也要写这个文件的路径，不能光写文件名
   - 比如上述例子中：`. ./function.sh`

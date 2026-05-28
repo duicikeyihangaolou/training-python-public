@@ -12,7 +12,8 @@
 
     ![Anaconda-Download.png](images/bec937bdec704aee995f610566dcebb0-Anaconda-Download.png)
 
-  - 这里要看你的操作系统是 32bit 还是 64bit，可以通过`我的电脑 / 右键`查看，如果不会看就选 32bit，但一般都应该是 64bit
+  - 这里要看你的操作系统是 32bit 还是 64bit，可以通过`我的电脑 / 右键`查看，如果不会看就选
+    32bit，但一般都应该是 64bit
 
   ![OS-Arch.png](images/bec937bdec704aee995f610566dcebb0-OS-Arch.png)
 
@@ -34,7 +35,8 @@
 
   - 如果没有 `PATH` 这个环境变量，就新建一个
   - 然后将 `C:\ProgramData\Anaconda3;C:\ProgramData\Anaconda3\Scripts;` 添加到 `PATH`
-    环境变量开头，环境变量中的各个字符串用分号隔开。注意，这里假设 Anaconda 的安装路径是 `C:\ProgramData\Anaconda3`。如果安装在其它路径，要相应地修改。
+    环境变量开头，环境变量中的各个字符串用分号隔开。注意，这里假设 Anaconda 的安装路径是
+    `C:\ProgramData\Anaconda3`。如果安装在其它路径，要相应地修改。
 
     ![OS-Env-Var.png](images/bec937bdec704aee995f610566dcebb0-OS-Env-Var.png)
 

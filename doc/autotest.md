@@ -48,15 +48,17 @@ Prerequisite：
 - 测试团队应该是怎样的？
   - 小而精的特种部队：依靠的是出色的战术和高级武器
   - 宁缺毋滥：选用不合适的人来填充名额永远要比等待合适的人员更糟糕
-  - 一切能自动化的都应该自动化：手动测试倾向于测试新功能、用户体验、隐私之类东西，Android 最依赖手动测试
+  - 一切能自动化的都应该自动化：手动测试倾向于测试新功能、用户体验、隐私之类东西，Android
+    最依赖手动测试
 - 测试工程师应该是怎样的？
   - 测试开发工程师：
     - 是一个编码能力很强的程序员，可以写功能代码
     - 也是一个很强的测试者，具备测试思维
   - 测试工程师：
     - 首先是产品专家
-    - 其次是善于进行价值分析，执行价值驱动的工程师（发现 bug 后思考：影响如何？是否在用户可达之路？是否还有更多的路径导致相同的 bug？是否存在可能影响数据和其他应用？然后可以判断是否将
-      bug 加入回归测试集，将其自动化）
+    - 其次是善于进行价值分析，执行价值驱动的工程师（发现 bug
+      后思考：影响如何？是否在用户可达之路？是否还有更多的路径导致相同的
+      bug？是否存在可能影响数据和其他应用？然后可以判断是否将 bug 加入回归测试集，将其自动化）
 - 测试用例应该是怎样的？
   - 研发代码是去创建，重点在考虑用户、使用场景和数据流程上；而测试代码主要思路是去破坏、怎样写测试代码用以扰乱分离用户及其数据
   - 每个测试和其他测试之间是独立的，使它们能够以任意顺序来执行
@@ -89,24 +91,27 @@ Prerequisite：
      - 测试类必须继承 unittest.TestCase
      - 测试方法必须以 `test_` 开头
      - 测试类必须要有 unittest.main() 方法
-   - pytest 是 python的第三方测试框架，是基于 unittest 的扩展框架，比 unittest 更简洁,更高效。使用 pytest 编写用例,必须遵守以下规则:
+   - pytest 是 python的第三方测试框架，是基于 unittest 的扩展框架，比 unittest 更简洁,更高效。使用
+     pytest 编写用例,必须遵守以下规则:
      - 测试文件名必须以 `test_` 开头或者 `_test` 结尾（如：`test_ab.py`）
      - 测试方法必须以 `test_` 开头。
      - 测试类命名以 Test 开头。
 
-   pytest 可以执行 unittest 风格的测试用例，无须修改 unittest 用例的任何代码，有较好的兼容性。pytest 插件丰富，比如 flask 插件，可用于用例出错重跑；还有
-   xdist 插件，可用于设备并行执行。
+   pytest 可以执行 unittest 风格的测试用例，无须修改 unittest 用例的任何代码，有较好的兼容性。pytest
+   插件丰富，比如 flask 插件，可用于用例出错重跑；还有 xdist 插件，可用于设备并行执行。
 
 2. 用例前置和后置
-   - unittest 提供了 setUp/tearDown，每个用例运行前、结束后运行一次。setUpClass/tearDownClass，用例执行前、结束后，只运行一次。
+   - unittest 提供了
+     setUp/tearDown，每个用例运行前、结束后运行一次。setUpClass/tearDownClass，用例执行前、结束后，只运行一次。
    - pytest提供了模块级、函数级、类极、方法级的 setup/teardown，比 unittest 更灵活
      - 模块级 `setup_module/teardown_modul` 开始于模块始末，全局的
      - 函数级 `setup_function/teardown_function` 只对函数用例生效（不在类中）
      - 类级 `setup_class/teardown_class` 只在类中前后运行一次(在类中)
      - 方法级 `setup_method/teardown_method` 开始于方法始末（在类中）
      - 类里面的 `setup/teardown` 运行在调用方法的前后
-   - pytest还可以在函数前加 @pytest.fixture() 装饰器，在测试用例中装在 fixture 函数。fixture 的使用范围可以是
-     function/module/class/session。firture 相对于 setup/teardown 来说有以下几点优势：
+   - pytest还可以在函数前加 @pytest.fixture() 装饰器，在测试用例中装在 fixture 函数。fixture
+     的使用范围可以是 function/module/class/session。firture 相对于 setup/teardown
+     来说有以下几点优势：
      - 命名方式灵活，不局限于setup和teardown这几个命名
      - conftest.py 配置里可以实现数据共享，不需要import就能自动找到一些配置，可供多个py文件调用
    - scope="module" 可以实现多个 .py 跨文件共享前置
@@ -187,7 +192,8 @@ Prerequisite：
   - API 应该作用于 Resource（资源）上
   - 对资源的操作应使用对应语义的几种操作，包括：GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS
 - REST API 设计中的常见注意事项
-  1. 用户注册：`POST /users`，资源即为 users。API 中的资源一般与你的数据模型（也就是数据库的表）是一一对应的。如果要创建管理员，创建“管理员”，`POST /admins`
+  1. 用户注册：`POST /users`，资源即为 users。API
+     中的资源一般与你的数据模型（也就是数据库的表）是一一对应的。如果要创建管理员，创建“管理员”，`POST /admins`
      是否合适？思考数据库中是否会有一张 admin 表？
   2. 资源的命名，一般为英文的复数。比如说 users 而不是 user
   3. 服务不应该只有 POST 和 GET
@@ -219,8 +225,9 @@ Prerequisite：
   5. REST API Endpoint 中都是资源，因此理论上不能有动词，只能有名词。那如何表示一个动作，比如登陆
      - POST /users/login
      - 如果你是以 token 密钥的方式登录的话，也许可以改为 POST /users/token，即创建一个 user token
-     - Github 把加星端点设计为 PUT /gists/:id/star，把取消加星设计为 DELETE /gitsts/:id/star。这样就完美地遵循了 REST
-       名词作为资源的准则，把动词"加星“完美地用 PUT/DELETE 两个操作
+     - Github 把加星端点设计为 PUT /gists/:id/star，把取消加星设计为 DELETE
+       /gitsts/:id/star。这样就完美地遵循了 REST 名词作为资源的准则，把动词"加星“完美地用 PUT/DELETE
+       两个操作
   6. REST API 如何区分版本？
 
      ```
@@ -229,8 +236,10 @@ Prerequisite：
      POST /v1/indexes/
      ```
 
-  7. REST API 应该返回什么？JSON，没有其它选项。建议打开 Pretty Print 和 Gzip。在 JSON 稍变得复杂之后，如果没有 Pretty print 的 JSON
-     将会变得完全不可读。虽然打开 Pretty print 会增加一些空白字符，但是由于打开 Gzip 压缩，这些空白字符所占用的空间都会被压缩掉，所以并不用担心网络传输时，JSON
+  7. REST API 应该返回什么？JSON，没有其它选项。建议打开 Pretty Print 和 Gzip。在 JSON
+     稍变得复杂之后，如果没有 Pretty print 的 JSON 将会变得完全不可读。虽然打开 Pretty print
+     会增加一些空白字符，但是由于打开 Gzip
+     压缩，这些空白字符所占用的空间都会被压缩掉，所以并不用担心网络传输时，JSON
      变得更大更慢。现在的浏览器或者客户端工具会自动解析 JSON，所以这一条不一定。
 
      ```json
@@ -267,8 +276,9 @@ Prerequisite：
      }
      ```
 
-     上面代码表示，文档中有一个 link 属性，用户读取这个属性就知道下一步该调用什么 API 了。rel 表示这个 API 与当前网址的关系（collection 关系，并给出该
-     collection 的网址），href 表示 API 的路径，title 表示 API 的标题，type 表示返回类型。
+     上面代码表示，文档中有一个 link 属性，用户读取这个属性就知道下一步该调用什么 API 了。rel
+     表示这个 API 与当前网址的关系（collection 关系，并给出该 collection 的网址），href 表示 API
+     的路径，title 表示 API 的标题，type 表示返回类型。
 
   10. 认证（Authentication）API 的身份认证尽量使用 OAuth 2.0 框架。
   11. 过滤信息
@@ -349,7 +359,8 @@ Prerequisite：
   - 201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。
   - 202 Accepted - [*]：表示一个请求已经进入后台排队（异步任务）
   - 204 NO CONTENT - [DELETE]：用户删除数据成功。
-  - 400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。
+  - 400 INVALID REQUEST -
+    [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。
   - 401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。
   - 403 Forbidden - [*]：表示用户得到授权（与401错误相对），但是访问是被禁止的。
   - 404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。
@@ -359,12 +370,14 @@ Prerequisite：
   - 500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。
 - Swagger API 标准
 
-  Swagger 是一个规范和完整的框架，用于生成、描述、调用和可视化RESTful风格的Web服务。Swagger 的目标是对 REST API
+  Swagger 是一个规范和完整的框架，用于生成、描述、调用和可视化RESTful风格的Web服务。Swagger
+  的目标是对 REST API
   定义一个标准的和语言无关的接口，可让人和计算机无需访问源码、文档或网络流量监测就可以发现和理解服务的能力。
 
-  Swagger 规范定义了一组描述一个 API 所需的文件格式，类似于描述 Web 服务的 WSDL。通过 Swagger 进行 REST API
-  的正确定义，用户可以理解远程服务并使用最少实现逻辑与远程服务进行交互。与为底层编程所实现的接口类似，Swagger 消除了调用服务时可能会有的猜测。Swagger 这类 API
-  文档工具可以满足下列需求：
+  Swagger 规范定义了一组描述一个 API 所需的文件格式，类似于描述 Web 服务的 WSDL。通过 Swagger 进行
+  REST API
+  的正确定义，用户可以理解远程服务并使用最少实现逻辑与远程服务进行交互。与为底层编程所实现的接口类似，Swagger
+  消除了调用服务时可能会有的猜测。Swagger 这类 API 文档工具可以满足下列需求：
 
   - 支持 API 自动生成同步的在线文档
   - 这些文档可用于项目内部 API 审核
@@ -606,7 +619,8 @@ Prerequisite：
     }
     ```
 
-- Restful API 和 GRPC 接口的自动化测试有哪些异同？gRPC 提供了许多优势，但它有一个主要障碍：浏览器兼容性低。因此，gRPC 的用例一般局限在内部/私有系统
+- Restful API 和 GRPC 接口的自动化测试有哪些异同？gRPC
+  提供了许多优势，但它有一个主要障碍：浏览器兼容性低。因此，gRPC 的用例一般局限在内部/私有系统
 
   ![](images/testing-gRPC-vs-RestAPI.jpeg)
 
@@ -725,23 +739,23 @@ Prerequisite：
 - JSONPath
   - 文档：<https://goessner.net/articles/JsonPath/>
 
-    JSONPath 表达式与 XPath 类似，是 XPath 在 json 中的应用，全称 XPath for JSON，用于从 JSON 文档中提取数据。JSONPath
-    表达式和XPath语法对比如下：
+    JSONPath 表达式与 XPath 类似，是 XPath 在 json 中的应用，全称 XPath for JSON，用于从 JSON
+    文档中提取数据。JSONPath 表达式和XPath语法对比如下：
 
-    | XPath | JSONPath          | Description |
-    | ----- | ----------------- | ----------- |
-    | /     | $                 | 跟节点         |
-    | .     | @                 | 当前节点        |
-    | /     | . or []           | 儿子节点        |
-    | ..    | N/A               | 父节点         |
-    | //    | ..                | 子孙节点        |
-    | *     | *                 | 匹配所有节点      |
+    | XPath | JSONPath          | Description   |
+    | ----- | ----------------- | ------------- |
+    | /     | $                 | 跟节点        |
+    | .     | @                 | 当前节点      |
+    | /     | . or []           | 儿子节点      |
+    | ..    | N/A               | 父节点        |
+    | //    | ..                | 子孙节点      |
+    | *     | *                 | 匹配所有节点  |
     | @     | N/A               | 属性          |
-    | []    | []                | 下标操作符       |
-    |       |                   | [,]         |
+    | []    | []                | 下标操作符    |
+    |       |                   | [,]           |
     | N/A   | [start:eand:step] | 切片          |
-    | []    | ?()               | 过滤表达式       |
-    | N/A   | ()                | script 表达式  |
+    | []    | ?()               | 过滤表达式    |
+    | N/A   | ()                | script 表达式 |
     | ()    | N/A               | 分组          |
 
   - jsonpath 库可用于处理 json 数据：<https://pypi.org/project/jsonpath/>，`pip3 install jsonpath`
@@ -929,7 +943,8 @@ Prerequisite：
     'type': 'object'}
     ```
 
-    不管用哪种方式（genson 自动生成 / online 网站转换 / 手写）获取到 schema，拿到 schema 之后可以开始验证：
+    不管用哪种方式（genson 自动生成 / online 网站转换 / 手写）获取到 schema，拿到 schema
+    之后可以开始验证：
 
     ```python
     >>> jsonschema.validate(data, schema=schema)
@@ -967,10 +982,12 @@ Prerequisite：
     root.findall(".//neighbor[2]")
     ```
 
-  - 和 JSON Schema 一样，也有一个 XML Schema，用于解析 xml 文档，文档参考：https://www.w3.org/2001/XMLSchema
+  - 和 JSON Schema 一样，也有一个 XML Schema，用于解析 xml
+    文档，文档参考：https://www.w3.org/2001/XMLSchema
   - Python库安装： pip3 install xmlschema
 - hamcrest 断言
-  - 除了常用的 Assert 断言以外，有一个功能更加强大的断言方法叫 Hamcrest 断言，具有丰富的断言匹配器，支持多种语言，官网地址：<http://hamcrest.org/>
+  - 除了常用的 Assert 断言以外，有一个功能更加强大的断言方法叫 Hamcrest
+    断言，具有丰富的断言匹配器，支持多种语言，官网地址：<http://hamcrest.org/>
   - PyHamcrest GitHub：<https://github.com/hamcrest/PyHamcrest>
   - 文档：<https://pyhamcrest.readthedocs.io/en/v2.0.2/tutorial/>
 
@@ -1253,7 +1270,8 @@ $ gabbi-run -v all localhost:9999 < test.yaml
 2. [怎么使用变量？](https://gabbi.readthedocs.io/en/latest/faq.html?highlight=var#can-i-have-variables-in-my-yaml-file)
 3. 怎么使用客户端证书？
 
-   如果需要作为 K8S API 客户端，一般需要客户端证书作为身份验证。Gabbi 本身不支持客户端证书（后续可以提 PR 给社区）
+   如果需要作为 K8S API 客户端，一般需要客户端证书作为身份验证。Gabbi
+   本身不支持客户端证书（后续可以提 PR 给社区）
 
    首先，下载 Gabbi 代码，用 vscode 打开
 
@@ -1261,7 +1279,8 @@ $ gabbi-run -v all localhost:9999 < test.yaml
    git clone git@github.com:cdent/gabbi.git
    ```
 
-   在 vscode 中可以进行调试（根据 setup 可以知道 `gabbi-run` 对应的是 runner.py 文件，这就是调试启动文件）：
+   在 vscode 中可以进行调试（根据 setup 可以知道 `gabbi-run` 对应的是 runner.py
+   文件，这就是调试启动文件）：
 
    ```json
    $ cat .vscode/launch.json
@@ -1440,8 +1459,8 @@ schemathesis run  http://localhost:9999/api/swagger.json
 
 在面向前端的开发框架 Vue/React 中，cypress 更加方便。
 
-在偏后端的 django Web 框架中，整合 Selenium，同样可以达到类似的效果。参考《Test-Driven Development with Python》，书中就很好的将基于
-Selenium 的 UI 测试与 Django 开发很好的结合起来。
+在偏后端的 django Web 框架中，整合 Selenium，同样可以达到类似的效果。参考《Test-Driven Development
+with Python》，书中就很好的将基于 Selenium 的 UI 测试与 Django 开发很好的结合起来。
 
 ### 5.1 Python & Selenium
 

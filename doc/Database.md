@@ -11,7 +11,8 @@
   sudo mysql_secure_installation # 全选No
   ```
 - 远程访问，需要修改下配置文件，binding 到 `0.0.0.0:3306`，再打开防火墙
-- 重启服务，发现本地 root 账户不能登陆，可以参考[这里](https://blog.csdn.net/qq_34771403/article/details/73927962)
+- 重启服务，发现本地 root
+  账户不能登陆，可以参考[这里](https://blog.csdn.net/qq_34771403/article/details/73927962)
   - 先 su 到 root，然后 mysql，就可以登进去
   - 然后运行如下命令，重启服务
 

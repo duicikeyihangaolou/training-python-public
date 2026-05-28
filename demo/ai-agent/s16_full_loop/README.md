@@ -15,10 +15,10 @@
 
 ## 文件说明
 
-| 文件                | 说明                   |
-| ----------------- | -------------------- |
+| 文件              | 说明                     |
+| ----------------- | ------------------------ |
 | `mcp_server.py`   | 自建 MCP Server（stdio） |
-| `agent_client.py` | Agent 作为 MCP Client  |
+| `agent_client.py` | Agent 作为 MCP Client    |
 
 ## 运行方式
 

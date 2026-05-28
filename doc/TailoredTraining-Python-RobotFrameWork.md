@@ -2,31 +2,31 @@
 
 ## Catalog
 
-| Date  | Time | Title                                                                           | Content                                                |
-| ----- | ---- | ------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| 课前准备  | N/A  | [lab-00 Python Environment](#lab-00-python-environment)                         | [Python Installation](#python-installation)            |
-|       |      |                                                                                 | [IDE Configuration](#ide-configuration)                |
-| 第 1 天 | 上午   | [lab-01 Python Basic](#lab-01-python-basic)                                     | [Quick Start](#quick-start)                            |
-|       |      |                                                                                 | [Data Structure](#data-structure)                      |
-|       | 下午   |                                                                                 | [Functions](#functions)                                |
-|       |      | [lab-02 Common Usage Modules](#lab-02-common-usage-modules)                     | [OS/SYS](#ossys)                                       |
-|       |      |                                                                                 | [I/O](#io)                                             |
-|       |      | [lab-03 Object Oriented](#lab-03-object-oriented)                               | [Class & Instance](#class--instance)                   |
-|       |      |                                                                                 | [Operator Overloading](#operator-overloading)          |
-|       |      |                                                                                 | [Inheritance & Composition](#inheritance--composition) |
-| 第 2 天 | 上午   | [lab-04 Scientific Computation Modules](#lab-04-scientific-computation-modules) | [Numpy & Pandas](#numpy--pandas)                       |
-|       |      |                                                                                 | [Scipy & SkLearn](#scipy--sklearn)                     |
-|       |      |                                                                                 | [Matplotlib](#matplotlib)                              |
-|       |      | [lab-05 Pythonic Code Style](#lab-05-pythonic-code-style)                       | [Functional Programming](#functional-programming)      |
-|       |      |                                                                                 | [Iterator & Generator](#iterator--generator)           |
-|       |      |                                                                                 | [PEP8](#pep8)                                          |
-|       | 下午   | [lab-06 Other Categories](#lab-06-other-categories)                             | [Parallel Process](#parallel-process)                  |
-|       |      |                                                                                 | [Debug](#debug)                                        |
-|       |      |                                                                                 | [Decorator](#decorator)                                |
-|       |      |                                                                                 | [Memory Management](#memory-management)                |
-|       |      |                                                                                 | [Time & Space Complexity](#time--space-complexity)     |
-|       |      | [lab-07 RobotFrameWork](#lab-07-robotframework)                                 | [Quick Start](#quick-start)                            |
-|       |      |                                                                                 | [Demo](#demo)                                          |
+| Date     | Time | Title                                                                           | Content                                                |
+| -------- | ---- | ------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| 课前准备 | N/A  | [lab-00 Python Environment](#lab-00-python-environment)                         | [Python Installation](#python-installation)            |
+|          |      |                                                                                 | [IDE Configuration](#ide-configuration)                |
+| 第 1 天  | 上午 | [lab-01 Python Basic](#lab-01-python-basic)                                     | [Quick Start](#quick-start)                            |
+|          |      |                                                                                 | [Data Structure](#data-structure)                      |
+|          | 下午 |                                                                                 | [Functions](#functions)                                |
+|          |      | [lab-02 Common Usage Modules](#lab-02-common-usage-modules)                     | [OS/SYS](#ossys)                                       |
+|          |      |                                                                                 | [I/O](#io)                                             |
+|          |      | [lab-03 Object Oriented](#lab-03-object-oriented)                               | [Class & Instance](#class--instance)                   |
+|          |      |                                                                                 | [Operator Overloading](#operator-overloading)          |
+|          |      |                                                                                 | [Inheritance & Composition](#inheritance--composition) |
+| 第 2 天  | 上午 | [lab-04 Scientific Computation Modules](#lab-04-scientific-computation-modules) | [Numpy & Pandas](#numpy--pandas)                       |
+|          |      |                                                                                 | [Scipy & SkLearn](#scipy--sklearn)                     |
+|          |      |                                                                                 | [Matplotlib](#matplotlib)                              |
+|          |      | [lab-05 Pythonic Code Style](#lab-05-pythonic-code-style)                       | [Functional Programming](#functional-programming)      |
+|          |      |                                                                                 | [Iterator & Generator](#iterator--generator)           |
+|          |      |                                                                                 | [PEP8](#pep8)                                          |
+|          | 下午 | [lab-06 Other Categories](#lab-06-other-categories)                             | [Parallel Process](#parallel-process)                  |
+|          |      |                                                                                 | [Debug](#debug)                                        |
+|          |      |                                                                                 | [Decorator](#decorator)                                |
+|          |      |                                                                                 | [Memory Management](#memory-management)                |
+|          |      |                                                                                 | [Time & Space Complexity](#time--space-complexity)     |
+|          |      | [lab-07 RobotFrameWork](#lab-07-robotframework)                                 | [Quick Start](#quick-start)                            |
+|          |      |                                                                                 | [Demo](#demo)                                          |
 
     import re
     reCmp=re.compile('^\s*#+\s+(.+)$')
@@ -165,14 +165,16 @@
 ### Numpy & Pandas
 
 1. [类库] **如何理解和使用Numpy模块中的ndarray对象？**
-   [boardcast](https://www.runoob.com/numpy/numpy-broadcast.html), 随机数生成，点乘，索引（布尔数组删选）
+   [boardcast](https://www.runoob.com/numpy/numpy-broadcast.html),
+   随机数生成，点乘，索引（布尔数组删选）
 2. [类库] **如何理解和使用Pandas中的DataFrame对象？** 读写文件，columns，index，apple，根据Index定位
 
 ### Scipy & SkLearn
 
 1. [类库] 如何使用Scipy解非线性方程组？
 2. [类库] 如何使用Scipy做数值积分？
-3. [类库] **如何使用Scikit-Lean完成回归、分类、聚类运算？** [参考](http://blog.wuwenxiang.net/Machine-Learning)
+3. [类库] **如何使用Scikit-Lean完成回归、分类、聚类运算？**
+   [参考](http://blog.wuwenxiang.net/Machine-Learning)
 
 ### Matplotlib
 
@@ -254,7 +256,8 @@
          pip install robotframework
          ```
 
-     安装完成后可以在终端使用`robot --help`查询当前 robotframework 相关版本信息和帮助信息以及简单的案例
+     安装完成后可以在终端使用`robot --help`查询当前 robotframework
+     相关版本信息和帮助信息以及简单的案例
    - 接下来下载官方测试用例到本地(此处需要用到git工具从github拉取项目到本地)进行运行
 
          ```shell

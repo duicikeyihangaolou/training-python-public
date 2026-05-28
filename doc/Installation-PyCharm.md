@@ -12,7 +12,8 @@
 
     ![Python-Version.png](images/9da5527f336948b59f2e5f195552cb61-Python-Version.png)
 
-  - 如果没有安装，可以安装[纯净版 Python](Installation-Python.md)，或者 [Anaconda](Installation-Anaconda.md)，二者有其一即可
+  - 如果没有安装，可以安装[纯净版 Python](Installation-Python.md)，或者
+    [Anaconda](Installation-Anaconda.md)，二者有其一即可
 - 安装 Pycharm
   - [下载页面](https://www.jetbrains.com/pycharm/download/#section=windows)，选择社区版
 
@@ -35,7 +36,8 @@
 
     ![Pycharm-NewProject.png](images/bec937bdec704aee995f610566dcebb0-Pycharm-NewProject.png)
 
-  - 为方便起见，我们可以不使用默认的虚拟环境，而是直接指定系统的 Python解释器（Anaconda 中的 Python，或者纯净版的 Python）
+  - 为方便起见，我们可以不使用默认的虚拟环境，而是直接指定系统的 Python解释器（Anaconda 中的
+    Python，或者纯净版的 Python）
 
     ![Pycharm-Interpreter.png](images/bec937bdec704aee995f610566dcebb0-Pycharm-Interpreter.png)
 

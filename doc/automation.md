@@ -12,29 +12,29 @@
 
 ## 课程目录
 
-| 日程    | 时间 | 课程              | 内容                                     |
-| ----- | -- | --------------- | -------------------------------------- |
-| 第 1 天 | 上午 | [运维基础](#1-运维基础) | [1.1 自动化运维概述](#11-自动化运维概述)             |
-|       |    |                 | [1.2 Python 和系统运维](#12-python-和系统运维)   |
-|       | 下午 |                 | [1.3 容器技术和自动化运维](#13-容器技术和自动化运维)       |
-| 第 2 天 | 上午 |                 | [1.4 K8S 和自动化运维](#14-k8s-和自动化运维)       |
-|       |    | [配置管理](#2-配置管理) | [2.1 自动化运维框架](#21-自动化运维框架)             |
-|       |    |                 | [2.2 Fabric](#22-fabric)               |
-|       | 下午 |                 | [2.3 Ansible 基础](#23-ansible-基础)       |
-|       |    |                 | [2.4 Ansible 和容器技术](#24-ansible-与容器技术) |
-| 第 3 天 | 上午 |                 | [2.5 Ansible 与云平台](#25-ansible-与云平台)   |
-|       |    | [任务管理](#3-任务管理) | [3.1 版本控制](#31-版本控制)                   |
-|       |    |                 | [3.2 Jenkins+Zuul](#32-jenkinszuul)    |
-|       | 下午 |                 | [3.3 Drone](#33-drone)                 |
-|       |    |                 | [3.4 CI-CD](#34-ci-cd)                 |
-| 第 4 天 | 上午 | [监控计量](#4-监控计量) | [4.1 监控框架对比](#41-监控框架对比)               |
-|       |    |                 | [4.2 Promtheus](#42-prometheus)        |
-|       |    |                 | [4.3 Alertmanager](#43-alertmanager)   |
-|       |    |                 | [4.4 Grafana](#44-Grafana)             |
-|       | 下午 | [日志分析](#5-日志分析) | [5.1 Fluentd](#51-Fluentd)             |
-|       |    |                 | [5.2 ElasticSearch](#52-ElasticSearch) |
-|       |    |                 | [5.3 Kibana](#53-Kibana)               |
-|       |    |                 | [5.4 其它的日志收集和分析方案](#54-其它的日志收集和分析方案)   |
+| 日程    | 时间 | 课程                    | 内容                                                         |
+| ------- | ---- | ----------------------- | ------------------------------------------------------------ |
+| 第 1 天 | 上午 | [运维基础](#1-运维基础) | [1.1 自动化运维概述](#11-自动化运维概述)                     |
+|         |      |                         | [1.2 Python 和系统运维](#12-python-和系统运维)               |
+|         | 下午 |                         | [1.3 容器技术和自动化运维](#13-容器技术和自动化运维)         |
+| 第 2 天 | 上午 |                         | [1.4 K8S 和自动化运维](#14-k8s-和自动化运维)                 |
+|         |      | [配置管理](#2-配置管理) | [2.1 自动化运维框架](#21-自动化运维框架)                     |
+|         |      |                         | [2.2 Fabric](#22-fabric)                                     |
+|         | 下午 |                         | [2.3 Ansible 基础](#23-ansible-基础)                         |
+|         |      |                         | [2.4 Ansible 和容器技术](#24-ansible-与容器技术)             |
+| 第 3 天 | 上午 |                         | [2.5 Ansible 与云平台](#25-ansible-与云平台)                 |
+|         |      | [任务管理](#3-任务管理) | [3.1 版本控制](#31-版本控制)                                 |
+|         |      |                         | [3.2 Jenkins+Zuul](#32-jenkinszuul)                          |
+|         | 下午 |                         | [3.3 Drone](#33-drone)                                       |
+|         |      |                         | [3.4 CI-CD](#34-ci-cd)                                       |
+| 第 4 天 | 上午 | [监控计量](#4-监控计量) | [4.1 监控框架对比](#41-监控框架对比)                         |
+|         |      |                         | [4.2 Promtheus](#42-prometheus)                              |
+|         |      |                         | [4.3 Alertmanager](#43-alertmanager)                         |
+|         |      |                         | [4.4 Grafana](#44-Grafana)                                   |
+|         | 下午 | [日志分析](#5-日志分析) | [5.1 Fluentd](#51-Fluentd)                                   |
+|         |      |                         | [5.2 ElasticSearch](#52-ElasticSearch)                       |
+|         |      |                         | [5.3 Kibana](#53-Kibana)                                     |
+|         |      |                         | [5.4 其它的日志收集和分析方案](#54-其它的日志收集和分析方案) |
 
 其它：[6. 问题排查案例](#6-问题排查案例)
 
@@ -55,7 +55,8 @@ Redhat
 对“自动化运维“的定义：[_the use of software to create repeatable instructions and processes to replace or
 reduce human interaction with IT
 systems._](https://www.redhat.com/en/topics/automation/whats-it-automation)
-**使用软件创建可重复的指令和过程，以取代或减少与 IT 系统的人机交互。自动化软件在这些指令、工具和框架的限制下工作，以执行任务，几乎不需要人工干预**。
+**使用软件创建可重复的指令和过程，以取代或减少与 IT
+系统的人机交互。自动化软件在这些指令、工具和框架的限制下工作，以执行任务，几乎不需要人工干预**。
 
 自动化运维包括：
 
@@ -304,16 +305,16 @@ K8S，参考：[Github](https://github.com/duicikeyihangaolou/lab-kubernetes/blo
 - [Chef](https://www.chef.io/solutions)
 - [Puppet](https://puppet.com/)
 
-| **对比维度** | **Ansible**      | **Puppet**              | **Chef**                 | **SaltStack**     | **Fabric**       |
-| -------- | ---------------- | ----------------------- | ------------------------ | ----------------- | ---------------- |
-| **架构**   | 无代理（SSH）         | 客户端 - 服务器（Agent-Server） | 客户端 - 服务器（Client-Server） | 混合架构（代理 / 无代理）    | 无架构（直接 SSH）      |
-| **配置语言** | YAML（Playbook）   | Puppet DSL（特定领域语言）      | Ruby DSL（Recipe）         | YAML/Python       | Python 脚本        |
-| **状态管理** | 支持（声明式）          | 强支持（状态驱动，自动修复）          | 支持（资源定义）                 | 支持（States）        | 不支持（仅执行命令）       |
-| **学习曲线** | 低（YAML 易读，语法简单）  | 中高（DSL 需专门学习）           | 中（需懂 Ruby 基础）            | 中（模块多，概念稍复杂）      | 极低（Python 基础即可）  |
-| **并发性能** | 中等（依赖 SSH 并发）    | 高（Agent 缓存机制）           | 中高（Client 本地执行）          | 极高（ZeroMQ 异步通信）   | 低（串行 / 简单并行）     |
-| **适用规模** | 中小到大型（万级节点需优化）   | 大型（企业级，十万级节点）           | 中大型（开发主导的复杂环境）           | 超大型（实时监控 + 大规模部署） | 小型（临时任务 / 小规模节点） |
-| **典型场景** | 配置管理、应用部署、容器集成   | 长期基础设施稳定管理（如 IDC）       | 开发与运维协同（CI/CD 流程）        | 实时操作、云平台管理、监控     | 临时脚本执行、批量命令      |
-| **生态集成** | 强（容器、GitOps、云厂商） | 强（企业级工具链，如 Foreman）     | 强（开发工具链，如 Jenkins）       | 强（云、监控、网络设备）      | 弱（仅基础命令扩展）       |
+| **对比维度** | **Ansible**                  | **Puppet**                      | **Chef**                         | **SaltStack**                   | **Fabric**                    |
+| ------------ | ---------------------------- | ------------------------------- | -------------------------------- | ------------------------------- | ----------------------------- |
+| **架构**     | 无代理（SSH）                | 客户端 - 服务器（Agent-Server） | 客户端 - 服务器（Client-Server） | 混合架构（代理 / 无代理）       | 无架构（直接 SSH）            |
+| **配置语言** | YAML（Playbook）             | Puppet DSL（特定领域语言）      | Ruby DSL（Recipe）               | YAML/Python                     | Python 脚本                   |
+| **状态管理** | 支持（声明式）               | 强支持（状态驱动，自动修复）    | 支持（资源定义）                 | 支持（States）                  | 不支持（仅执行命令）          |
+| **学习曲线** | 低（YAML 易读，语法简单）    | 中高（DSL 需专门学习）          | 中（需懂 Ruby 基础）             | 中（模块多，概念稍复杂）        | 极低（Python 基础即可）       |
+| **并发性能** | 中等（依赖 SSH 并发）        | 高（Agent 缓存机制）            | 中高（Client 本地执行）          | 极高（ZeroMQ 异步通信）         | 低（串行 / 简单并行）         |
+| **适用规模** | 中小到大型（万级节点需优化） | 大型（企业级，十万级节点）      | 中大型（开发主导的复杂环境）     | 超大型（实时监控 + 大规模部署） | 小型（临时任务 / 小规模节点） |
+| **典型场景** | 配置管理、应用部署、容器集成 | 长期基础设施稳定管理（如 IDC）  | 开发与运维协同（CI/CD 流程）     | 实时操作、云平台管理、监控      | 临时脚本执行、批量命令        |
+| **生态集成** | 强（容器、GitOps、云厂商）   | 强（企业级工具链，如 Foreman）  | 强（开发工具链，如 Jenkins）     | 强（云、监控、网络设备）        | 弱（仅基础命令扩展）          |
 
 如何选择？
 
@@ -362,10 +363,12 @@ Ansible 的独特优势​：
 
 1. 无代理架构：减少目标节点资源占用，避免 “客户端故障影响整体” 的风险；​
 2. 语法友好：YAML 格式接近自然语言，运维、开发、产品均可参与编写；​
-3. 生态灵活性：与容器（Docker/K8s）、云平台（AWS/Azure）、GitOps（GitLab CI）无缝集成，适配现代运维趋势；​
+3. 生态灵活性：与容器（Docker/K8s）、云平台（AWS/Azure）、GitOps（GitLab
+   CI）无缝集成，适配现代运维趋势；​
 4. 模块丰富：内置数千模块（涵盖系统、网络、数据库等），且支持 Python 自定义模块，扩展成本低。​
 
-综上，Ansible 凭借 “简单、灵活、易集成” 的特点，成为当前自动化运维的主流选择，尤其适合中小团队快速落地自动化流程。
+综上，Ansible 凭借 “简单、灵活、易集成”
+的特点，成为当前自动化运维的主流选择，尤其适合中小团队快速落地自动化流程。
 
 Ansible 原理：
 
@@ -548,11 +551,14 @@ test2 | SUCCESS => {
 
 最佳实践：
 
-1. hosts.ini 还可以配置 ssh 相关的参数，但尽量不要，让 ssh 配置都放在 ~/.ssh/config 里，配置免密登陆后，ansible 会自动使用 ssh 登陆
-2. 可以在 hosts.ini 里配置 ansible 相关的参数，如 ansible_python_interpreter 等，但尽量不要，越简单越好，尽量和 python 版本无关。
-3. ping 是 ansible 内置的动作，用来测试连接是否正常，也可以用来测试 ansible 配置是否正确。大部分内置命令是幂等的，但也有些不是，比如 shell。
-4. 这里直接运行 ansible，但实际更常用的是 ansible-playbook，把要执行的命令放在 playbook 里，playbook 是 ansible 的剧本文件，用 YAML
-   格式编写。
+1. hosts.ini 还可以配置 ssh 相关的参数，但尽量不要，让 ssh 配置都放在 ~/.ssh/config
+   里，配置免密登陆后，ansible 会自动使用 ssh 登陆
+2. 可以在 hosts.ini 里配置 ansible 相关的参数，如 ansible_python_interpreter
+   等，但尽量不要，越简单越好，尽量和 python 版本无关。
+3. ping 是 ansible 内置的动作，用来测试连接是否正常，也可以用来测试 ansible
+   配置是否正确。大部分内置命令是幂等的，但也有些不是，比如 shell。
+4. 这里直接运行 ansible，但实际更常用的是 ansible-playbook，把要执行的命令放在 playbook 里，playbook
+   是 ansible 的剧本文件，用 YAML 格式编写。
 
 #### 2.3.4 YAML
 
@@ -570,37 +576,37 @@ test2 | SUCCESS => {
 
 **Ansible 核心命令**
 
-| 命令                  | 功能描述                                                                 | 示例                                                                                            |
-| ------------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `ansible`           | 执行临时命令，快速在远程主机上执行单一任务（如 ping、shell 命令）。                              | `ansible webservers -m pingansible dbservers -a "df -h"`                                      |
-| `ansible-playbook`  | 执行 Playbook 文件，批量执行预定义的任务序列。                                         | `ansible-playbook deploy.yml -i hosts.ini`                                                    |
+| 命令                | 功能描述                                                                                 | 示例                                                                                          |
+| ------------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `ansible`           | 执行临时命令，快速在远程主机上执行单一任务（如 ping、shell 命令）。                      | `ansible webservers -m pingansible dbservers -a "df -h"`                                      |
+| `ansible-playbook`  | 执行 Playbook 文件，批量执行预定义的任务序列。                                           | `ansible-playbook deploy.yml -i hosts.ini`                                                    |
 | `ansible-galaxy`    | 管理 Ansible 角色和集合，可从 [Galaxy](https://galaxy.ansible.com/) 下载或上传共享内容。 | `ansible-galaxy install geerlingguy.nginxansible-galaxy collection install community.general` |
-| `ansible-doc`       | 查看模块文档和用法示例。                                                         | `ansible-doc fileansible-doc -s copy`（仅显示参数摘要）                                                |
-| `ansible-vault`     | 加密 / 解密敏感数据（如密码、密钥），保护 Playbook 中的机密信息。                              | `ansible-vault encrypt group_vars/production/secrets.ymlansible-vault view secrets.yml`       |
-| `ansible-inventory` | 查看或调试主机清单（inventory）的结构和变量。                                          | `ansible-inventory --list -i hosts.iniansible-inventory --graph`                              |
+| `ansible-doc`       | 查看模块文档和用法示例。                                                                 | `ansible-doc fileansible-doc -s copy`（仅显示参数摘要）                                       |
+| `ansible-vault`     | 加密 / 解密敏感数据（如密码、密钥），保护 Playbook 中的机密信息。                        | `ansible-vault encrypt group_vars/production/secrets.ymlansible-vault view secrets.yml`       |
+| `ansible-inventory` | 查看或调试主机清单（inventory）的结构和变量。                                            | `ansible-inventory --list -i hosts.iniansible-inventory --graph`                              |
 
 **常用模块（非完整列表）**
 
-| 模块名               | 功能描述                                              | 适用场景                                                                                            |
-| ----------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| `ping`            | 测试与目标主机的连通性（基于 Python），验证 SSH 配置和 Python 环境。      | 检查主机是否可达：`ansible all -m ping`                                                                  |
-| `shell`/`command` | 在远程主机执行 shell 命令（`shell` 支持管道和变量，`command` 直接执行）。 | 执行系统命令：`ansible web -m shell -a "ls -l /tmp"`                                                   |
-| `copy`            | 将文件从控制节点复制到远程主机，支持权限和内容替换。                        | 分发配置文件：`ansible web -m copy -a "src=nginx.conf dest=/etc/nginx/"`                               |
-| `file`            | 管理文件 / 目录属性（权限、所有者、状态等）。                          | 创建目录：`ansible all -m file -a "path=/data state=directory mode=0755"`                            |
-| `template`        | 基于 Jinja2 模板生成配置文件，动态填充变量。                        | 生成个性化配置：`ansible web -m template -a "src=app.conf.j2 dest=/etc/app.conf"`                       |
-| `yum`/`apt`       | 包管理模块，用于安装、升级或删除软件包（分别适用于 RHEL 和 Debian 系）。       | 安装 Nginx：`ansible web -m yum -a "name=nginx state=present"`                                     |
+| 模块名            | 功能描述                                                                  | 适用场景                                                                                             |
+| ----------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `ping`            | 测试与目标主机的连通性（基于 Python），验证 SSH 配置和 Python 环境。      | 检查主机是否可达：`ansible all -m ping`                                                              |
+| `shell`/`command` | 在远程主机执行 shell 命令（`shell` 支持管道和变量，`command` 直接执行）。 | 执行系统命令：`ansible web -m shell -a "ls -l /tmp"`                                                 |
+| `copy`            | 将文件从控制节点复制到远程主机，支持权限和内容替换。                      | 分发配置文件：`ansible web -m copy -a "src=nginx.conf dest=/etc/nginx/"`                             |
+| `file`            | 管理文件 / 目录属性（权限、所有者、状态等）。                             | 创建目录：`ansible all -m file -a "path=/data state=directory mode=0755"`                            |
+| `template`        | 基于 Jinja2 模板生成配置文件，动态填充变量。                              | 生成个性化配置：`ansible web -m template -a "src=app.conf.j2 dest=/etc/app.conf"`                    |
+| `yum`/`apt`       | 包管理模块，用于安装、升级或删除软件包（分别适用于 RHEL 和 Debian 系）。  | 安装 Nginx：`ansible web -m yum -a "name=nginx state=present"`                                       |
 | `service`         | 管理系统服务（启动、停止、重启、设置开机自启）。                          | 重启服务：`ansible all -m service -a "name=httpd state=restarted enabled=yes"`                       |
-| `user`/`group`    | 创建或管理用户和用户组。                                      | 创建 deploy 用户：`ansible all -m user -a "name=deploy groups=sudo append=yes"`                      |
-| `git`             | 从 Git 仓库克隆或更新代码。                                  | 部署应用：`ansible app -m git -a "repo=https://github.com/example.git dest=/opt/app version=master"` |
-| `uri`             | 发送 HTTP 请求，用于 API 调用或检查服务状态。                      | 检查网站状态：`ansible localhost -m uri -a "url=http://example.com return_content=yes"`                |
-| `debug`           | 调试模块，打印变量值或临时信息。                                  | 输出变量：`ansible all -m debug -a "var=ansible_facts"`                                              |
+| `user`/`group`    | 创建或管理用户和用户组。                                                  | 创建 deploy 用户：`ansible all -m user -a "name=deploy groups=sudo append=yes"`                      |
+| `git`             | 从 Git 仓库克隆或更新代码。                                               | 部署应用：`ansible app -m git -a "repo=https://github.com/example.git dest=/opt/app version=master"` |
+| `uri`             | 发送 HTTP 请求，用于 API 调用或检查服务状态。                             | 检查网站状态：`ansible localhost -m uri -a "url=http://example.com return_content=yes"`              |
+| `debug`           | 调试模块，打印变量值或临时信息。                                          | 输出变量：`ansible all -m debug -a "var=ansible_facts"`                                              |
 
 **其他实用命令**
 
-| 命令                | 功能描述                                     |
-| ----------------- | ---------------------------------------- |
-| `ansible-config`  | 查看或配置 Ansible 的运行参数（如并发数、SSH 超时）。        |
-| `ansible-console` | 交互式执行命令，类似 shell 终端，但针对多主机批量操作。          |
+| 命令              | 功能描述                                                                |
+| ----------------- | ----------------------------------------------------------------------- |
+| `ansible-config`  | 查看或配置 Ansible 的运行参数（如并发数、SSH 超时）。                   |
+| `ansible-console` | 交互式执行命令，类似 shell 终端，但针对多主机批量操作。                 |
 | `ansible-pull`    | 在远程主机上直接拉取并执行 Playbook（反向操作，适用于无中心节点场景）。 |
 
 **如何查找更多模块？**
@@ -1092,7 +1098,8 @@ Ansible 内置调试方法
 3. 用户主目录下的 ~/.ansible.cfg
 4. 系统级默认配置：/etc/ansible/ansible.cfg
 
-加载顺序：Ansible 会按上述顺序查找配置文件，找到第一个存在的文件后停止搜索。例如，如果 ANSIBLE_CONFIG 环境变量已设置，则优先使用该路径的配置文件。
+加载顺序：Ansible 会按上述顺序查找配置文件，找到第一个存在的文件后停止搜索。例如，如果
+ANSIBLE_CONFIG 环境变量已设置，则优先使用该路径的配置文件。
 
 查看当前 ansible 执行对应的全局配置文件：
 
@@ -1110,7 +1117,8 @@ ansible 2.10.17
 
 1. 系统级配置：在 /etc/ansible/ansible.cfg 中设置全局默认值。
 2. 项目级配置：在项目根目录创建 ansible.cfg，覆盖系统默认配置。
-3. 变量优先级：尽量使用角色 defaults（低优先级）定义通用默认值，通过 extra_vars 或 host_vars（高优先级）覆盖特定场景的值。
+3. 变量优先级：尽量使用角色 defaults（低优先级）定义通用默认值，通过 extra_vars 或
+   host_vars（高优先级）覆盖特定场景的值。
 
 举例说明：
 
@@ -1329,10 +1337,12 @@ ok: [127.0.0.1] => {
 
 依赖说明：
 
-1. 任务执行顺序为 `firewall → common → webserver`，webserver 依赖 common（直接依赖），common 依赖 firewall（间接依赖，递归加载）
-2. 依赖传递：webserver 的 meta/main.yml 中定义的变量 `app_env: "production"` 会传递给 common 角色（可在 common 任务中通过
-   `{{ app_env }}` 使用）。
-3. 手动检查依赖关系：可通过 ansible-galaxy 命令查看角色依赖树：`ansible-galaxy role dependencies roles/webserver/`
+1. 任务执行顺序为 `firewall → common → webserver`，webserver 依赖 common（直接依赖），common 依赖
+   firewall（间接依赖，递归加载）
+2. 依赖传递：webserver 的 meta/main.yml 中定义的变量 `app_env: "production"` 会传递给 common
+   角色（可在 common 任务中通过 `{{ app_env }}` 使用）。
+3. 手动检查依赖关系：可通过 ansible-galaxy
+   命令查看角色依赖树：`ansible-galaxy role dependencies roles/webserver/`
 
 扩展场景 1：带条件的依赖
 
@@ -1438,12 +1448,15 @@ ansible-playbook site.yml -l webservers -e "nginx_port=8081"
 参考：[Ansible 自定义模块开发](https://docs.ansible.com/ansible/latest/dev_guide/developing_modules_general.html)
 
 1. 必须用 AnsibleModule 作为入口
-2. 参数声明（`argument_spec`）,用 `argument_spec` 字典声明所有支持的参数、类型、是否必需、默认值等。支持类型有：str、int、bool、list、dict 等。
+2. 参数声明（`argument_spec`）,用 `argument_spec`
+   字典声明所有支持的参数、类型、是否必需、默认值等。支持类型有：str、int、bool、list、dict 等。
 3. 参数获取：通过 `module.params['参数名']` 获取传入的参数。
-4. 返回数据（输出）：用 module.exit_json(**result) 正常返回。用 module.fail_json(msg='错误信息', **result) 返回错误。返回数据必须是
-   JSON 可序列化的字典，常见字段有：changed（bool）：是否有变更；failed（bool）：是否失败；其他自定义字段
+4. 返回数据（输出）：用 module.exit_json(**result) 正常返回。用 module.fail_json(msg='错误信息',
+   **result) 返回错误。返回数据必须是 JSON
+   可序列化的字典，常见字段有：changed（bool）：是否有变更；failed（bool）：是否失败；其他自定义字段
 5. changed 字段：必须返回 changed 字段，表示本次操作是否对目标系统做了更改。
-6. 支持 check_mode（可选）如果支持 check_mode，要在参数里加 supports_check_mode=True，并在代码里判断 module.check_mode。
+6. 支持 check_mode（可选）如果支持 check_mode，要在参数里加 supports_check_mode=True，并在代码里判断
+   module.check_mode。
 7. 错误处理：用 module.fail_json(msg='...') 返回错误，Ansible 会自动处理异常和输出。
 8. 只允许标准输出/错误：模块不能直接 print，所有输出都要通过 exit_json 或 fail_json。
 
@@ -2225,7 +2238,8 @@ ansible-playbook defensive_playbook.yml --check
 
 ##### 2.3.11.5 通过 AI 自动生成 Ansible Dashboard
 
-参考：ansible-dashboard demo：[Github](https://github.com/duicikeyihangaolou/project-ansible-dashboard)
+参考：ansible-dashboard
+demo：[Github](https://github.com/duicikeyihangaolou/project-ansible-dashboard)
 
 ### 2.4 Ansible 和容器技术
 
@@ -2383,7 +2397,8 @@ docker_container:
   # state: absent  # 彻底删除容器
 ```
 
-这个示例展示了 Ansible 管理 Docker 容器的最基本模式，通过声明式方式确保容器始终处于预期状态，无需编写复杂的过程式脚本。
+这个示例展示了 Ansible 管理 Docker
+容器的最基本模式，通过声明式方式确保容器始终处于预期状态，无需编写复杂的过程式脚本。
 
 ### 2.5 Ansible 与云平台
 
@@ -2428,8 +2443,8 @@ OpenStack
 [返回目录](#课程目录)
 
 Gitlab +
-Drone，参考：[Github](https://github.com/99cloud/lab-openstack/blob/master/doc/cicd/gitlab_drone.md) 或
-[Gitee](https://gitee.com/dev-99cloud/lab-openstack/blob/master/doc/cicd/gitlab_drone.md)
+Drone，参考：[Github](https://github.com/99cloud/lab-openstack/blob/master/doc/cicd/gitlab_drone.md)
+或 [Gitee](https://gitee.com/dev-99cloud/lab-openstack/blob/master/doc/cicd/gitlab_drone.md)
 
 ### 3.4 CI/CD
 

@@ -10,10 +10,10 @@
 
 ## 总览
 
-| 日期    | 上午（3h）          | 下午（3h）    |
-| ----- | --------------- | --------- |
-| Day 1 | Agent 主循环与工具编排  | MCP 协议与连接 |
-| Day 2 | MCP Server 设计实现 | 完整实战与扩展   |
+| 日期  | 上午（3h）             | 下午（3h）     |
+| ----- | ---------------------- | -------------- |
+| Day 1 | Agent 主循环与工具编排 | MCP 协议与连接 |
+| Day 2 | MCP Server 设计实现    | 完整实战与扩展 |
 
 ### 环境准备
 
@@ -54,11 +54,11 @@
 
 **停止条件（stop_reason）**：
 
-| stop_reason    | 含义             | 动作        |
-| -------------- | -------------- | --------- |
-| `"end_turn"`   | 模型完成回复         | 打印文本，继续循环 |
+| stop_reason    | 含义                  | 动作               |
+| -------------- | --------------------- | ------------------ |
+| `"end_turn"`   | 模型完成回复          | 打印文本，继续循环 |
 | `"tool_use"`   | 模型想调用工具        | 执行工具，反馈结果 |
-| `"max_tokens"` | 回复被 token 限制截断 | 打印部分文本    |
+| `"max_tokens"` | 回复被 token 限制截断 | 打印部分文本       |
 
 **从零实现**（理解底层）：
 
@@ -89,7 +89,8 @@ def agent_loop(query):
         messages.append({"role": "user", "content": results})
 ```
 
-**用框架快速搭建**：Claude Agent SDK / OpenAI Agents SDK，最小 Boilerplate（~50 行），内置主循环、解析、重试。
+**用框架快速搭建**：Claude Agent SDK / OpenAI Agents SDK，最小 Boilerplate（~50
+行），内置主循环、解析、重试。
 
 > 📂 代码示例：[s01_agent_loop](../demo/ai-agent/s01_agent_loop/) — 从零实现 ~30 行主循环
 
@@ -139,8 +140,8 @@ def process_tool_call(tool_name, tool_input):
 
 **多工具路由**：registry 映射表，扩展时只加 Schema + Handler，循环本身不变。
 
-> 📂 代码示例：[s02_tool_dispatch](../demo/ai-agent/s02_tool_dispatch/) — TOOLS Schema + TOOL_HANDLERS +
-> 分发函数
+> 📂 代码示例：[s02_tool_dispatch](../demo/ai-agent/s02_tool_dispatch/) — TOOLS Schema +
+> TOOL_HANDLERS + 分发函数
 
 #### 3. 上下文管理与会话持久化
 
@@ -180,20 +181,21 @@ Tool call result
 2. 溢出 → 截断过大的 tool_result
 3. 还溢出 → LLM 摘要压缩历史
 
-> 📂 代码示例：[s03_context_compact](../demo/ai-agent/s03_context_compact/) — 三层压缩 + JSONL 持久化 + 3 阶段溢出保护
+> 📂 代码示例：[s03_context_compact](../demo/ai-agent/s03_context_compact/) — 三层压缩 + JSONL
+> 持久化 + 3 阶段溢出保护
 
 #### 4. 主流 Agent 框架对比（选讲）
 
-| 框架                     | 特点                                                  | 适用场景                  | Skill 支持 |
-| ---------------------- | --------------------------------------------------- | --------------------- | -------- |
-| **Claude Agent SDK**   | 原生 MCP、扩展思维、透明推理                                    | 深度用 Claude / 需 MCP 集成 | MCP      |
-| **OpenAI Agents SDK**  | 最小 boilerplate、沙盒执行、结构化输出                           | OpenAI 模型、追求简洁        | MCP      |
-| **CrewAI**             | 角色 + 任务 + 班组、多 Agent 协作                             | 业务流程自动化、多角色任务         | Tool     |
-| **LangGraph**          | 状态机/图模型、checkpoint、可观测                              | 复杂工作流、生产级控制           | Tool     |
-| **Hermes Agent**       | 增长最快开源（140k+ stars）、GEPA 自优化、6 大消息平台                | 快速落地、自托管、多平台集成        | 内置 Skill |
-| **OpenHuman**          | Rust + Tauri 桌面端、Memory Tree、118+ 数据源、TokenJuice 压缩 | 桌面优先、本地隐私、多数据整合       | 内置 Skill |
-| **OpenClaw**           | 370k+ stars、50+ 平台集成，Skill 市场成熟                     | 快速集成、成熟生态             | Skill 市场 |
-| **Claude Code Router** | 多 AI 引擎路由、自动切换、Token 优化                             | 需要灵活切换模型、项目级管理        | MCP      |
+| 框架                   | 特点                                                           | 适用场景                       | Skill 支持 |
+| ---------------------- | -------------------------------------------------------------- | ------------------------------ | ---------- |
+| **Claude Agent SDK**   | 原生 MCP、扩展思维、透明推理                                   | 深度用 Claude / 需 MCP 集成    | MCP        |
+| **OpenAI Agents SDK**  | 最小 boilerplate、沙盒执行、结构化输出                         | OpenAI 模型、追求简洁          | MCP        |
+| **CrewAI**             | 角色 + 任务 + 班组、多 Agent 协作                              | 业务流程自动化、多角色任务     | Tool       |
+| **LangGraph**          | 状态机/图模型、checkpoint、可观测                              | 复杂工作流、生产级控制         | Tool       |
+| **Hermes Agent**       | 增长最快开源（140k+ stars）、GEPA 自优化、6 大消息平台         | 快速落地、自托管、多平台集成   | 内置 Skill |
+| **OpenHuman**          | Rust + Tauri 桌面端、Memory Tree、118+ 数据源、TokenJuice 压缩 | 桌面优先、本地隐私、多数据整合 | 内置 Skill |
+| **OpenClaw**           | 370k+ stars、50+ 平台集成，Skill 市场成熟                      | 快速集成、成熟生态             | Skill 市场 |
+| **Claude Code Router** | 多 AI 引擎路由、自动切换、Token 优化                           | 需要灵活切换模型、项目级管理   | MCP        |
 
 选 1～2 个做端到端演示，学员跟做。
 
@@ -206,12 +208,12 @@ Tool call result
 
 **Skill vs Tool**：
 
-| 维度   | Tool（工具）      | Skill（技能）                  |
-| ---- | ------------- | -------------------------- |
-| 粒度   | 单个原子操作        | 多个工具 + 编排逻辑                |
-| 复用性  | 依赖框架工具系统      | 可脱离框架，独立分发                 |
-| 生命周期 | 随 Agent 会话    | 可持久化、安装、版本管理               |
-| 生态   | MCP Server 市场 | 社区 Skill 市场（HuggingFace 等） |
+| 维度     | Tool（工具）     | Skill（技能）                     |
+| -------- | ---------------- | --------------------------------- |
+| 粒度     | 单个原子操作     | 多个工具 + 编排逻辑               |
+| 复用性   | 依赖框架工具系统 | 可脱离框架，独立分发              |
+| 生命周期 | 随 Agent 会话    | 可持久化、安装、版本管理          |
+| 生态     | MCP Server 市场  | 社区 Skill 市场（HuggingFace 等） |
 
 **Skill 核心结构**：
 
@@ -271,7 +273,8 @@ def organize_files(directory: str, pattern: str = "*.txt"):
 - **Hugging Face Agents**：新兴生态，支持模型卡片一键加载
 - **Claude Code Router**：支持 Skill 路由，自动选择最优工具集
 
-> 📂 代码示例：[s05_skill_dev](../demo/ai-agent/s05_skill_dev/) — Skill 开发模板 + OpenClaw / Hermes 实际开发
+> 📂 代码示例：[s05_skill_dev](../demo/ai-agent/s05_skill_dev/) — Skill 开发模板 + OpenClaw / Hermes
+> 实际开发
 
 #### 6. 开源 Agent 框架（选讲）
 
@@ -299,8 +302,8 @@ def organize_files(directory: str, pattern: str = "*.txt"):
   - 项目级 Agent 管理，适合需要灵活切换模型的场景
 - 端到端走通：用 Hermes 或 OpenHuman 跑一条完整任务（读取文件 / 查天气 / 发消息）
 
-> 📂 代码示例：[s05_open_source](../demo/ai-agent/s05_open_source/) — Hermes Agent / OpenHuman / OpenClaw
-> 安装说明
+> 📂 代码示例：[s05_open_source](../demo/ai-agent/s05_open_source/) — Hermes Agent / OpenHuman /
+> OpenClaw 安装说明
 
 ### 下午：MCP 协议与连接（3 小时）
 
@@ -349,7 +352,8 @@ def organize_files(directory: str, pattern: str = "*.txt"):
 - 生命周期：启动（读配置）→ 运行（接收/分发）→ 关闭（清理）
 - 与「进程内工具调用」的对比：序列化/反序列化、跨进程
 
-> 📂 代码示例：[s10_mcp_server_lifecycle](../demo/ai-agent/s10_mcp_server_lifecycle/) — 启动→运行→关闭骨架
+> 📂 代码示例：[s10_mcp_server_lifecycle](../demo/ai-agent/s10_mcp_server_lifecycle/) —
+> 启动→运行→关闭骨架
 
 #### 12. JSON-RPC 路由与分发
 
@@ -368,8 +372,8 @@ def organize_files(directory: str, pattern: str = "*.txt"):
 - 错误处理：参数缺失/类型错误/执行异常 → JSON-RPC error
 - 实战：注册 2～3 个真实工具（如 read_file、get_time、calc）
 
-> 📂 代码示例：[s12_tool_registration](../demo/ai-agent/s12_tool_registration/) — tools/list + tools/call
-> 实现
+> 📂 代码示例：[s12_tool_registration](../demo/ai-agent/s12_tool_registration/) — tools/list +
+> tools/call 实现
 
 #### 14. 用官方 SDK 快速搭建 Server（选讲）
 
@@ -377,7 +381,8 @@ def organize_files(directory: str, pattern: str = "*.txt"):
 - 定义工具：用 `@tool` 装饰器或 `Server` constructor
 - 专注业务逻辑，传输层由 SDK 处理
 
-> 📂 代码示例：[s13_mcp_sdk_server](../demo/ai-agent/s13_mcp_sdk_server/) — Python MCP SDK @tool 装饰器
+> 📂 代码示例：[s13_mcp_sdk_server](../demo/ai-agent/s13_mcp_sdk_server/) — Python MCP SDK @tool
+> 装饰器
 
 ### 下午：传输层与完整实战（3 小时）
 
@@ -423,7 +428,8 @@ def organize_files(directory: str, pattern: str = "*.txt"):
 - **官方/社区 MCP Server 选用**：filesystem / git / database / slack 等
 - **生产环境**：认证（API Key / OAuth）、限流（token / rpm）、多实例部署
 - **与课程 2 的衔接**：理解 LangChain/CrewAI 内部工具机制
-- **持续关注**：Hermes Agent（快速迭代）、OpenHuman（社区热度）、OpenClaw（生态成熟）、MCP 官方 SDK 更新
+- **持续关注**：Hermes Agent（快速迭代）、OpenHuman（社区热度）、OpenClaw（生态成熟）、MCP 官方 SDK
+  更新
 
 > 📂 代码示例：[s17_day2_summary](../demo/ai-agent/s17_day2_summary/) — 总结 + 扩展方向
 
