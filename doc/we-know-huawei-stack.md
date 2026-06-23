@@ -191,7 +191,20 @@ Dockerfile、应用代码         CCE/ServiceStage 集群
 
 > **Reference**
 >
-> - [The Twelve-Factor App（配置、日志、进程）](https://12factor.net/)
+> - [The Twelve-Factor App（配置、日志、进程）](https://12factor.net/) — 十二要素（★ =
+>   与本课紧密相关）：
+>   1. Codebase 一份代码库，多处部署
+>   2. Dependencies 显式声明依赖
+>   3. **Config** 配置外置（env），不进镜像/Git ★
+>   4. **Backing services** DB/OBS/MQ 等当作可替换附加资源 ★
+>   5. **Build, release, run** 构建、发布、运行严格分离 ★
+>   6. **Processes** 无状态进程运行 ★
+>   7. Port binding 端口绑定对外服务
+>   8. Concurrency 进程模型水平扩展
+>   9. **Disposability** 快速启动、优雅退出（SIGTERM、`/health`） ★
+>   10. Dev/prod parity 开发/预发/生产环境尽量一致
+>   11. **Logs** 日志写 stdout/stderr，作事件流 ★
+>   12. Admin processes 迁移/批处理等用一次性进程
 > - [华为云 Stack 解决方案描述](https://www.huaweicloud.com/solution/dedicated-cloud/forecloud-stack.html)
 > - [Kubernetes Pod 生命周期与探针](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes)
 
@@ -280,15 +293,25 @@ def root():
     return {"msg": "lab-demo", "log_level": os.getenv("LOG_LEVEL", "info")}
 ```
 
+`requirements.txt`
+
+```
+fastapi==0.138.0
+uvicorn[standard]==0.49.0
+```
+
 `Dockerfile`：
 
 ```dockerfile
-FROM python:3.11-slim-bookworm
+FROM crpi-wbg5vm8h2xypwe6e.cn-chengdu.personal.cr.aliyuncs.com/gpufusion/python:3.11-slim-bookworm
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 RUN useradd -m -u 10001 appuser
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir \
+    -i https://mirrors.aliyun.com/pypi/simple \
+    --trusted-host mirrors.aliyun.com \
+    -r requirements.txt
 COPY app/ ./app/
 USER appuser
 EXPOSE 8080
@@ -543,6 +566,8 @@ docker push ${SWR_REGISTRY}/${SWR_NAMESPACE}/lab-demo:0.1.0
 > - [SWR 用户指南（镜像上传）](https://support.huaweicloud.com/usermanual-swr/swr_01_0001.html)
 > - [KooCLI 快速入门](https://support.huaweicloud.com/qs-hcli/hcli_02_005.html)
 > - [huaweicloud-sdk-python-v3（SWR）](https://github.com/huaweicloud/huaweicloud-sdk-python-v3)
+
+端到端走通，参考：<https://gitee.com/dev-99cloud/training-kubernetes/blob/master/doc/class-01-Kubernetes-Administration.md#29-%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA-pod>
 
 ---
 
