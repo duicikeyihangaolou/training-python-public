@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: lab-demo
+spec:
+  containers:
+  - name: lab-demo
+    image: crpi-wbg5vm8h2xypwe6e.cn-chengdu.personal.cr.aliyuncs.com/gpufusion/lab-demo:cache-test 

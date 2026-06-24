@@ -12,6 +12,7 @@
 2. [K8S 扩展阅读](https://gitee.com/dev-99cloud/training-kubernetes/blob/master/doc/class-01-Kubernetes-Administration.md?#29-%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA-pod)
 3. [华为云 SWR 容器镜像服务](https://support.huaweicloud.com/productdesc-swr/swr_03_0001.html)，[容器镜像服务控制台](https://console.huaweicloud.com/swr/?region=cn-east-3#/swr/dashboard)
 4. [华为云开发者 Python 软件开发工具包（Python SDK）](https://github.com/huaweicloud/huaweicloud-sdk-python-v3/blob/master/README_CN.md)
+5. 完整代码参考：[huawei-stack-lab-demo](src/huawei-stack-lab-demo/README.md)
 
 ---
 
