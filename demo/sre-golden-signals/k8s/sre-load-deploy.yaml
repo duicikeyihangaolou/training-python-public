@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sre-load
+  labels:
+    app: sre-load
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sre-load
+  template:
+    metadata:
+      labels:
+        app: sre-load
+    spec:
+      containers:
+        - name: pause
+          image: registry.aliyuncs.com/google_containers/pause:3.9
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi

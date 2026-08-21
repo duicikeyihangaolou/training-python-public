@@ -1,0 +1,64 @@
+# SRE 黄金指标 Demo 栈：Prometheus + Grafana + Node Exporter + Alertmanager + 示例 API
+# 启动：docker compose up -d --build
+# 访问：Grafana :3000 (admin/admin) | Prometheus :9090 | API :8088
+# 说明：API 映射 8088 避免与 KubeClipper 控制台 :8080 冲突；
+#       alertmanager 通过 host-gateway 访问宿主机 webhook（Linux/macOS 通用）。
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    container_name: sre-prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/rules.yml:/etc/prometheus/rules.yml:ro
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+    ports:
+      - "9090:9090"
+    depends_on:
+      - node-exporter
+      - api
+      - alertmanager
+
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    container_name: sre-alertmanager
+    volumes:
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    ports:
+      - "9093:9093"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # 说明：在 Linux 裸机上可解开 pid/volumes 以采集真实宿主机；
+  # macOS Docker Desktop 采集的是 Linux VM 指标，课堂演示足够。
+  node-exporter:
+    image: prom/node-exporter:v1.8.2
+    container_name: sre-node-exporter
+    ports:
+      - "9100:9100"
+
+  api:
+    build: ./api
+    container_name: sre-demo-api
+    ports:
+      - "8088:8080"
+    environment:
+      - ERROR_RATE=0.02
+
+  grafana:
+    image: grafana/grafana:11.2.0
+    container_name: sre-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus

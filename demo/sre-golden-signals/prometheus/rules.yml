@@ -1,0 +1,54 @@
+groups:
+  - name: golden-signals
+    rules:
+      # 流量突增（相对基线的简化版：绝对阈值阈值，课堂演示用）
+      - alert: HighRequestRate
+        expr: sum(rate(http_requests_total{job="api"}[1m])) > 5
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "API 流量偏高"
+          description: "当前 QPS={{ $value | humanize }}，超过演示阈值 5。"
+
+      # 错误率（Latency/Traffic/Errors/Saturation 中的 Errors）
+      - alert: HighErrorRate
+        expr: |
+          (
+            sum(rate(http_requests_total{job="api",status=~"5.."}[1m]))
+            /
+            clamp_min(sum(rate(http_requests_total{job="api"}[1m])), 0.001)
+          ) > 0.05
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "API 错误率超过 5%"
+          description: "当前错误率={{ $value | humanizePercentage }}。"
+
+      # 饱和度：CPU（基础设施层静态阈值）
+      - alert: HighCPUUsage
+        expr: |
+          100 - (
+            avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100
+          ) > 90
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "主机 CPU 使用率 > 90%"
+          description: "实例 {{ $labels.instance }} CPU={{ $value | humanize }}%。"
+
+      # 延迟：P95 请求耗时
+      - alert: HighLatencyP95
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum(rate(http_request_duration_seconds_bucket{job="api"}[2m])) by (le)
+          ) > 0.5
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API P95 延迟 > 500ms"
+          description: "P95={{ $value | humanize }}s。"

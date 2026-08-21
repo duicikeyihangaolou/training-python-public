@@ -1,0 +1,42 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: default-webhook
+  group_by: ["alertname", "severity"]
+  group_wait: 10s
+  group_interval: 30s
+  repeat_interval: 1h
+  routes:
+    - matchers:
+        - severity="critical"
+      receiver: critical-webhook
+      continue: true
+
+receivers:
+  # 课堂默认：写入 webhook 便于用 curl / 本地查看，无需企业微信密钥
+  - name: default-webhook
+    webhook_configs:
+      - url: "http://host.docker.internal:9999/webhook"
+        send_resolved: true
+
+  - name: critical-webhook
+    webhook_configs:
+      - url: "http://host.docker.internal:9999/webhook/critical"
+        send_resolved: true
+
+  # 企业微信机器人示例（课上可选替换；将 key 换成真实值后取消注释并改 route.receiver）
+  # - name: wecom
+  #   wechat_configs:
+  #     - corp_id: "YOUR_CORP_ID"
+  #       to_user: "@all"
+  #       agent_id: "YOUR_AGENT_ID"
+  #       api_secret: "YOUR_SECRET"
+  #       message: '{{ template "wechat.default.message" . }}'
+
+inhibit_rules:
+  - source_matchers:
+      - severity="critical"
+    target_matchers:
+      - severity="warning"
+    equal: ["alertname", "service"]
