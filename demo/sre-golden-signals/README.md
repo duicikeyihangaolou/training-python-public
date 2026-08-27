@@ -40,14 +40,20 @@ curl -X POST 'http://127.0.0.1:8088/chaos/error-rate?rate=0.02'
 curl -X POST 'http://127.0.0.1:8088/chaos/latency-ms?ms=0'
 ```
 
-## AIOps（可选）
+## AIOps（第 12 课 · Demo E）
 
 ```bash
-python3 -m venv /root/sre-aiops-venv && /root/sre-aiops-venv/bin/pip install -r requirements-aiops.txt
+# 无需 API Key（全班必做）
+python3 aiops_agent.py --mode advise --rules-only
+python3 aiops_agent.py --mode execute --confirm --rules-only
+
+# 可选：GLM / OpenAI 兼容
+pip3 install -r requirements-aiops.txt
 export GLM_API_KEY=... GLM_BASE_URL=https://open.bigmodel.cn/api/paas/v4/ GLM_MODEL=glm-4-flash
-kubectl apply -f k8s/sre-load-deploy.yaml
-/root/sre-aiops-venv/bin/python aiops_agent.py --mode advise
-/root/sre-aiops-venv/bin/python aiops_agent.py --mode execute --confirm   # 或 --auto-execute
+python3 aiops_agent.py --mode advise
+kubectl apply -f k8s/sre-load-deploy.yaml   # 扩容演示需 K8s
+python3 aiops_agent.py --mode execute --confirm
 ```
 
-详见讲义附录 F 与 lab 实录 §12。
+详见讲义 [第 12 课](../../doc/we-know-sre-golden-signals.md#第-12-课-简易-aiops-与-ai-场景扩展) 与
+lab 实录 §13。
