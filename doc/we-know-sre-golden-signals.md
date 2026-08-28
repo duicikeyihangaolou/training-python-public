@@ -529,7 +529,8 @@ Google SRE 将「黄金指标」定义为刻画 **请求驱动型服务** 健康
 
 ### 第 3 课 · Latency 与 Traffic
 
-**原理层 ③ 测什么** | **讲授**：分布 P50/P95/P99；Traffic 形态；PromQL 入门（定义见
+**原理层 ③ 测什么** | **讲授**：分布 P50/P95/P99；Traffic 形态；PromQL 入门（语法见
+[附录 D.1](#d1-promql-速查课后-reference)；四信号定义见
 [速查](#四大信号速查音标--含义--场景--误区)）。\
 **实验**：Prometheus Graph 看无流量基线；预告 loadgen（第 6、8 课）。
 
@@ -1031,9 +1032,43 @@ curl -s http://127.0.0.1:8088/health && curl -s http://127.0.0.1:9090/-/ready
 
 **原理层 ④ 怎么做（告警）** | **讲授**：Traffic→Saturation→E/L
 决策流；静/动态阈值；Warning/Critical。\
-**实验**：打开 `prometheus/rules.yml` 对照四条规则与级别。
+**实验**：打开 `prometheus/rules.yml` 对照四条规则与级别（见下
+[实验目标](#实验目标与验收rulesyml)）。
 
 [返回总览](#总览)
+
+#### 本课定位
+
+|              | 内容                                                                                                                                                                                               |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **讲什么**   | 告警 **策略**：决策流（忙 vs 坏）、阈值类型、分级、状态机、`rules.yml` 设计                                                                                                                        |
+| **不讲什么** | PromQL **怎么算**四信号（[第 8 课](#第-8-课-demo-apromql-四信号实算)）；firing/webhook **实跑**（[第 11 课](#第-11-课-告警闭环-demo-c)）；AIOps（[第 12 课](#第-12-课-简易-aiops-与-ai-场景扩展)） |
+| **承接**     | 上午已会 **识别/采集**（第 5–6 课）；Metrics 已在库里                                                                                                                                              |
+| **下游**     | 第 8 课把 PromQL **嵌进**面板与规则；第 11 课 **实跑** FIRING/Resolved；第 12 课决策流 **同构**                                                                                                    |
+
+#### 实验目标与验收（`rules.yml`）
+
+本课实验 **不注入 chaos、不要求 Alerts 页变红**——那是第 11 课。此处只验收
+**规则设计是否与决策流、四信号一致**。
+
+| 验收项                                                        | 说明                                                                         |
+| ------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| 四条规则各对应 L/T/E/S 之一                                   | 不是「随便设 CPU>90%」                                                       |
+| `HighErrorRate` 为 **critical**，其余演示规则多为 **warning** | 级别与「用户是否受损」一致                                                   |
+| 每条规则能解释 `expr` / `for` / `severity` / `annotations`    | `for` 对应 [状态机](#告警状态inactive--pending--firing--resolved) 的 Pending |
+| 能口头走一遍 [决策工作流](#决策工作流课堂标准路径)            | 给定「QPS↑+CPU↑」vs「5xx↑+CPU 不高」说出级别与动作                           |
+
+**`rules.yml` 与四信号 / 级别对照**（`demo/sre-golden-signals/prometheus/rules.yml`）：
+
+| 规则名            | 黄金信号       | severity     | 决策流位置         | 为何这样定级                                   |
+| ----------------- | -------------- | ------------ | ------------------ | ---------------------------------------------- |
+| `HighRequestRate` | **Traffic**    | warning      | 步骤 1：流量抬升   | 可能是高峰或容量前兆，需结合 Saturation 再看   |
+| `HighErrorRate`   | **Errors**     | **critical** | 步骤 3：用户已失败 | 错误率 >5% = SLI 受损，优先回滚/熔断           |
+| `HighCPUUsage`    | **Saturation** | warning      | 步骤 2：资源顶满   | 容量预警，扩容/限流，未必已是业务故障          |
+| `HighLatencyP95`  | **Latency**    | warning      | 步骤 3：变慢       | 用户体感恶化；需与 Traffic/Saturation 关联定因 |
+
+> **课堂说明**：Demo 阈值为 **演示用静态值**（如 QPS>5）；生产应按 SLO 与历史基线调整。动态基线与 ML
+> 异常检测见 [静/动态阈值](#静态阈值-vs-动态基线) 与 lab-ai 孤立森林实验。
 
 #### 决策工作流（课堂标准路径）
 
@@ -1069,10 +1104,11 @@ curl -s http://127.0.0.1:8088/health && curl -s http://127.0.0.1:9090/-/ready
 
 #### 静态阈值 vs 动态基线
 
-| 类型     | 适用层级    | 示例                  | 优点         | 风险                               |
-| -------- | ----------- | --------------------- | ------------ | ---------------------------------- |
-| 静态阈值 | 基础设施    | CPU > 90% 持续 5m     | 简单、可解释 | 不同机器水位不同，易误报/漏报      |
-| 动态基线 | 业务 / 流量 | 超过近 7 日同时段 P95 | 适配潮汐流量 | 需足够历史；突变后基线会「跟着坏」 |
+| 类型        | 适用层级            | 示例                     | 优点                           | 风险                                               |
+| ----------- | ------------------- | ------------------------ | ------------------------------ | -------------------------------------------------- |
+| 静态阈值    | 基础设施            | CPU > 90% 持续 5m        | 简单、可解释                   | 不同机器水位不同，易误报/漏报                      |
+| 动态基线    | 业务 / 流量         | 超过近 7 日同时段 P95    | 适配潮汐流量                   | 需足够历史；突变后基线会「跟着坏」                 |
+| ML 异常检测 | Saturation / 多指标 | 孤立森林等多维特征离群点 | 无需手工阈值；适配负载形态变化 | 需训练/推理链路；对周期性弱；**不能替代** SLI 真值 |
 
 **PromQL 动态基线示意**（课堂可只讲思路）：
 
@@ -1084,6 +1120,13 @@ sum(rate(http_requests_total{job="api"}[5m]))
 
 > **解读**：**动态基线**示意——当前 QPS 是否超过「7 天前同时段」的 1.5 倍。`offset 7d`
 > 取历史对照；适合潮汐流量，课堂 Demo 规则仍多用静态阈值。
+
+**ML 异常检测（进阶，非本课 Demo）**：行业里 AIOps 还常用 **无监督异常检测**（如 **孤立森林 /
+Isolation Forest**）对 CPU、内存、负载等多维指标找离群点——适合「没有固定阈值、但形态突然不对」的
+Saturation 预警；检出后仍要走 [第 7 课决策流](#决策工作流课堂标准路径) 与
+[I.7 关联矩阵](#i7-指标关联与根因定位方法论--本课案例) 定根因，**不能**把模型分数当唯一告警源。
+动手实验（Prometheus 取数 → scikit-learn 训练/推理 → 可视化验证）见 lab-ai：
+[§3.6.1 孤立森林检测服务器负载异常](https://gitee.com/duicikeyihangaolou/lab-ai/blob/master/docs/aiops.md#361-%E5%AD%A4%E7%AB%8B%E6%A3%AE%E6%9E%97%E6%A3%80%E6%B5%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B4%9F%E8%BD%BD%E5%BC%B8%E5%B8%B8)。
 
 #### 分级与通知通道
 
@@ -1130,6 +1173,16 @@ Demo 例：`HighErrorRate` 错误率 >5% 持续约 30s → **FIRING**；`chaos/e
 
 Demo 规则见
 `prometheus/rules.yml`：`HighRequestRate`、`HighErrorRate`、`HighCPUUsage`、`HighLatencyP95`。
+
+**要带走的结论**：
+
+1. **告警策略 = 决策流 + 分级 +
+   状态机**——先分「忙」（容量/Warning）还是「坏」（故障/Critical），再选动作。
+2. **`rules.yml` 是策略的代码化**——四条规则分别钉住 L/T/E/S；`HighErrorRate` 为 critical
+   是刻意设计，不是随手标注。
+3. **本课只设计规则，不实跑 firing**——PromQL 实算见第 8 课；FIRING/Resolved/webhook 见第 11
+   课；AIOps 与第 7 课决策流同构见第 12 课。
+4. 多指标如何 **关联定根因** → [附录 I.7](#i7-指标关联与根因定位方法论--本课案例)。
 
 ---
 
@@ -1253,7 +1306,16 @@ Grafana 后，团队能 **共识排障**（不用每人自己拼查询）。
 
 [返回总览](#总览)
 
-**本实验目的**
+#### 本课定位
+
+|              | 内容                                                                                                                                                                                               |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **讲什么**   | 看板 **设计原则**：先总后分、统一时间窗、少而准、`$service` 变量、链 Runbook                                                                                                                       |
+| **不讲什么** | PromQL **怎么算**四信号（[第 8 课](#第-8-课-demo-apromql-四信号实算)）；firing/webhook **实跑**（[第 11 课](#第-11-课-告警闭环-demo-c)）；AIOps（[第 12 课](#第-12-课-简易-aiops-与-ai-场景扩展)） |
+| **承接**     | [第 9 课](#第-9-课-grafana-一屏四信号demo-b) Demo B 预置看板（会用）                                                                                                                               |
+| **下游**     | [第 11 课](#第-11-课-告警闭环-demo-c) 同一 Error Rate 条件触发 **FIRING**，而不止看板红线                                                                                                          |
+
+#### 本实验目的
 
 第 9 课用的是 **预置看板**（会用就行）。本课讲
 **为什么这样排、自己怎么搭一块合格面板**——避免生产里复制出「五十个面板没人看」的看板。
@@ -1427,6 +1489,22 @@ flowchart LR
 
 #### Demo E：课堂 AIOps 体验（约 10–15 min）
 
+**本实验目的**
+
+第 11 课止于 webhook 打印 firing JSON；本课在 **同一告警** 上接 `aiops_agent`，验证
+observe→advise→（人审）→execute 的 **薄 AIOps loop**——真值来自 Prom，建议来自规则或
+LLM，动作走白名单。
+
+| 相对 Demo C                       | Demo E 多证明什么                                             |
+| --------------------------------- | ------------------------------------------------------------- |
+| webhook 收到 `"status": "firing"` | **OBSERVE** 拉 Prom 真值，与 Grafana Errors 面板 **数值一致** |
+| 人读 JSON、翻 Runbook             | **ADVISE** 输出 `summary` / `runbook` / `recommended_action`  |
+| 手动 `curl` 回滚 chaos            | （可选）**EXECUTE** + `--confirm` 走白名单 `rollback_chaos`   |
+| 无 Key 也能上课                   | **`--rules-only`** 走规则引擎，loop 形状与有 LLM 时同构       |
+
+**要带走的结论**：AIOps 接在告警 **之后**，减轻 toil、不替代 Prometheus 真值；AI（LLM）只是 advise
+的一种实现，execute 仍靠预批准动作 + 默认人审。
+
 **前置**：第 11 课 `webhook_receiver.py` 与 `loadgen` 仍在跑；若无 firing，重新注入：
 
 ```bash
@@ -1498,7 +1576,10 @@ OBSERVE 到的 `error_rate` / `qps` / `cpu_pct` 等套第 7 课同款 if-then（
 
 所以上表三行是 **决策同构**（人、规则、LLM 应对齐同一套第 7 课逻辑）；不等于「已经全部由 AI
 自动做完」。课堂默认 `--rules-only` 练的是 **loop 形状**；有 Key 再开路径 B，才真正看到 **AI
-写自然语言建议**。行业里 AIOps 还可含异常检测等，本课刻意做薄，只接在 Demo C 的 firing 之后。
+写自然语言建议**。行业里 AIOps 还可含 **异常检测**（如孤立森林多维离群，见
+[第 7 课 · ML 异常检测](#静态阈值-vs-动态基线) 与
+[lab-ai §3.6.1](https://gitee.com/duicikeyihangaolou/lab-ai/blob/master/docs/aiops.md#361-%E5%AD%A4%E7%AB%8B%E6%A3%AE%E6%9E%97%E6%A3%80%E6%B5%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B4%9F%E8%BD%BD%E5%BC%B8%E5%B8%B8)）等，本课刻意做薄，只接在
+Demo C 的 firing 之后。
 
 **那 AIOps 只能建议、不能做事吗？**
 
@@ -1602,9 +1683,9 @@ python3 demo/sre-golden-signals/aiops_agent.py --mode execute --confirm --rules-
 - **SRE 来源与演化、Reference 全表**：见 [第 1 课](#第-1-课-sre-来源与量化)
 - Google SRE
   Book：[Ch.6 Monitoring Distributed Systems](https://sre.google/sre-book/chapters/monitoring-distributed-systems/)（黄金指标）、[Ch.4 Service Level Objectives](https://sre.google/sre-book/chapters/service-level-objectives/)
-- Prometheus 文档：PromQL、Alerting rules、Histogram
-- Grafana：Dashboard best practices
-- OpenTelemetry：Metrics 语义约定（HTTP / RPC）
+- **PromQL 速查与官方链接**：见 [附录 D.1](#d1-promql-速查课后-reference)
+- Grafana：[Dashboard best practices](https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/best-practices/)
+- OpenTelemetry：[Metrics 语义约定（HTTP / RPC）](https://opentelemetry.io/docs/specs/semconv/http/http-metrics/)
 - **开源 AIOps 方案对照**：见 [附录 F.1](#f1-开源-aiops-方案-reference对比表)
 - **智能日志 / 告警聚合 Agent（Python+AI 课程）**：见
   [`we-know-python-coding-with-ai.md`](./we-know-python-coding-with-ai.md)
@@ -1613,6 +1694,127 @@ python3 demo/sre-golden-signals/aiops_agent.py --mode execute --confirm --rules-
   [§4.2 逐步实现](./we-know-python-coding-with-ai.md#42-逐步实现教学与作业执行顺序)
 - **分层指标速查与业界实践**：见 [附录 I](#i-分层指标速查与业界实践)（USE/RED/OTel/各
   Exporter/大厂案例）
+- **ML 异常检测实验（孤立森林 · CPU
+  负载）**：[lab-ai §3.6.1](https://gitee.com/duicikeyihangaolou/lab-ai/blob/master/docs/aiops.md#361-%E5%AD%A4%E7%AB%8B%E6%A3%AE%E6%9E%97%E6%A3%80%E6%B5%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B4%9F%E8%BD%BD%E5%BC%B8%E5%B8%B8)（与
+  [第 7 课动态基线/ML 异常检测](#静态阈值-vs-动态基线) 对照）
+
+#### D.1 PromQL 速查（课后 Reference）
+
+PromQL（**Prom**etheus **Q**uery **L**anguage）是 Prometheus
+的查询语言，在「带标签的时间序列」上选数据、做运算，供 Graph / Grafana / `rules.yml`
+告警使用。**不负责采集**——采集由 Exporter / 应用埋点 + scrape 完成。
+
+```
+Exporter / 应用埋点 → scrape → Prometheus TSDB → PromQL → Graph / Grafana / rules.yml
+```
+
+**本课对应**：Lat/Traffic 入门 → [第 3 课](#第-3-课-latency-与-traffic)；Errors/Saturation →
+[第 4 课](#第-4-课-errors-saturation-与三支柱)；四信号实算 →
+[第 8 课](#第-8-课-demo-a-promql-四信号实算)；lab 打流验收 →
+[lab §6.2](./we-know-sre-golden-signals-lab-ali.md#62-promql-四信号讲义--第-8-课)。
+
+##### 四种指标类型
+
+| 类型          | 含义                 | 典型场景            | 常用写法                           |
+| ------------- | -------------------- | ------------------- | ---------------------------------- |
+| **Counter**   | 只增不减（可 reset） | 请求总数、错误数    | `rate()` / `increase()`            |
+| **Gauge**     | 可涨可跌             | CPU%、在途请求      | 直接查或 `avg()`                   |
+| **Histogram** | 分桶统计             | 延迟分布 `*_bucket` | `histogram_quantile()` + `by (le)` |
+| **Summary**   | 客户端预算分位       | 老系统              | 新系统优先 Histogram               |
+
+**口诀**：计数用 Counter + `rate`；当前状态用 Gauge；延迟分布用 Histogram + `histogram_quantile`。
+
+##### Instant Vector vs Range Vector
+
+| 类型               | 示例                      | 用途                                     |
+| ------------------ | ------------------------- | ---------------------------------------- |
+| **Instant Vector** | `http_requests_total`     | Graph 当前点、`rules.yml` 的 `expr`      |
+| **Range Vector**   | `http_requests_total[5m]` | 套 `rate()` / `avg_over_time()` 前取窗口 |
+
+`[5m]` 为 **range selector**：取近 5 分钟样本；窗口建议 ≥ 2× scrape 间隔，否则 `rate` 易抖。
+
+##### 标签选择器
+
+```promql
+http_requests_total{job="api", method="GET"}       # 精确匹配
+http_requests_total{status=~"5.."}                 # 正则（5xx）
+http_requests_total{method!="POST"}                # 排除
+```
+
+##### 核心算子
+
+```promql
+# 聚合
+sum by (method) (...)
+avg by (instance) (...)
+max without (pod) (...)
+
+# Counter → 速率（最常用）
+rate(http_requests_total[5m])
+increase(http_requests_total[1h])
+
+# Histogram → 分位数
+histogram_quantile(
+  0.95,
+  sum(rate(http_request_duration_seconds_bucket{job="api"}[5m])) by (le)
+)
+
+# 防除零（错误率分母）
+... / clamp_min(sum(rate(http_requests_total{job="api"}[5m])), 0.001)
+```
+
+##### 四信号 PromQL 模板（Demo 栈）
+
+| 信号           | 问什么          | 表达式（与第 8 课一致）                                                                            |
+| -------------- | --------------- | -------------------------------------------------------------------------------------------------- |
+| **Traffic**    | QPS 多少？      | `sum by (method) (rate(http_requests_total{job="api"}[1m]))`                                       |
+| **Errors**     | 5xx 占比？      | `sum(rate(...{status=~"5.."}[1m])) / clamp_min(sum(rate(...[1m])), 0.001)`                         |
+| **Latency**    | P95 多少？      | `histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{job="api"}[2m])) by (le))` |
+| **Saturation** | 排队/资源压力？ | `http_inflight_requests`（应用）；Node CPU 见 [第 4 课](#第-4-课-errors-saturation-与三支柱)       |
+
+##### 告警规则写法
+
+`prometheus/rules.yml` 中 `expr` 即 PromQL instant query；`for` 表示条件持续多久才 **FIRING**（非
+PromQL 语法）：
+
+```yaml
+expr: |
+  sum(rate(http_requests_total{job="api",status=~"5.."}[1m]))
+  /
+  clamp_min(sum(rate(http_requests_total{job="api"}[1m])), 0.001)
+  > 0.05
+for: 30s
+```
+
+##### 常见坑
+
+1. **Counter 直接画图** → 必须 `rate` / `increase`
+2. **`rate` 窗口过短** → 生产常用 `[1m]`～`[5m]`
+3. **Histogram 漏 `by (le)`** → 分位数算错
+4. **高基数标签**（如 `user_id`）→ 序列爆炸
+5. **Utilization ≠ Saturation** → CPU 高不等于已饱和，还要看队列 / inflight
+
+##### 5 分钟上手（Demo 栈）
+
+1. 打开 `http://localhost:9090/graph`
+2. 跑 `up` → 确认 target 在线
+3. 跑 Traffic 的 `rate(...)` → 再打 `loadgen` 看曲线抬升
+4. 跑 Errors 比率 → `curl -X POST '.../chaos/error-rate?rate=0.2'` 看 >5%
+5. 跑 P95 → 理解 `histogram_quantile` + `by (le)`
+
+##### 官方文档（推荐顺序）
+
+| 资源            | 链接                                                                                           | 适合                         |
+| --------------- | ---------------------------------------------------------------------------------------------- | ---------------------------- |
+| 查询基础        | [Querying basics](https://prometheus.io/docs/prometheus/latest/querying/basics/)               | 第一次学                     |
+| 运算符          | [Operators](https://prometheus.io/docs/prometheus/latest/querying/operators/)                  | 聚合、比较                   |
+| 函数大全        | [Functions](https://prometheus.io/docs/prometheus/latest/querying/functions/)                  | `rate`、`histogram_quantile` |
+| 示例集          | [Query examples](https://prometheus.io/docs/prometheus/latest/querying/examples/)              | 对照练习                     |
+| Histogram 实践  | [Histograms and summaries](https://prometheus.io/docs/practices/histograms/)                   | 延迟 / SLO                   |
+| 告警规则        | [Alerting rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)   | `rules.yml`                  |
+| Recording rules | [Recording rules](https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/) | 预计算重查询                 |
+| 社区速查        | [Robust Perception examples](https://www.robustperception.io/prometheus-query-examples/)       | 值班速查                     |
+| Grafana 数据源  | [Prometheus data source](https://grafana.com/docs/grafana/latest/datasources/prometheus/)      | 面板写 PromQL                |
 
 ### E. 目录结构
 
@@ -2232,12 +2434,13 @@ Traffic↑ → Saturation 也高？ ──是──► 容量（Warning）→ �
 
 **进阶：自动关联工具（Reference，非本课运行时）**
 
-| 方案                     | 关联方式                              | 与讲义关系                                                                                                 |
-| ------------------------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| **Netflix Telltale**     | SLI 异常 → 上下游拓扑 + 日志 exemplar | [I.6](#i6-大厂实践与踩坑国内--国外)                                                                        |
-| **HolmesGPT**            | 多源 Prom/K8s 拉取 + LLM 调查         | [附录 F.1](#f1-开源-aiops-方案-reference对比表)                                                            |
-| **本课 aiops_agent**     | 四指标 if-then / GLM 摘要             | [第 12 课 Demo E](#demo-e课堂-aiops-体验约-10-15-min)                                                      |
-| **Python+AI 日志 Agent** | 日志文本 + 工具 + RAG                 | [we-know-python-coding-with-ai.md §3.7/§4.1](./we-know-python-coding-with-ai.md#37-智能日志--运维助手项目) |
+| 方案                     | 关联方式                              | 与讲义关系                                                                                                                                                                                                                                                    |
+| ------------------------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Netflix Telltale**     | SLI 异常 → 上下游拓扑 + 日志 exemplar | [I.6](#i6-大厂实践与踩坑国内--国外)                                                                                                                                                                                                                           |
+| **HolmesGPT**            | 多源 Prom/K8s 拉取 + LLM 调查         | [附录 F.1](#f1-开源-aiops-方案-reference对比表)                                                                                                                                                                                                               |
+| **本课 aiops_agent**     | 四指标 if-then / GLM 摘要             | [第 12 课 Demo E](#demo-e课堂-aiops-体验约-10-15-min)                                                                                                                                                                                                         |
+| **Python+AI 日志 Agent** | 日志文本 + 工具 + RAG                 | [we-know-python-coding-with-ai.md §3.7/§4.1](./we-know-python-coding-with-ai.md#37-智能日志--运维助手项目)                                                                                                                                                    |
+| **lab-ai 孤立森林**      | 多维 Saturation 无监督离群检测        | [§3.6.1 CPU 负载异常实验](https://gitee.com/duicikeyihangaolou/lab-ai/blob/master/docs/aiops.md#361-%E5%AD%A4%E7%AB%8B%E6%A3%AE%E6%9E%97%E6%A3%80%E6%B5%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B4%9F%E8%BD%BD%E5%BC%B8%E5%B8%B8) · [第 7 课](#静态阈值-vs-动态基线) |
 
 > **分工**：Metrics/告警关联定 **方向**（容量 vs 故障）；Trace/Logs 定 **证据**；AIOps/Agent 减
 > toil， 不替代 Prometheus 真值。
@@ -2247,11 +2450,13 @@ Traffic↑ → Saturation 也高？ ──是──► 容量（Warning）→ �
 | 类别        | 链接                                                                                                                                                                                                                                                                                                                                                                                       |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 方法论      | [Golden Signals](https://sre.google/sre-book/chapters/monitoring-distributed-systems/) · [RED](https://grafana.com/blog/the-red-method-how-to-instrument-your-services/) · [USE](https://www.brendangregg.com/usemethod.html)                                                                                                                                                              |
+| PromQL      | [附录 D.1](#d1-promql-速查课后-reference) · [Querying basics](https://prometheus.io/docs/prometheus/latest/querying/basics/) · [Histograms 实践](https://prometheus.io/docs/practices/histograms/)                                                                                                                                                                                         |
 | 应用 / OTel | [HTTP Metrics Semconv](https://opentelemetry.io/docs/specs/semconv/http/http-metrics/) · [DB Semconv](https://opentelemetry.io/docs/specs/semconv/database/)                                                                                                                                                                                                                               |
 | 基础设施    | [Node Exporter](https://github.com/prometheus/node_exporter) · [Blackbox Exporter](https://github.com/prometheus/blackbox_exporter)                                                                                                                                                                                                                                                        |
 | 中间件      | [RabbitMQ](https://www.rabbitmq.com/docs/prometheus) · [Confluent Kafka](https://docs.confluent.io/platform/current/kafka/broker-metrics.html) · [Redis](https://redis.io/docs/latest/operate/oss_and_stack/management/observability/) · [postgres_exporter](https://github.com/prometheus-community/postgres_exporter) · [mysqld_exporter](https://github.com/prometheus/mysqld_exporter) |
 | 大厂实践    | 见上表 I.6 各列 Reference                                                                                                                                                                                                                                                                                                                                                                  |
 | 根因定位    | [附录 I.7](#i7-指标关联与根因定位方法论--本课案例) · [第 7 课决策流](#决策工作流课堂标准路径) · [三支柱联动](#可观测性三支柱的分工与联动)                                                                                                                                                                                                                                                  |
+| ML 异常检测 | [lab-ai §3.6.1 孤立森林 · CPU 负载](https://gitee.com/duicikeyihangaolou/lab-ai/blob/master/docs/aiops.md#361-%E5%AD%A4%E7%AB%8B%E6%A3%AE%E6%9E%97%E6%A3%80%E6%B5%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B4%9F%E8%BD%BD%E5%BC%B8%E5%B8%B8) · [第 7 课](#静态阈值-vs-动态基线)                                                                                                                    |
 
 ---
 
