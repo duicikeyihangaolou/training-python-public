@@ -1064,7 +1064,8 @@ curl -s http://127.0.0.1:8088/health && curl -s http://127.0.0.1:9090/-/ready
 
 **为啥这个顺序**：先分清「忙」和「坏」。只看 CPU 会漏掉「CPU 不高但 5xx
 狂涨」；只看错误率又可能把「该扩容」误判成「该回滚」。Demo D /
-金丝雀场景也是同一套思维：指标要能指向动作。
+金丝雀场景也是同一套思维：指标要能指向动作。多指标关联矩阵与值班 checklist 见
+[附录 I.7](#i7-指标关联与根因定位方法论--本课案例)。
 
 #### 静态阈值 vs 动态基线
 
@@ -1549,6 +1550,7 @@ checkpoint 失败、节点失联。
 
 - 云原生标签、反模式、Demo D（高 QPS vs chaos 决策演练）→ [附录 G](#g-最佳实践与-demo-d)
 - 分层指标速查、中间件必盯点位、大厂实践 → [附录 I](#i-分层指标速查与业界实践)（课后 Reference）
+- **指标关联与根因定位** → [附录 I.7](#i7-指标关联与根因定位方法论--本课案例)
 - 全天主线：**看见（四信号）→ 告警（AM）→ 减负（薄 AIOps）→ AI 场景同构扩展**
 
 **课后作业（选一，见 [附录 B](#b-作业选一即可)）**
@@ -1824,8 +1826,10 @@ topk(
 ### I. 分层指标速查与业界实践
 
 课堂主线见 [第 2–5 课](#第-2-课-监控到四信号总览)；本节是 **课后
-Reference**——按层列出「最少必盯」指标、 **含义与用途**、对应 L/T/E/S、官方文档与大厂踩坑。安装与
-PromQL 实算见第 6–8 课 Demo；K8s/Istio 细节见 [附录 G](#g-最佳实践与-demo-d)。
+Reference**——按层列出「最少必盯」指标、 **含义与用途**、对应
+L/T/E/S、官方文档与大厂踩坑；**指标如何关联定根因**见
+[I.7](#i7-指标关联与根因定位方法论--本课案例)。安装与 PromQL 实算见第 6–8 课 Demo；K8s/Istio 细节见
+[附录 G](#g-最佳实践与-demo-d)。
 
 #### 方法论：Golden Signals / RED / USE 如何嵌套
 
@@ -2076,8 +2080,6 @@ Exporter：[mysqld_exporter](https://github.com/prometheus/mysqld_exporter)（Ma
 - **国内**：阿里 / 腾讯强调 **全链路分层**（网关→服务→中间件→节点）与
   **无侵入补洞**（eBPF/OBI），中间件优先云厂商托管指标。
 
-下列 **不是规范**，是可对照的演进路径；指标名仍以各厂开源文档与 SRE Book 为准。
-
 | 公司                 | 一句话归纳                                                      | 指标 / 架构组合                                             | 踩坑 / 教训                                                                   | Reference                                                                                                                                                                               |
 | -------------------- | --------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Google**           | 四黄金指标的 **定义出处**；教「最少盯哪四个」                   | L / T / E / S；Latency 分成功/失败路径                      | 饱和度要在性能下降**前**预警，非 100% 才看                                    | [SRE Book Ch.6](https://sre.google/sre-book/chapters/monitoring-distributed-systems/)                                                                                                   |
@@ -2087,16 +2089,158 @@ Exporter：[mysqld_exporter](https://github.com/prometheus/mysqld_exporter)（Ma
 | **阿里巴巴**         | **万节点 ACK**：应用 RED + 基建 Exporter + 云产品 + eBPF 无侵入 | 应用 Rate/Error/Duration + UV/营收；node-exporter；ARMS/OBI | 中间件用云监控开箱指标；eBPF 补 Go/Python 等非 Java 栈                        | [万节点 SRE](https://developer.aliyun.com/article/1004954)；[ACK OBI](https://help.aliyun.com/zh/arms/tracing-analysis/access-observable-through-opentelemetry-ebpf-obi-on-ack)         |
 | **腾讯云**           | **压测 + 调用拓扑**，逐层看 QPS/耗时/成功率                     | TraceID 串网关→微服务→DB；每层四信号                        | 单点 CPU 正常但链路某层已满 → 必须分层看（见 [附录 G](#g-最佳实践与-demo-d)） | [云原生 SRE 实践](https://cloud.tencent.com/developer/article/1935721)                                                                                                                  |
 
-**各案稍展开（供备课口述）**
+**演进脉络：痛点 → 各厂做了什么 → 我们能学什么**
 
-| 公司     | 背景                       | 可借鉴点                                        | 不必照搬                                       |
-| -------- | -------------------------- | ----------------------------------------------- | ---------------------------------------------- |
-| Google   | SRE 体系化监控理论         | 四信号 + SLO 语言                               | 具体 PromQL 需按自己栈写                       |
-| Netflix  | 全球流式、实例 churn 极高  | 服务看板 checklist；Saturation 含队列/inflight  | Atlas 自研；中小团队用 Prom+Grafana 即可       |
-| Telltale | 应用健康与 SLI 异常检测    | 异常 SLI 自动关联上下游 + 日志 exemplar         | 依赖 Atlas streaming；中小团队用 AM+Trace 即可 |
-| Uber     | 数千微服务、多数据中心     | 统一 Prometheus 指标格式；分层告警（M3 + 主机） | M3 运维成本；可先单 Prom + 远程存储            |
-| 阿里巴巴 | 公有云 ACK、混合托管中间件 | 分层指标 + 云产品指标接入 + OBI 少改代码        | 绑定阿里云产品；自建 K8s 取 node-exporter 思路 |
-| 腾讯云   | 游戏/社交等大流量          | 压测时按拓扑逐层验收四信号                      | 全链路 Trace 基建需额外投入                    |
+**1. 演进前的共同痛点**
+
+| 痛点               | 典型表现                                                                                | 谁最先撞墙                                               |
+| ------------------ | --------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| **指标语言不统一** | 各团队盯 CPU/磁盘/自定义计数，值班无法横向对比「用户是否受损」                          | 几乎所有团队；Google 用四信号 + SLO 先定「最少盯哪四个」 |
+| **规模撑爆旧栈**   | 微服务 + 弹性扩缩 → 时间序列与标签 churn 爆炸；Graphite/Nagios/单机 Prom 存不下、查不动 | Netflix（~200 万序列撑爆 Epic）、Uber（4000+ 服务）      |
+| **告警慢、关联弱** | 轮询式评估 + 单点 SLI 告警 → 不知道上下游谁坏了、日志在哪；MTTR 长                      | Netflix Telltale                                         |
+| **分层盲区**       | 某层 CPU 正常，网关/DB/队列另一层已饱和；压测只盯单点                                   | 腾讯等大流量、多跳链路                                   |
+| **埋点覆盖不全**   | 多语言栈、遗留服务不愿改代码；中间件指标分散在各处                                      | 阿里 ACK 万节点、混合托管中间件                          |
+
+**2. 各厂分别做了什么（分工不同，不是六套哲学）**
+
+- **Google**：**定方法论**——Latency / Traffic / Errors / Saturation 四黄金信号 + SLO
+  语言；教「饱和度要在性能下降**前**预警」，而非等资源 100%
+  才看。未卖具体产品，是后续各厂的共同语法。
+- **Netflix**：**扛规模 + 统一服务看板**——云上实例频繁替换，在四信号上补 **Instances** 维度；~200
+  万时间序列撑爆 Epic 后 **自研 Atlas**；服务看板 checklist（L/E/L/S + Instances），基建层 USE +
+  主机 Vector；滚动发布导致标签 churn，需 rollup 聚合。
+- **Netflix Telltale**：**缩短 MTTR（关联与流式）**——在 Atlas 上做 **SLI 异常检测**；轮询告警太慢 →
+  改 **streaming eval**；异常 SLI 自动 **关联上下游依赖** 并挂 **日志 exemplar**（log-derived
+  metrics 走专门路径，避免高基数拖垮存储）。
+- **Uber**：**统一格式 + 分层存储告警**——Graphite/Nagios 无法扩展、单机 Prom retention/HA 不够 →
+  各服务统一 **Prometheus RED 格式**，指标进自研 **M3**；**uMonitor** 对 M3 告警，**Neris**
+  补主机层；4000+ 微服务、多数据中心一套查询语言。
+- **阿里巴巴**：**万节点分层 + 少改代码补洞**——ACK 上 **应用 RED**（Rate/Error/Duration）+ 业务
+  UV/营收 + **node-exporter** 基建；托管中间件走 **云监控开箱指标**；Go/Python 等非 Java 栈用 **ARMS
+  / OBI（eBPF）** 无侵入补 APM 缺口。
+- **腾讯云**：**压测 + 拓扑逐层验收**——游戏/社交大流量下，用 **TraceID 串网关 → 微服务 →
+  DB**；压测时按 **调用拓扑每一层** 看 QPS/耗时/成功率，避免「单点 CPU 绿、链路某层已满」。
+
+**3. 我们能学什么（不必照搬什么）**
+
+| 可带走                         | 对应做法                                        | 中小团队落地（本课 Demo 已覆盖部分）                                                |
+| ------------------------------ | ----------------------------------------------- | ----------------------------------------------------------------------------------- |
+| **统一语言**                   | 四信号 / RED / USE 先对齐，再写 PromQL          | 讲义 [第 8 课](#第-8-课-demo-apromql-四信号实算) PromQL 四信号 + Grafana 一屏四信号 |
+| **先饱和、后 100%**            | Saturation 含队列/inflight/连接池，而非只看 CPU | 附录 I 中间件表（Kafka lag、PG 连接、Redis memory）                                 |
+| **分层看，不单点**             | 网关 RED + 应用 RED + 中间件 + Node             | [附录 G](#g-最佳实践与-demo-d)「指标 → 动作」；腾讯思路用 Trace 串层                |
+| **告警可行动**                 | SLI 驱动 + 关联上下游（Telltale 思想）          | 第 11 课 AM 分组/抑制；第 12 课 AIOps 摘要 + Runbook                                |
+| **规模未到，别自研 TSDB**      | Atlas / M3 是 Epic/Prom 不够才造                | **Prometheus + Grafana + Alertmanager** 即可；远程存储/Thanos 是下一步              |
+| **无侵入是补洞，不是替代埋点** | OBI/eBPF 补多语言栈                             | 业务 SLI 仍要应用埋点（本课 `api` + `prometheus_client`）                           |
+| **压测按拓扑验四信号**         | 腾讯式验收清单                                  | Demo A/B 注入 + 第 7 课决策流对照各层指标                                           |
+
+**不必照搬**：Netflix/Uber 的自研时序库与 streaming 平台（运维成本极高）；阿里云产品绑定（自建 K8s
+取 **分层 + exporter + OTel** 思路即可）；Telltale 级 log-derived 高基数指标需专门存储路径，课堂先用
+**Metrics 真值 + Trace/Logs 人工跳转**（见 [第 12 课](#第-12-课-简易-aiops-与-ai-场景扩展) 与
+[Python+AI 日志 Agent](./we-know-python-coding-with-ai.md#37-智能日志--运维助手项目) 分责）。
+
+#### I.7 指标关联与根因定位（方法论 + 本课案例）
+
+告警/看板往往 **同时亮好几条指标**——关联不是「猜」，而是按固定顺序 **缩小根因面**，再下钻到
+Trace/Logs 确认。本节把讲义分散的方法论收束为一页；课堂主线见 [第 7 课](#第-7-课-告警策略)、
+[第 12 课](#第-12-课-简易-aiops-与-ai-场景扩展)，动手练见
+[附录 G · Demo D](#demo-d从指标到动作的思维演练)。
+
+**前提（关联靠得住的条件）**
+
+- **统一时间窗**：所有对比与下钻用同一 incident 起止时间。
+- **可控标签**：至少 `service` / `env` / `version`（或 `route`）；禁止用 `user_id`
+  等高基数做关联轴。
+- **关联键**：Metrics → Traces → Logs 靠 `trace_id` 粘住（见
+  [三支柱联动](#可观测性三支柱的分工与联动)）；缺键则只能人肉 grep，MTTR 陡增。
+
+**方法论一：三支柱串联（生产标准路径）**
+
+| 步骤    | 用什么  | 回答什么                             | 本课对应                                                                             |
+| ------- | ------- | ------------------------------------ | ------------------------------------------------------------------------------------ |
+| 1. 发现 | Metrics | 「哪条 SLI 坏了、何时、哪个服务？」  | 第 8 课 PromQL 四信号、第 11 课 firing                                               |
+| 2. 收窄 | Traces  | 「慢/错在本服务还是下游 DB/缓存？」  | 生产 OTel → Tempo；课堂先记路径                                                      |
+| 3. 确认 | Logs    | 「具体栈/SQL/超时/限流原因？」       | [Python+AI 日志 Agent](./we-know-python-coding-with-ai.md#37-智能日志--运维助手项目) |
+| 4. 闭环 | Metrics | 「修复后 E/L 与告警是否 Resolved？」 | Demo C/E、`rollback_chaos`                                                           |
+
+**方法论二：四信号关联（纯 Metrics 阶段）**
+
+口诀（与 [第 2 课速查](#四大信号速查音标--含义--场景--误区) 一致）：**先看 E+L（用户痛）→ 再看
+T（负载是否异常）→ 最后看 S（资源/队列是否顶满）**。
+
+分析层三件事（[第 6 课](#阶段三分析analysis)）：
+
+| 动作     | 示例                                            | 关联目的                                                                   |
+| -------- | ----------------------------------------------- | -------------------------------------------------------------------------- |
+| **聚合** | `sum by (status)`、`avg by (node)`              | 降噪；暴露 **不均衡**（见 [附录 G 单 Pod 案例](#案例只盯单个-pod-的-cpu)） |
+| **对比** | 今日 vs `offset 7d`；`version=canary` vs stable | 发布回归、金丝雀                                                           |
+| **关联** | E↑ 且 S↑ → 容量；E↑ 且 S 不高 → 应用/依赖       | **缩小根因面**                                                             |
+
+**方法论三：决策流——先分「忙」还是「坏」**
+
+[第 7 课决策流](#决策工作流课堂标准路径) 是把若干指标 **组合成结论** 的核心表：
+
+```
+Traffic↑ → Saturation 也高？ ──是──► 容量（Warning）→ 扩容 / 限流
+              │
+              否 → Errors/Latency 恶化？ ──是──► 故障（Critical）→ 回滚 / 熔断
+              │
+              否 → 可解释业务高峰 → 少打扰
+```
+
+**方法论四：分层下钻（避免单点误导）**
+
+按 [第 5 课四层映射](#阶段一识别identification) 自上而下关联，**任一层异常都要看相邻层**：
+
+```text
+业务 SLI（支付成功率）
+  → 应用 RED（http_requests_*）
+  → 依赖（PG 连接、Kafka lag、Redis memory）
+  → 基建 USE（node_cpu、disk IO、Blackbox）
+```
+
+腾讯式补充：有 Trace 时用 **TraceID 串网关 → 微服务 → DB**（见
+[I.6 Telltale / 腾讯](#i6-大厂实践与踩坑国内--国外)）。
+
+**关联矩阵（本课 Demo 可直接对照）**
+
+| 观测组合                                 | 根因假设                                | 优先动作                  | 本课落点                                                                         |
+| ---------------------------------------- | --------------------------------------- | ------------------------- | -------------------------------------------------------------------------------- |
+| E↑，S（CPU/队列）不高                    | **应用/依赖故障**（bug、坏发布、chaos） | 回滚、熔断、查下游        | `chaos/error-rate` → `rollback_chaos`；[Demo D-4](#demo-d从指标到动作的思维演练) |
+| T↑，S↑，L↑，E 低                         | **容量不足**                            | 扩容、限流、削峰          | `loadgen --qps 30` → `scale_out`；[Demo D-3](#demo-d从指标到动作的思维演练)      |
+| 仅 T↑，E/L 正常                          | **可解释高峰**                          | 记录，Warning 或不告警    | 第 7 课步骤 4；AIOps `none`                                                      |
+| L↑，E 低，S 低                           | **依赖慢**（DB/外部 API）               | Trace 找慢 hop；查连接池  | 三支柱步骤 2；中间件 [附录 I](#i-分层指标速查与业界实践)                         |
+| S↑（连接池/lag），E/L 滞后               | **中间件/队列饱和**                     | 扩消费、调池、查堆积      | Kafka `consumer-lag`、PG 连接占比                                                |
+| 全局 CPU 均值正常，单 node/instance 尖刺 | **负载不均衡**                          | HPA + 反亲和；`topk` 下钻 | [附录 G · 单 Pod CPU](#案例只盯单个-pod-的-cpu)                                  |
+
+**本课三个可跑案例**
+
+1. **Demo D（手动关联）**——`loadgen` 提 QPS vs `chaos/error-rate`，对照四信号走
+   [第 7 课决策流](#决策工作流课堂标准路径)。
+2. **Demo C + Demo E（告警 + 薄 AIOps）**——`HighErrorRate` firing 后 `aiops_agent` 把 `error_rate` /
+   `qps` / `cpu_pct` **关联成** `root_cause_hypothesis` 与 `recommended_action`（见
+   [第 12 课](#第-12-课-简易-aiops-与-ai-场景扩展)）。
+3. **附录 G 反模式**——「单 Pod CPU 40% 但用户超时」：教 **聚合分布** 而非盯一个实例。
+
+**值班六步（checklist）**
+
+1. 锁定 **时间窗 + 标签**（哪服务、哪版本）。
+2. 四信号：**E/L 先痛 → T 是否异常 → S 是否饱和**。
+3. 决策流：**忙（T+S）还是坏（E 高 S 不高）**。
+4. **分层**：应用 RED → 中间件 → Node；有 Trace 串路径。
+5. **确认**：`trace_id` 跳日志；无 Trace 则 Runbook + 依赖指标。
+6. **闭环**：动作后看 Metrics / 告警 Resolved。
+
+**进阶：自动关联工具（Reference，非本课运行时）**
+
+| 方案                     | 关联方式                              | 与讲义关系                                                                                                 |
+| ------------------------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Netflix Telltale**     | SLI 异常 → 上下游拓扑 + 日志 exemplar | [I.6](#i6-大厂实践与踩坑国内--国外)                                                                        |
+| **HolmesGPT**            | 多源 Prom/K8s 拉取 + LLM 调查         | [附录 F.1](#f1-开源-aiops-方案-reference对比表)                                                            |
+| **本课 aiops_agent**     | 四指标 if-then / GLM 摘要             | [第 12 课 Demo E](#demo-e课堂-aiops-体验约-10-15-min)                                                      |
+| **Python+AI 日志 Agent** | 日志文本 + 工具 + RAG                 | [we-know-python-coding-with-ai.md §3.7/§4.1](./we-know-python-coding-with-ai.md#37-智能日志--运维助手项目) |
+
+> **分工**：Metrics/告警关联定 **方向**（容量 vs 故障）；Trace/Logs 定 **证据**；AIOps/Agent 减
+> toil， 不替代 Prometheus 真值。
 
 **Reference 汇总（附录 I 全文）**
 
@@ -2107,6 +2251,7 @@ Exporter：[mysqld_exporter](https://github.com/prometheus/mysqld_exporter)（Ma
 | 基础设施    | [Node Exporter](https://github.com/prometheus/node_exporter) · [Blackbox Exporter](https://github.com/prometheus/blackbox_exporter)                                                                                                                                                                                                                                                        |
 | 中间件      | [RabbitMQ](https://www.rabbitmq.com/docs/prometheus) · [Confluent Kafka](https://docs.confluent.io/platform/current/kafka/broker-metrics.html) · [Redis](https://redis.io/docs/latest/operate/oss_and_stack/management/observability/) · [postgres_exporter](https://github.com/prometheus-community/postgres_exporter) · [mysqld_exporter](https://github.com/prometheus/mysqld_exporter) |
 | 大厂实践    | 见上表 I.6 各列 Reference                                                                                                                                                                                                                                                                                                                                                                  |
+| 根因定位    | [附录 I.7](#i7-指标关联与根因定位方法论--本课案例) · [第 7 课决策流](#决策工作流课堂标准路径) · [三支柱联动](#可观测性三支柱的分工与联动)                                                                                                                                                                                                                                                  |
 
 ---
 
@@ -2122,3 +2267,5 @@ Exporter：[mysqld_exporter](https://github.com/prometheus/mysqld_exporter)（Ma
    [附录 G](#g-最佳实践与-demo-d)）。
 7. **分层速查**：业务埋点 / AOP·OTel / Node·Blackbox / 中间件各盯哪些指标、大厂怎么组合——见
    [附录 I](#i-分层指标速查与业界实践)（课后 Reference）。
+8. **指标关联定根因**：E/L → T → S 四信号关联 + 第 7 课决策流 + 三支柱下钻——见
+   [附录 I.7](#i7-指标关联与根因定位方法论--本课案例)。
