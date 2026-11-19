@@ -1,0 +1,64 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: order-service
+  config:
+    # 池参数从 Nacos DataId order-service.yaml 读取，发布新配置即可热更新（见 scripts/publish-nacos-config.sh）
+    import: optional:nacos:order-service.yaml
+  datasource:
+    url: jdbc:h2:file:/data/orders;MODE=MySQL;DB_CLOSE_DELAY=-1;AUTO_SERVER=FALSE;FILE_LOCK=FS
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: 6379
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_ADDR:nacos:8848}
+        prefer-ip-address: true
+      config:
+        server-addr: ${NACOS_ADDR:nacos:8848}
+        file-extension: yaml
+        refresh-enabled: true
+    openfeign:
+      sentinel:
+        enabled: true
+      client:
+        config:
+          default:
+            connectTimeout: 200
+            readTimeout: 800
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    tracing:
+      endpoint: ${OTLP_TRACES_URL:http://jaeger:4318/v1/traces}
+  opentelemetry:
+    resource-attributes:
+      service.name: ${spring.application.name}
+user:
+  base-url: ${USER_URL:http://user-service:8080}
+inventory:
+  confirm-url: ${INVENTORY_URL:http://inventory-service:8080}

@@ -1,0 +1,46 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_ADDR:nacos:8848}
+        prefer-ip-address: true
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+      routes:
+        # K8s DNS 保底；Nacos 仍用于注册发现演示（lb 可在 Nacos 就绪后对照）
+        - id: order-route
+          uri: http://order-service:8080
+          predicates:
+            - Path=/api/orders,/api/orders/**
+        - id: recommend-route
+          uri: http://recommend-bff:8080
+          predicates:
+            - Path=/api/recommend,/api/recommend/**
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    tracing:
+      endpoint: ${OTLP_TRACES_URL:http://jaeger:4318/v1/traces}
+  opentelemetry:
+    resource-attributes:
+      service.name: ${spring.application.name}
+jwt:
+  secret: ${JWT_SECRET:ms-lab-secret-key-for-training-32b}
+canary:
+  percent: 10

@@ -1,0 +1,455 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: ms-lab
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: user-service}}
+  template:
+    metadata: {labels: {app: user-service}}
+    spec:
+      containers:
+        - name: user-service
+          image: ms-lab/user-service:dev
+          imagePullPolicy: IfNotPresent
+          ports: [{containerPort: 8080}]
+          env:
+            - {name: NACOS_ADDR, value: "nacos:8848"}
+            - {name: REDIS_HOST, value: "redis"}
+            - {name: SPRING_CLOUD_NACOS_DISCOVERY_FAIL_FAST, value: "false"}
+            - {name: SPRING_CLOUD_NACOS_DISCOVERY_REGISTER_ENABLED, value: "true"}
+          resources:
+            requests: {cpu: "100m", memory: 256Mi}
+            limits: {cpu: "800m", memory: 640Mi}
+          readinessProbe:
+            httpGet: {path: /actuator/health/readiness, port: 8080}
+            initialDelaySeconds: 25
+            periodSeconds: 5
+            failureThreshold: 36
+          livenessProbe:
+            httpGet: {path: /actuator/health/liveness, port: 8080}
+            initialDelaySeconds: 60
+            periodSeconds: 10
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: ms-lab
+spec:
+  type: ClusterIP
+  selector: {app: user-service}
+  ports: [{port: 8080, targetPort: 8080}]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-service
+  namespace: ms-lab
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: inventory-service}}
+  template:
+    metadata: {labels: {app: inventory-service}}
+    spec:
+      containers:
+        - name: inventory-service
+          image: ms-lab/inventory-service:dev
+          imagePullPolicy: IfNotPresent
+          ports: [{containerPort: 8080}]
+          env:
+            - {name: NACOS_ADDR, value: "nacos:8848"}
+            - {name: REDIS_HOST, value: "redis"}
+            - {name: SPRING_CLOUD_NACOS_DISCOVERY_FAIL_FAST, value: "false"}
+          resources:
+            requests: {cpu: "100m", memory: 256Mi}
+            limits: {cpu: "800m", memory: 640Mi}
+          readinessProbe:
+            httpGet: {path: /actuator/health/readiness, port: 8080}
+            initialDelaySeconds: 25
+            periodSeconds: 5
+            failureThreshold: 36
+          livenessProbe:
+            httpGet: {path: /actuator/health/liveness, port: 8080}
+            initialDelaySeconds: 60
+            periodSeconds: 10
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-service
+  namespace: ms-lab
+spec:
+  type: ClusterIP
+  selector: {app: inventory-service}
+  ports: [{port: 8080, targetPort: 8080}]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  namespace: ms-lab
+spec:
+  replicas: 1
+  # H2 文件库不可双实例；滚动更新会双 Pod 抢锁
+  strategy: {type: Recreate}
+  selector: {matchLabels: {app: order-service}}
+  template:
+    metadata: {labels: {app: order-service}}
+    spec:
+      containers:
+        - name: order-service
+          image: ms-lab/order-service:dev
+          imagePullPolicy: IfNotPresent
+          ports: [{containerPort: 8080}]
+          env:
+            - {name: NACOS_ADDR, value: "nacos:8848"}
+            - {name: REDIS_HOST, value: "redis"}
+            - {name: INVENTORY_URL, value: "http://inventory-service:8080"}
+            - {name: SPRING_CLOUD_NACOS_DISCOVERY_FAIL_FAST, value: "false"}
+          volumeMounts:
+            - {name: data, mountPath: /data}
+          resources:
+            requests: {cpu: "100m", memory: 256Mi}
+            limits: {cpu: "800m", memory: 640Mi}
+          readinessProbe:
+            httpGet: {path: /actuator/health/readiness, port: 8080}
+            initialDelaySeconds: 25
+            periodSeconds: 5
+            failureThreshold: 36
+          livenessProbe:
+            httpGet: {path: /actuator/health/liveness, port: 8080}
+            initialDelaySeconds: 60
+            periodSeconds: 10
+
+      volumes:
+        - name: data
+          hostPath: {path: /data/ms-lab, type: DirectoryOrCreate}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+  namespace: ms-lab
+spec:
+  type: ClusterIP
+  selector: {app: order-service}
+  ports: [{port: 8080, targetPort: 8080}]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommend
+  namespace: ms-lab
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: recommend}}
+  template:
+    metadata: {labels: {app: recommend}}
+    spec:
+      # 镜像内置 v1/v2 初始权重；拷到可写 emptyDir 后，热加载（POST /admin/reload-model）从 /models 读取
+      initContainers:
+        - name: seed-models
+          image: ms-lab/model-service:dev
+          imagePullPolicy: IfNotPresent
+          command: ["sh", "-c", "cp -f /app/models/*.pt /models/"]
+          volumeMounts:
+            - {name: models, mountPath: /models}
+          resources:
+            requests: {cpu: "10m", memory: 32Mi}
+            limits: {cpu: "200m", memory: 128Mi}
+      containers:
+        - name: recommend
+          image: ms-lab/model-service:dev
+          imagePullPolicy: IfNotPresent
+          ports: [{containerPort: 8080}]
+          env:
+            - {name: MODEL_VERSION, value: "v1"}
+            - {name: MODEL_DIR, value: "/models"}
+            - {name: OTEL_EXPORTER_OTLP_ENDPOINT, value: "http://jaeger:4318/v1/traces"}
+          volumeMounts:
+            - {name: models, mountPath: /models}
+          resources:
+            requests: {cpu: "100m", memory: 512Mi}
+            limits: {cpu: "1000m", memory: 1280Mi}
+          readinessProbe:
+            httpGet: {path: /health, port: 8080}
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            failureThreshold: 36
+          livenessProbe:
+            httpGet: {path: /health, port: 8080}
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 6
+      volumes:
+        - name: models
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommend
+  namespace: ms-lab
+spec:
+  type: ClusterIP
+  selector: {app: recommend}
+  ports: [{port: 8080, targetPort: 8080}]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommend-canary
+  namespace: ms-lab
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: recommend-canary}}
+  template:
+    metadata: {labels: {app: recommend-canary}}
+    spec:
+      # 镜像内置 v1/v2 初始权重；拷到可写 emptyDir 后，热加载（POST /admin/reload-model）从 /models 读取
+      initContainers:
+        - name: seed-models
+          image: ms-lab/model-service:dev
+          imagePullPolicy: IfNotPresent
+          command: ["sh", "-c", "cp -f /app/models/*.pt /models/"]
+          volumeMounts:
+            - {name: models, mountPath: /models}
+          resources:
+            requests: {cpu: "10m", memory: 32Mi}
+            limits: {cpu: "200m", memory: 128Mi}
+      containers:
+        - name: recommend
+          image: ms-lab/model-service:dev
+          imagePullPolicy: IfNotPresent
+          ports: [{containerPort: 8080}]
+          env:
+            - {name: MODEL_VERSION, value: "v2"}
+            - {name: MODEL_DIR, value: "/models"}
+            - {name: OTEL_EXPORTER_OTLP_ENDPOINT, value: "http://jaeger:4318/v1/traces"}
+          volumeMounts:
+            - {name: models, mountPath: /models}
+          resources:
+            requests: {cpu: "100m", memory: 512Mi}
+            limits: {cpu: "1000m", memory: 1280Mi}
+          readinessProbe:
+            httpGet: {path: /health, port: 8080}
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            failureThreshold: 36
+          livenessProbe:
+            httpGet: {path: /health, port: 8080}
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 6
+      volumes:
+        - name: models
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommend-canary
+  namespace: ms-lab
+spec:
+  type: ClusterIP
+  selector: {app: recommend-canary}
+  ports: [{port: 8080, targetPort: 8080}]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommend-bff
+  namespace: ms-lab
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: recommend-bff}}
+  template:
+    metadata: {labels: {app: recommend-bff}}
+    spec:
+      containers:
+        - name: recommend-bff
+          image: ms-lab/recommend-bff:dev
+          imagePullPolicy: IfNotPresent
+          ports: [{containerPort: 8080}]
+          env:
+            - {name: NACOS_ADDR, value: "nacos:8848"}
+            - {name: REDIS_HOST, value: "redis"}
+            - {name: RECOMMEND_URL, value: "http://recommend:8080"}
+            - {name: RECOMMEND_CANARY_URL, value: "http://recommend-canary:8080"}
+            - {name: SPRING_CLOUD_NACOS_DISCOVERY_FAIL_FAST, value: "false"}
+          resources:
+            requests: {cpu: "100m", memory: 256Mi}
+            limits: {cpu: "800m", memory: 640Mi}
+          readinessProbe:
+            httpGet: {path: /actuator/health/readiness, port: 8080}
+            initialDelaySeconds: 25
+            periodSeconds: 5
+            failureThreshold: 36
+          livenessProbe:
+            httpGet: {path: /actuator/health/liveness, port: 8080}
+            initialDelaySeconds: 60
+            periodSeconds: 10
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommend-bff
+  namespace: ms-lab
+spec:
+  type: ClusterIP
+  selector: {app: recommend-bff}
+  ports: [{port: 8080, targetPort: 8080}]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  namespace: ms-lab
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: gateway}}
+  template:
+    metadata: {labels: {app: gateway}}
+    spec:
+      containers:
+        - name: gateway
+          image: ms-lab/gateway:dev
+          imagePullPolicy: IfNotPresent
+          ports: [{containerPort: 8080}]
+          env:
+            - {name: NACOS_ADDR, value: "nacos:8848"}
+            - {name: REDIS_HOST, value: "redis"}
+            - {name: JWT_SECRET, value: "ms-lab-secret-key-for-training-32b"}
+            - {name: SPRING_CLOUD_NACOS_DISCOVERY_FAIL_FAST, value: "false"}
+          resources:
+            requests: {cpu: "100m", memory: 256Mi}
+            limits: {cpu: "800m", memory: 640Mi}
+          readinessProbe:
+            httpGet: {path: /actuator/health/readiness, port: 8080}
+            initialDelaySeconds: 25
+            periodSeconds: 5
+            failureThreshold: 36
+          livenessProbe:
+            httpGet: {path: /actuator/health/liveness, port: 8080}
+            initialDelaySeconds: 60
+            periodSeconds: 10
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+  namespace: ms-lab
+spec:
+  type: NodePort
+  selector: {app: gateway}
+  ports: [{port: 8080, targetPort: 8080, nodePort: 30888}]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aiops-detector
+  namespace: ms-lab
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: aiops-detector}}
+  template:
+    metadata: {labels: {app: aiops-detector}}
+    spec:
+      serviceAccountName: aiops-detector
+      containers:
+        - name: aiops-detector
+          image: ms-lab/aiops-detector:dev
+          imagePullPolicy: IfNotPresent
+          ports: [{containerPort: 8080}]
+          env:
+            - {name: PROM_URL, value: "http://prometheus:9090"}
+            - {name: JAEGER_URL, value: "http://jaeger:16686"}
+            - {name: NAMESPACE, value: "ms-lab"}
+            - {name: WINDOW, value: "30"}
+            - {name: DAY_THR, value: "0.99"}
+            - {name: NIGHT_THR, value: "0.85"}
+            - {name: TZ_NAME, value: "Asia/Shanghai"}
+            - {name: NIGHT_START, value: "0"}
+            - {name: NIGHT_END, value: "7"}
+          resources:
+            requests: {cpu: "100m", memory: 256Mi}
+            limits: {cpu: "800m", memory: 768Mi}
+          readinessProbe:
+            httpGet: {path: /health, port: 8080}
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: {path: /health, port: 8080}
+            initialDelaySeconds: 40
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aiops-detector
+  namespace: ms-lab
+spec:
+  type: ClusterIP
+  selector: {app: aiops-detector}
+  ports: [{port: 8080, targetPort: 8080}]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-governor
+  namespace: ms-lab
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: ai-governor}}
+  template:
+    metadata: {labels: {app: ai-governor}}
+    spec:
+      serviceAccountName: ai-governor
+      containers:
+        - name: ai-governor
+          image: ms-lab/ai-governor:dev
+          imagePullPolicy: IfNotPresent
+          ports: [{containerPort: 8080}]
+          env:
+            - {name: PROM_URL, value: "http://prometheus:9090"}
+            - {name: NAMESPACE, value: "ms-lab"}
+            - {name: SCALE_TARGET, value: "recommend"}
+            - {name: ROUTE_CANDIDATES, value: "recommend:8080,recommend-canary:8080"}
+            - {name: QPS_PER_REPLICA, value: "5"}
+            - {name: MIN_REPLICAS, value: "1"}
+            - {name: MAX_REPLICAS, value: "3"}
+            # 默认只输出建议；改为 "true" 才会 patch Deployment 副本数
+            - {name: APPLY, value: "false"}
+          resources:
+            requests: {cpu: "100m", memory: 256Mi}
+            limits: {cpu: "800m", memory: 1Gi}
+          readinessProbe:
+            httpGet: {path: /health, port: 8080}
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: {path: /health, port: 8080}
+            initialDelaySeconds: 40
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-governor
+  namespace: ms-lab
+spec:
+  type: ClusterIP
+  selector: {app: ai-governor}
+  ports: [{port: 8080, targetPort: 8080}]
