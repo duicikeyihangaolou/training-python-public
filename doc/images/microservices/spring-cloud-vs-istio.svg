@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="480" viewBox="0 0 960 480" role="img" aria-labelledby="title desc">
+  <title id="title">Spring Cloud 进程内 SDK 与 Istio 边车对照</title>
+  <desc id="desc">左侧 Spring Cloud 将治理能力放在应用进程内；右侧 Istio 用 Envoy 边车与 istiod 控制面</desc>
+  <defs>
+    <style>
+      .t { font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif; fill: #1a1a1a; }
+      .s { font-size: 13px; }
+      .h { font-size: 15px; font-weight: 600; }
+      .m { font-size: 12px; fill: #444; }
+      .box { stroke: #2f3b4a; stroke-width: 1.5; }
+      .left { fill: #e8f1fb; }
+      .right { fill: #f3eef8; }
+      .pod { fill: #f7f8fa; }
+      .sdk { fill: #d9ecdf; }
+      .side { fill: #efe6f7; }
+      .ctrl { fill: #f7f1e8; }
+      .arr { stroke: #2f3b4a; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#2f3b4a"/>
+    </marker>
+  </defs>
+  <rect width="960" height="480" fill="#ffffff"/>
+
+  <text x="24" y="28" class="t h">架构差异：治理能力放在哪里？</text>
+
+  <!-- Left -->
+  <rect x="24" y="48" width="440" height="360" rx="8" class="box left"/>
+  <text x="244" y="78" text-anchor="middle" class="t h">Spring Cloud（本课默认）</text>
+  <text x="244" y="98" text-anchor="middle" class="t m">进程内 SDK · 偏开发态治理</text>
+
+  <rect x="64" y="120" width="360" height="250" rx="6" class="box pod"/>
+  <text x="244" y="148" text-anchor="middle" class="t s">应用进程 / Pod</text>
+
+  <rect x="92" y="168" width="304" height="70" rx="4" class="box" fill="#ffffff"/>
+  <text x="244" y="198" text-anchor="middle" class="t h">业务代码</text>
+  <text x="244" y="220" text-anchor="middle" class="t m">order / inventory / …</text>
+
+  <rect x="92" y="252" width="304" height="96" rx="4" class="box sdk"/>
+  <text x="244" y="280" text-anchor="middle" class="t h">进程内治理 SDK</text>
+  <text x="244" y="302" text-anchor="middle" class="t s">OpenFeign · LoadBalancer</text>
+  <text x="244" y="322" text-anchor="middle" class="t s">Nacos Client · Sentinel</text>
+
+  <text x="244" y="390" text-anchor="middle" class="t m">排障先看应用日志与业务指标</text>
+
+  <!-- Right -->
+  <rect x="496" y="48" width="440" height="360" rx="8" class="box right"/>
+  <text x="716" y="78" text-anchor="middle" class="t h">Istio Service Mesh</text>
+  <text x="716" y="98" text-anchor="middle" class="t m">边车数据面 · 偏平台态流量治理</text>
+
+  <rect x="528" y="120" width="240" height="250" rx="6" class="box pod"/>
+  <text x="648" y="148" text-anchor="middle" class="t s">应用 Pod</text>
+  <rect x="548" y="168" width="200" height="70" rx="4" class="box" fill="#ffffff"/>
+  <text x="648" y="210" text-anchor="middle" class="t h">业务代码</text>
+  <rect x="548" y="256" width="200" height="90" rx="4" class="box side"/>
+  <text x="648" y="290" text-anchor="middle" class="t h">Envoy 边车</text>
+  <text x="648" y="314" text-anchor="middle" class="t s">流量代理 / mTLS / 策略</text>
+
+  <rect x="784" y="168" width="128" height="178" rx="6" class="box ctrl"/>
+  <text x="848" y="220" text-anchor="middle" class="t h">istiod</text>
+  <text x="848" y="244" text-anchor="middle" class="t s">发现</text>
+  <text x="848" y="264" text-anchor="middle" class="t s">配置</text>
+  <text x="848" y="284" text-anchor="middle" class="t s">证书</text>
+  <path d="M776 257 H748" class="arr"/>
+
+  <text x="716" y="390" text-anchor="middle" class="t m">排障常要看 Envoy / 控制面</text>
+
+  <text x="24" y="440" class="t h">怎么选</text>
+  <text x="24" y="462" class="t s">Java 为主、已有 Gateway + 限流熔断、无专职平台组 → 先 Spring Cloud。多语言统一流量与复杂发布、且有平台编制 → 再评估 Mesh。</text>
+</svg>

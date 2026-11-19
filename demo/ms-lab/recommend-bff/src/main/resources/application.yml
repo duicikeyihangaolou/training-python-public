@@ -1,0 +1,34 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: recommend-bff
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_ADDR:nacos:8848}
+        prefer-ip-address: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    tracing:
+      endpoint: ${OTLP_TRACES_URL:http://jaeger:4318/v1/traces}
+  opentelemetry:
+    resource-attributes:
+      service.name: ${spring.application.name}
+mslab:
+  recommend-url: ${RECOMMEND_URL:http://recommend:8080}
+  recommend-canary-url: ${RECOMMEND_CANARY_URL:http://recommend-canary:8080}
+  read-timeout-ms: ${RECOMMEND_READ_TIMEOUT_MS:1000}
+  smart-routing: ${SMART_ROUTING:false}
+  router-url: ${ROUTER_URL:http://ai-governor:8080}

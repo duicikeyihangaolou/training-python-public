@@ -1,0 +1,57 @@
+# ai-governor：读取并（仅 APPLY=true 时）调整 recommend 副本数
+# aiops-detector：只读拉取 Pod 日志，用于日志异常检测（§12.1）
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ai-governor
+  namespace: ms-lab
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ai-governor
+  namespace: ms-lab
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get"]
+  - apiGroups: ["apps"]
+    resources: ["deployments/scale"]
+    verbs: ["get", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ai-governor
+  namespace: ms-lab
+subjects:
+  - {kind: ServiceAccount, name: ai-governor, namespace: ms-lab}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: ai-governor}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: aiops-detector
+  namespace: ms-lab
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: aiops-detector
+  namespace: ms-lab
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: aiops-detector
+  namespace: ms-lab
+subjects:
+  - {kind: ServiceAccount, name: aiops-detector, namespace: ms-lab}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: aiops-detector}

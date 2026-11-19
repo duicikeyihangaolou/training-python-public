@@ -1,0 +1,27 @@
+# kind 单节点集群配置（客户自备机 / WSL2 Ubuntu）
+# 用法（推荐显式指定节点镜像，并先经 DOCKER_MIRROR 拉取）：
+#   docker pull --platform linux/amd64 docker.m.daocloud.io/kindest/node:v1.32.2
+#   docker tag docker.m.daocloud.io/kindest/node:v1.32.2 kindest/node:v1.32.2
+#   kind create cluster --name ms-lab --image kindest/node:v1.32.2 --config k8s/kind-ms-lab.yaml
+#
+# Docker daemon 须关闭 containerd-snapshotter（见 lab 文首 §3），否则 kind load 易失败。
+#
+# 将课堂 NodePort 映射到宿主机，便于浏览器访问：
+#   gateway 30888 · nacos 30848 · grafana 30890 · jaeger 30891 · prometheus 30892
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: ms-lab
+nodes:
+  - role: control-plane
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "ms-lab=learner"
+    extraPortMappings:
+      - {containerPort: 30888, hostPort: 30888, protocol: TCP}
+      - {containerPort: 30848, hostPort: 30848, protocol: TCP}
+      - {containerPort: 30890, hostPort: 30890, protocol: TCP}
+      - {containerPort: 30891, hostPort: 30891, protocol: TCP}
+      - {containerPort: 30892, hostPort: 30892, protocol: TCP}
