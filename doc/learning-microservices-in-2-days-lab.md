@@ -20,19 +20,19 @@
 
 ### 0. 软硬件与版本一览
 
-| 项        | 要求 / 版本                                                                                  | 备注                                                                                              |
-| --------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| 硬件内存  | **≥ 16 GiB**（推荐）；**≥ 14 GiB 可跑**（已在 14 GiB 云主机验证）；**8 GiB 不稳定**          | 给 kind / 容器留足空间，关闭无关大内存软件                                                        |
-| CPU       | ≥ 4 核推荐（验证机 8 核）                                                                    | 构建镜像时 CPU 会打满一段时间                                                                     |
-| 磁盘      | 建议可用 ≥ **40 GiB**                                                                        | `model-service` 镜像约 2 GiB；加上基础镜像与 kind 节点                                            |
-| GPU       | **不需要**                                                                                   | 排序模型用 CPU（torch CPU）                                                                       |
-| OS        | **Linux**：Ubuntu **22.04 / 24.04** LTS；或 Windows 10/11 + **WSL2** 跑上述 Ubuntu           | 以下命令均在 **Linux / WSL Ubuntu shell** 内执行                                                  |
-| 容器      | Docker Engine **24+**（验证：29.x）                                                          | **须关闭 containerd-snapshotter**（见 §3），否则 `kind load` 会报 digest not found                |
-| 集群      | **kind** **v0.27.0** + 节点镜像 `kindest/node:v1.32.2`                                       | 客户默认路径；与实录里裸机 kubeadm 等价验收                                                       |
-| kubectl   | snap `kubectl` 或官方二进制均可（验证：客户端 1.30 / 1.35 皆可）                             | 国内直连 `dl.k8s.io` 常极慢，优先 snap / 镜像站                                                   |
-| 应用栈    | Java **17**、Spring Boot **3.2.5**、Spring Cloud **2023.0.1**、Python **3.11**（均在镜像内） | 本机可不单独装 JDK/Maven/Python                                                                   |
-| 镜像加速  | `DOCKER_MIRROR=docker.m.daocloud.io`                                                         | 国内拉 Docker Hub 易超时，**必设**                                                                |
-| Namespace | `ms-lab`                                                                                     | NodePort：gateway `30888` · nacos `30848` · grafana `30890` · jaeger `30891` · prometheus `30892` |
+| 项        | 要求 / 版本                                                                                  | 备注                                                                                                     |
+| --------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| 硬件内存  | **≥ 16 GiB**（推荐）；**≥ 14 GiB 可跑**（已在 14 GiB 云主机验证）；**8 GiB 不稳定**          | 给 kind / 容器留足空间，关闭无关大内存软件                                                               |
+| CPU       | ≥ 4 核推荐（验证机 8 核）                                                                    | 构建镜像时 CPU 会打满一段时间                                                                            |
+| 磁盘      | 建议可用 ≥ **40 GiB**                                                                        | `model-service` 镜像约 2 GiB；加上基础镜像与 kind 节点                                                   |
+| GPU       | **不需要**                                                                                   | 排序模型用 CPU（torch CPU）                                                                              |
+| OS        | **Linux**：Ubuntu **22.04 / 24.04** LTS；或 Windows 10/11 + **WSL2** 跑上述 Ubuntu           | 以下命令均在 **Linux / WSL Ubuntu shell** 内执行                                                         |
+| 容器      | Docker Engine **24+**（验证：29.x）                                                          | **须关闭 containerd-snapshotter**（见 §3），否则 `kind load` 会报 digest not found                       |
+| 集群      | **kind** **v0.27.0** + 节点镜像 `kindest/node:v1.32.2`                                       | 客户默认路径；与实录里裸机 kubeadm 等价验收                                                              |
+| kubectl   | snap `kubectl` 或官方二进制均可（验证：客户端 1.30 / 1.35 皆可）                             | 国内直连 `dl.k8s.io` 常极慢，优先 snap / 镜像站                                                          |
+| 应用栈    | Java **17**、Spring Boot **3.2.5**、Spring Cloud **2023.0.1**、Python **3.11**（均在镜像内） | 本机可不单独装 JDK/Maven/Python                                                                          |
+| 镜像加速  | `DOCKER_MIRROR=docker.m.daocloud.io`                                                         | 国内默认。`kindest/node` 可用；`eclipse-temurin:17-jre` 可能只有数 KB/s，见 [§7](#7-构建镜像并导入-kind) |
+| Namespace | `ms-lab`                                                                                     | NodePort：gateway `30888` · nacos `30848` · grafana `30890` · jaeger `30891` · prometheus `30892`        |
 
 IDE（可选，用于看代码）：**VS Code** 或 **IntelliJ IDEA**；Cursor / Claude Code 可用、不强制。\
 用途：打开 [`../demo/ms-lab/`](../demo/ms-lab/)；**不要求**在 IDE 里本地 Run 起全套服务。
@@ -177,6 +177,18 @@ bash scripts/build-load.sh
   分钟**，14–16 GiB 机器请耐心等待、少开其它应用。
 - 若仍出现 `content digest ... not found`：确认 §3 已关闭 `containerd-snapshotter` 并
   `systemctl restart docker` 后重建 kind 集群。
+- **`eclipse-temurin:17-jre` 在 daocloud 上可能卡住**（2026-11-27，阿里云
+  ECS）：`docker pull
+  docker.m.daocloud.io/library/eclipse-temurin:17-jre` 的大层长期停在数
+  KB/s；同一台机器拉 `kindest/node` 正常。先换源拉好并打成本地标签。`build-load.sh` 发现本机已有
+  `eclipse-temurin:17-jre` 就不再拉：
+
+  ```bash
+  docker pull --platform linux/amd64 docker.1ms.run/library/eclipse-temurin:17-jre
+  docker tag docker.1ms.run/library/eclipse-temurin:17-jre eclipse-temurin:17-jre
+  ```
+
+  `docker.1ms.run` 失效时换其它 Docker Hub 代理，打出的标签名保持 `eclipse-temurin:17-jre`。
 
 只重打某一模块示例：
 
@@ -951,6 +963,7 @@ MS_LAB_HOST=103.198.127.21 bash scripts/chaos.sh
 | 问题                                                                              | 处理                                                                                                                                                                                                 |
 | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Docker Hub `i/o timeout`                                                          | `export DOCKER_MIRROR=docker.m.daocloud.io` 后重跑 `build-load.sh`                                                                                                                                   |
+| daocloud 拉 `eclipse-temurin:17-jre` 长期只有数 KB/s                              | 换 `docker.1ms.run` 拉完后 `docker tag` 为 `eclipse-temurin:17-jre`，再跑 `build-load.sh`（见练习环境 §7）                                                                                           |
 | `curl 127.0.0.1:<NodePort>` connection refused                                    | 改用节点 IP                                                                                                                                                                                          |
 | pip 慢                                                                            | Dockerfile `PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple`                                                                                                                                  |
 | `docker build` 里下 torch（175MB）卡住                                            | 宿主机预下载 wheel 再 `COPY`（见 §2.3）                                                                                                                                                              |
@@ -974,7 +987,7 @@ MS_LAB_HOST=103.198.127.21 bash scripts/chaos.sh
 | `IfNotPresent` + 同名 `:dev` 镜像，重建后 Pod 不换新                              | 重新 `ctr import` 后 `kubectl rollout restart`                                                                                                                                                       |
 | curl 直接拼 PromQL，`{}` 被当作通配符                                             | 用 `curl -G --data-urlencode 'query=...'`                                                                                                                                                            |
 | Grafana 首次启动数据库迁移慢（5–10 分钟）                                         | 等 readiness 为 1 再验收                                                                                                                                                                             |
-| `ssh host 'pkill -f build-load.sh'` 把 ssh 自己杀了（退出码 255）                 | 写成 `pkill -f "[b]uild-load.sh"`，让正则不匹配自身命令行                                                                                                                                            |
+| `ssh host 'pkill -f ...'` 把 ssh 自己杀了（退出码 255）                           | 命令行里含被匹配的字符串就会误杀，例如 `pkill -f build-load.sh`、`pkill -f "docker pull"`。写成 `pkill -f "[b]uild-load.sh"`，或按 PID `kill`                                                        |
 
 ---
 
@@ -1008,4 +1021,6 @@ kubectl delete ns ms-lab
 ---
 
 **修订**：客户默认改为自备 Linux/WSL2 + kind 部署；文首补充逐步安装命令与版本；`build-load.sh` 支持
-`KIND_CLUSTER`；redis/grafana 改为公共镜像名。
+`KIND_CLUSTER`；redis/grafana 改为公共镜像名。2026-11-27 阿里云 ECS：daocloud 拉
+`eclipse-temurin:17-jre` 会停在数 KB/s，改为先从 `docker.1ms.run` 拉取再打本地标签；`ssh` 里
+`pkill -f` 会误杀当前会话。
